@@ -1,12 +1,12 @@
 {
   "name": "iis-student-tournament",
   "version": "1.0.0",
-  "description": "This is text for test This is text for test2",
+  "description": "student tournament organizer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./build/index.js",
-    "start:dev": "nodemon",
+    "start:dev": "npm run build && nodemon",
     "build": "tsc --build"
   },
   "repository": {
