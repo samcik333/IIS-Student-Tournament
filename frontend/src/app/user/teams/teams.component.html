@@ -16,6 +16,56 @@
 
   <!-- Content or body of your page-->
   <mat-sidenav-content>
-    <div style="height: 90vh">Teams component</div>
+    <div style="height: 90vh">
+      <mat-grid-list cols="5" rowHeight="2:1">
+        <mat-grid-tile
+          ><div class="profile_photo">
+            <img
+              src="https://storage.googleapis.com/grunex/disk_1/avatars/150x150/31.jpg"
+            /></div
+        ></mat-grid-tile>
+        <mat-grid-tile
+          ><div>
+            <mat-form-field appearance="fill">
+              <mat-label>Team name</mat-label>
+              <input matInput placeholder="Ex. Nougat" />
+            </mat-form-field></div
+        ></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile
+          ><div>
+            <mat-form-field appearance="fill">
+              <img
+                matPrefix
+                class="input-icon"
+                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+                width="24px"
+                height="24px"
+              />
+              <mat-label>Photo</mat-label>
+              <input ype="Photo" matInput />
+            </mat-form-field></div
+        ></mat-grid-tile>
+        <mat-grid-tile><button mat-raised-button>Create</button></mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title-group>
+            <img
+              mat-card-avatar
+              src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
+            />
+            <mat-card-title class="team-label-name">Oštinohy</mat-card-title>
+            <mat-card-content class="team-label-capacity"
+              >5/20</mat-card-content
+            >
+            <mat-card-actions><button mat-button>-</button></mat-card-actions>
+          </mat-card-title-group>
+        </mat-card-header>
+      </mat-card>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

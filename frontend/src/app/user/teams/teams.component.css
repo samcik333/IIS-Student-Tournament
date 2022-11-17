@@ -1,0 +1,24 @@
+.mat-button {
+  position: absolute;
+  background-color: red;
+  color: white;
+  height: 35px;
+  top: 22px;
+  left: 575px;
+  border-radius: 2em;
+}
+
+.team-label-name {
+  position: absolute;
+  left: 100px;
+  top: 28px;
+}
+
+.team-label-capacity {
+  position: absolute;
+  left: 500px;
+  top: 22.5px;
+  border: 2px solid lightgrey;
+  border-radius: 2em;
+  padding: 5px;
+}

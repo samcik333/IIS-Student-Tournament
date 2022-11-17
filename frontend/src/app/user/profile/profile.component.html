@@ -19,23 +19,15 @@
     <div style="height: 90vh">
       <mat-grid-list cols="5" rowHeight="2:1">
         <mat-grid-tile>
-          <div class="example-container">
-            <mat-form-field appearance="fill">
-              <img
-                matPrefix
-                class="input-icon"
-                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
-                width="24px"
-                height="24px"
-              />
-              <mat-label>Photo</mat-label>
-              <input ype="Photo" matInput />
-            </mat-form-field>
+          <div class="profile_photo">
+            <img
+              src="https://storage.googleapis.com/grunex/disk_1/avatars/150x150/31.jpg"
+            />
           </div>
         </mat-grid-tile>
 
         <mat-grid-tile
-          ><div class="example-container">
+          ><div>
             <mat-form-field appearance="fill">
               <mat-label>Username</mat-label>
               <input matInput placeholder="Ex. Nougat" />
@@ -43,7 +35,7 @@
         ></mat-grid-tile>
 
         <mat-grid-tile
-          ><div class="example-container">
+          ><div>
             <mat-form-field appearance="fill">
               <mat-label>Password</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" />
@@ -64,10 +56,24 @@
 
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile>6</mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field appearance="fill">
+              <img
+                matPrefix
+                class="input-icon"
+                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+                width="24px"
+                height="24px"
+              />
+              <mat-label>Photo</mat-label>
+              <input ype="Photo" matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
 
         <mat-grid-tile
-          ><div class="example-container">
+          ><div>
             <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
               <input matInput placeholder="Ex. Nougat" />
@@ -75,7 +81,7 @@
         ></mat-grid-tile>
 
         <mat-grid-tile
-          ><div class="example-container">
+          ><div>
             <mat-form-field appearance="fill">
               <mat-label>E-mail</mat-label>
               <input matInput placeholder="Ex. Nougat" />
@@ -87,7 +93,7 @@
         <mat-grid-tile></mat-grid-tile>
 
         <mat-grid-tile
-          ><div class="example-container">
+          ><div>
             <mat-form-field appearance="fill">
               <mat-label>Surname</mat-label>
               <input matInput placeholder="Ex. Nougat" />
