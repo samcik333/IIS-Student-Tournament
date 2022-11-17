@@ -1,0 +1,23 @@
+<mat-sidenav-container>
+  <!-- This is your sidenav -->
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/tournament/info'"> Info </a>
+      <a mat-list-item [routerLink]="'/tournament/players'"> Players </a>
+      <a
+        mat-list-item
+        [routerLink]="'/tournament/playoff'"
+        routerLinkActive="active-list-item"
+      >
+        Playoff
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content or body of your page-->
+  <mat-sidenav-content>
+    <div style="height: 90vh">Playoff component</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<p>Playoff component</p>

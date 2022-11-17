@@ -1,0 +1,14 @@
+.card {
+  border: 1px solid lightgrey;
+  max-width: 300px;
+  padding: 10px;
+}
+.card:hover {
+  border: 1px;
+  background: lightskyblue;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
