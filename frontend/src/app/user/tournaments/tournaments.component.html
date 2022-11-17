@@ -44,7 +44,7 @@
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile
           ><div>
-            <mat-form-field appearance="fill">
+            <mat-form-field id:tournament-photo appearance="fill">
               <img
                 matPrefix
                 class="input-icon"
@@ -58,14 +58,14 @@
         ></mat-grid-tile>
         <mat-grid-tile
           ><div>
-            <mat-form-field appearance="fill">
+            <mat-form-field id:players appearance="fill">
               <mat-label>Players</mat-label>
               <input matInput type="number" formControlName="Players" min="1" />
             </mat-form-field></div
         ></mat-grid-tile>
         <mat-grid-tile
           ><div>
-            <mat-form-field appearance="fill" [style.max.height]="'20px'">
+            <mat-form-field id:description appearance="fill">
               <mat-label>Description</mat-label>
               <textarea matInput></textarea>
             </mat-form-field></div
@@ -75,7 +75,7 @@
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile
           ><div>
-            <mat-form-field appearance="fill">
+            <mat-form-field id:mode appearance="fill">
               <mat-label>Mode</mat-label>
               <mat-select>
                 <mat-option value="1">1v1</mat-option>
