@@ -1,3 +1,5 @@
+.PHONY: init up build
+
 init:
 	yarn
 up:

@@ -1,12 +1,20 @@
-import express, { Response, Request } from "express"
+import express, { Router } from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import { Model } from "objection";
+import Knex from "knex";
+import knexConfiig from "../knexfile";
 
-const PORT = process.env.PORT || 5000
+const knex = Knex(knexConfiig.development);
 
-const app = express()
-app.get('/', (req: Request, res: Response) => {
-    res.send('Helo World')
-})
+Model.knex(knex);
+
+const PORT = process.env.PORT || 5000;
+const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.listen(PORT, () => {
-    console.log(`app running on port ${PORT}`)
-})
+  console.log(`app running on port ${PORT}`);
+});
