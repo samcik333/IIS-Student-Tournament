@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/samcik333/IIS-Student-Tournament#readme",
   "dependencies": {
+    "@types/ajv": "^1.0.0",
     "@types/body-parser": "^1.19.2",
+    "ajv": "^8.11.2",
+    "ajv-formats": "^2.1.1",
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
@@ -28,7 +31,8 @@
     "http-errors": "^2.0.0",
     "knex": "^2.3.0",
     "morgan": "^1.10.0",
-    "objection": "^3.0.1"
+    "objection": "^3.0.1",
+    "pg": "^8.8.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",
