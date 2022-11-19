@@ -1,11 +1,12 @@
-import User from "../models/userModel";
+import User from "../../models/userModel";
 
 export default async function registerUserService(
   name: string,
   lastname: string,
   username: string,
   email: string,
-  password: string
+  password: string,
+  role: "admin" | "register" = "register"
 ) {
   const user = await User.query().insert({
     name,
@@ -13,6 +14,7 @@ export default async function registerUserService(
     username,
     email: email.toLowerCase(),
     password,
+    role,
   });
-  console.log(user);
+  return user;
 }

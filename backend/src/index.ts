@@ -5,6 +5,7 @@ import { Model } from "objection";
 import Knex from "knex";
 import knexConfiig from "../knexfile";
 import routes from "./routes/index";
+import bodyParser from "body-parser";
 
 const knex = Knex(knexConfiig.development);
 
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use("/", routes);
 
 app.listen(PORT, () => {

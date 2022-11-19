@@ -1,14 +1,13 @@
-import express from "express";
-import { registerUser } from "../controllers/auth";
-import { validateUser } from "../middlewares/validate";
+import express, { response } from "express";
+import { loginUser, registerUser } from "../controllers/auth";
+import {
+  validateLoginUser,
+  validateRegisterUser,
+} from "../middlewares/validate";
 const router = express.Router();
 
-// Home page route.
-router.post("/register", validateUser, registerUser);
+router.post("/register", validateRegisterUser, registerUser);
 
-// About page route.
-router.get("/about", function (req, res) {
-  res.send("About this wiki");
-});
+router.post("/login", validateLoginUser, loginUser);
 
 export default router;
