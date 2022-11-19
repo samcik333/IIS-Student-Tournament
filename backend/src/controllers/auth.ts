@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import {
   findRegisteredUser,
   findUserByUsername,
@@ -31,18 +32,24 @@ export const registerUser = async (req: Request, res: Response) => {
     encryptedPassword,
     role
   );
+
+  const token = jwt.sign({ id: user.id }, "SlUser", {
+    expiresIn: "1h",
+  });
   return res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
     .json({
-      name,
-      lastname,
-      username,
-      email,
+      message: "Successfully registered",
     })
     .status(200);
 };
 
 export const loginUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
+
   const userToLogin = await findRegisteredUser(username);
 
   if (!userToLogin) {
@@ -64,13 +71,24 @@ export const loginUser = async (req: Request, res: Response) => {
       message: "Invalid email or password",
     });
   }
+  const token = jwt.sign({ id: user.id }, "SlUser", {
+    expiresIn: "1h",
+  });
 
   return res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
     .json({
-      name: user.name,
-      lastname: user.lastname,
-      username,
-      email: user.email,
+      message: "Logged in successfully",
     })
     .status(200);
+};
+
+export const logOutUser = async (req: Request, res: Response) => {
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out" });
 };
