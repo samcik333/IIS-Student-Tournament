@@ -16,6 +16,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { MaterialModule } from './material/material.module';
     InfoComponent,
     PlayersComponent,
     PlayoffComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,5 +44,6 @@ import { MaterialModule } from './material/material.module';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [RegisterComponent],
 })
 export class AppModule {}
