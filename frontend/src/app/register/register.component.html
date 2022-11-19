@@ -1,0 +1,56 @@
+<div>
+  <mat-toolbar color="primary">
+    <span class="fill-remaining-space"></span>
+    <span>Registration</span>
+    <span class="fill-remaining-space"></span>
+  </mat-toolbar>
+</div>
+
+<form class="normal-form">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile
+      ><div class="controles-container">
+        <input type="hidden" />
+        <mat-form-field>
+          <input
+            id:username
+            formControlName="username"
+            matInput
+            placeholder="Username"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input id:name formControlName="name" matInput placeholder="Name" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            id:surname
+            formControlName="surname"
+            matInput
+            placeholder="Surname"
+          />
+        </mat-form-field></div
+    ></mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" />
+        <mat-form-field>
+          <input id:pwd formControlName="pwd" matInput placeholder="Password" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            id:email
+            formControlName="email"
+            matInput
+            placeholder="Email"
+          />
+        </mat-form-field>
+        <div [style.margin-top]="'4em'">
+          <button class="center" mat-raised-button [style.width]="'100px'">
+            Enter
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

@@ -4,8 +4,20 @@
     <a [routerLink]="'/user/profile'" [style.color]="'white'" class="right"
       >username</a
     >
-    <a class="right" [style.right]="'255px'" [style.color]="'white'">Log in</a>
-    <a class="right" [style.right]="'129px'" [style.color]="'white'"
+    <a
+      (click)="openLoginDialog()"
+      class="right"
+      [style.cursor]="'pointer'"
+      [style.right]="'255px'"
+      [style.color]="'white'"
+      >Log in</a
+    >
+    <a
+      (click)="openRegisterDialog()"
+      class="right"
+      [style.cursor]="'pointer'"
+      [style.right]="'129px'"
+      [style.color]="'white'"
       >Register</a
     >
   </mat-toolbar-row>
