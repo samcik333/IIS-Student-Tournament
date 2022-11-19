@@ -44,6 +44,6 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [RegisterComponent],
+  entryComponents: [RegisterComponent, LoginComponent],
 })
 export class AppModule {}
