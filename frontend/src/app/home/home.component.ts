@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { TournamentService } from '../shared/tournament.service';
 
 @Component({
   selector: 'app-home',
@@ -6,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  restTournament:TournamentService;
+  tournaments:any = [];
 
-  ngOnInit(): void {}
+  constructor(restTournament:TournamentService) {
+    this.restTournament=restTournament;
+  }
+
+  async ngOnInit() {
+    const tournaments$ = this.restTournament.getTournaments();
+    this.tournaments = await lastValueFrom(tournaments$);
+  }
+
+
 
   cards: {
     title: string;
