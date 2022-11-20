@@ -5,8 +5,7 @@ export default async function registerUserService(
   lastname: string,
   username: string,
   email: string,
-  password: string,
-  role: "admin" | "register" = "register"
+  password: string
 ) {
   const user = await User.query().insert({
     name,
@@ -14,7 +13,6 @@ export default async function registerUserService(
     username,
     email: email.toLowerCase(),
     password,
-    role,
   });
   return user;
 }

@@ -29,8 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
     lastname,
     username,
     email,
-    encryptedPassword,
-    role
+    encryptedPassword
   );
 
   const token = jwt.sign({ id: user.id }, "SlUser", {

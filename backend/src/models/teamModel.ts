@@ -8,13 +8,13 @@ export default class Team extends Model {
   ownerId!: number;
   name!: string;
   capacity!: number;
-  logo!: string;
-  gold!: number;
-  silver!: number;
-  bronze!: number;
-  numberOfGames!: number;
-  numberOfWins!: number;
-  numberOfLoses!: number;
+  logo: string =
+    "https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png";
+  gold: number = 0;
+  silver: number = 0;
+  bronze: number = 0;
+  numberOfGames: number = 0;
+  numberOfWins: number = 0;
   static get tableName() {
     return "teams";
   }
