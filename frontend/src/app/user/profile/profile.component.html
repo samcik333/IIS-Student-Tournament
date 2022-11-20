@@ -29,7 +29,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile> </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
 
@@ -70,9 +70,9 @@
                 [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide"
               >
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                }}</mat-icon>
+                <mat-icon>
+                  {{ hide ? "visibility_off" : "visibility" }}
+                </mat-icon>
               </button>
             </mat-form-field>
           </div>
@@ -89,6 +89,7 @@
 
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
+
         <mat-grid-tile>
           <div>
             <mat-form-field id:name appearance="fill">
