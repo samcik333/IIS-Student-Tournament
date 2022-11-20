@@ -21,18 +21,42 @@
         <mat-grid-tile>
           <div class="profile_photo">
             <img
-              src="https://storage.googleapis.com/grunex/disk_1/avatars/150x150/31.jpg"
+              [style.width]="'125px'"
+              [style.height]="'125px'"
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             />
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile
-          ><div>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile> </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:profile-photo appearance="fill">
+              <img
+                matPrefix
+                class="input-icon"
+                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+                width="24px"
+                height="24px"
+              />
+              <mat-label>Photo</mat-label>
+              <input ype="Photo" matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:username appearance="fill">
               <mat-label>Username</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
 
         <mat-grid-tile
           ><div>
@@ -54,51 +78,34 @@
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile>
           <div>
-            <mat-form-field id:profile-photo appearance="fill">
-              <img
-                matPrefix
-                class="input-icon"
-                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
-                width="24px"
-                height="24px"
-              />
-              <mat-label>Photo</mat-label>
-              <input ype="Photo" matInput />
+            <mat-form-field id:email appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input matInput placeholder="example@gmail.com" />
             </mat-form-field>
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile
-          ><div>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:name appearance="fill">
               <mat-label>Name</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
 
-        <mat-grid-tile
-          ><div>
-            <mat-form-field id:email appearance="fill">
-              <mat-label>E-mail</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
-
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-
-        <mat-grid-tile
-          ><div>
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:surname appearance="fill">
               <mat-label>Surname</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
 
         <mat-grid-tile> <button mat-raised-button>Save</button></mat-grid-tile>
       </mat-grid-list>

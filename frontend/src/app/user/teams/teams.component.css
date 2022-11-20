@@ -8,13 +8,13 @@
   border-radius: 2em;
 }
 
-.team-label-name {
+.label-name {
   position: absolute;
   left: 100px;
   top: 28px;
 }
 
-.team-label-capacity {
+.label-capacity {
   position: absolute;
   left: 500px;
   top: 22.5px;

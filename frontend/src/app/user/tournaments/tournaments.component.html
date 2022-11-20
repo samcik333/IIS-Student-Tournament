@@ -18,21 +18,27 @@
   <mat-sidenav-content>
     <div style="height: 90vh">
       <mat-grid-list cols="5" rowHeight="2:1">
-        <mat-grid-tile
-          ><div class="profile_photo">
+        <mat-grid-tile>
+          <div class="profile_photo">
             <img
-              src="https://storage.googleapis.com/grunex/disk_1/avatars/150x150/31.jpg"
-            /></div
-        ></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+              [style.width]="'125px'"
+              [style.height]="'125px'"
+              src="https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png"
+            />
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:tournament-name appearance="fill">
               <mat-label>Tournament name</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field appearance="fill">
               <mat-label>Choose a date</mat-label>
               <input matInput [matDatepicker]="picker" />
@@ -40,15 +46,25 @@
                 matSuffix
                 [for]="picker"
               ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #picker> </mat-datepicker>
               <mat-hint>MM/DD/YYYY</mat-hint>
             </mat-form-field>
-          </div></mat-grid-tile
-        >
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:place appearance="fill">
+              <mat-label>Place</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
         <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:tournament-photo appearance="fill">
               <img
                 matPrefix
@@ -59,27 +75,12 @@
               />
               <mat-label>Photo</mat-label>
               <input ype="Photo" matInput />
-            </mat-form-field></div
-        ></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
-            <mat-form-field id:players appearance="fill">
-              <mat-label>Players</mat-label>
-              <input matInput type="number" formControlName="Players" min="1" />
-            </mat-form-field></div
-        ></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
-            <mat-form-field id:description appearance="fill">
-              <mat-label>Description</mat-label>
-              <textarea matInput></textarea>
-            </mat-form-field></div
-        ></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:mode appearance="fill">
               <mat-label>Mode</mat-label>
               <mat-select>
@@ -97,11 +98,35 @@
                 <mat-option value="12">12v12</mat-option>
               </mat-select>
             </mat-form-field>
-          </div></mat-grid-tile
-        >
-        <mat-grid-tile><button mat-raised-button>Create</button></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:players appearance="fill">
+              <mat-label>Players</mat-label>
+              <input matInput type="number" formControlName="Players" min="1" />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field id:description appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="7"
+                cdkAutosizeMaxRows="7"
+                matInput
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <button mat-raised-button>Create</button>
+        </mat-grid-tile>
       </mat-grid-list>
 
       <mat-card>
@@ -111,10 +136,8 @@
               mat-card-avatar
               src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
             />
-            <mat-card-title class="team-label-name">Oštinohy</mat-card-title>
-            <mat-card-content class="team-label-capacity"
-              >2/10</mat-card-content
-            >
+            <mat-card-title class="label-name">LoL Tournament</mat-card-title>
+            <mat-card-content class="label-capacity">2/10</mat-card-content>
             <mat-card-actions><button mat-button>-</button></mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
