@@ -18,24 +18,31 @@
   <mat-sidenav-content>
     <div style="height: 90vh">
       <mat-grid-list cols="5" rowHeight="2:1">
-        <mat-grid-tile
-          ><div class="profile_photo">
+        <mat-grid-tile>
+          <div class="profile_photo">
             <img
-              src="https://storage.googleapis.com/grunex/disk_1/avatars/150x150/31.jpg"
-            /></div
-        ></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+              [style.width]="'125px'"
+              [style.height]="'125px'"
+              src="https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png"
+            />
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:team-name appearance="fill">
               <mat-label>Team name</mat-label>
-              <input matInput placeholder="Ex. Nougat" />
-            </mat-form-field></div
-        ></mat-grid-tile>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile
-          ><div>
+
+        <mat-grid-tile>
+          <div>
             <mat-form-field id:team-photo appearance="fill">
               <img
                 matPrefix
@@ -46,9 +53,13 @@
               />
               <mat-label>Photo</mat-label>
               <input ype="Photo" matInput />
-            </mat-form-field></div
-        ></mat-grid-tile>
-        <mat-grid-tile><button mat-raised-button>Create</button></mat-grid-tile>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <button mat-raised-button>Create</button>
+        </mat-grid-tile>
       </mat-grid-list>
 
       <mat-card id:team-card>
@@ -58,11 +69,11 @@
               mat-card-avatar
               src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
             />
-            <mat-card-title class="team-label-name">Oštinohy</mat-card-title>
-            <mat-card-content class="team-label-capacity"
-              >5/20</mat-card-content
-            >
-            <mat-card-actions><button mat-button>-</button></mat-card-actions>
+            <mat-card-title class="label-name">Oštinohy</mat-card-title>
+            <mat-card-content class="label-capacity">5/20</mat-card-content>
+            <mat-card-actions>
+              <button mat-button>-</button>
+            </mat-card-actions>
           </mat-card-title-group>
         </mat-card-header>
       </mat-card>

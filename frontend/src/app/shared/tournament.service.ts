@@ -4,17 +4,15 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Tournament } from '../model/tournament';
 
-const endpoint = 'http://localhost:5000/';
+const endpoint = 'http://localhost:5005/';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TournamentService {
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private http:HttpClient, private router:Router) { }
-
-  getTournaments(): Observable<Tournament>{
+  getTournaments(): Observable<Tournament> {
     return this.http.get<Tournament>(endpoint);
   }
-
 }
