@@ -1,168 +1,24 @@
-<div>
-  <mat-card *ngFor="let tournament of tournaments">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{ tournament.name }}</mat-card-title>
-        <mat-card-subtitle>STATE</mat-card-subtitle>
-        <img mat-card-md-image [src]="" alt="Photo of STATE" />
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Date: {{ tournament.date }}</p>
-      <p>Mode: xxx</p>
-      <p>Teams: x/{{ tournament.capacity }}</p>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<!-- <mat-grid-list cols="5" rowHeight="1:1">
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
+<html>
+<head></head>
+<body>
+  <div class="container">
+    <mat-card *ngFor="let tournament of tournaments">
       <mat-card-header>
         <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
+          <mat-card-title>{{ tournament.name }}</mat-card-title>
+          <mat-card-subtitle>STATE</mat-card-subtitle>
           <img
             mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
+            [src]=""
+            alt="Photo of STATE"
           />
         </mat-card-title-group>
       </mat-card-header>
       <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
+        <p>Date: {{ tournament.date }}</p>
+        <p>Mode: xxx</p>
+        <p>Teams: x/{{ tournament.capacity }}</p>
       </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
+    </mat-card>
+  </div>
 
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
-          <img
-            mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
-      </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
-
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
-          <img
-            mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
-      </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
-
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
-          <img
-            mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
-      </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
-
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
-          <img
-            mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
-      </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
-
-  <mat-grid-tile [routerLink]="'/tournament/info'"
-    ><mat-card id:tournament-card class="card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>LoL Tournament</mat-card-title>
-          <mat-card-subtitle
-            [style.color]="'white'"
-            [style.background-color]="'green'"
-            [style.width]="'110px'"
-            >Open</mat-card-subtitle
-          >
-          <img
-            mat-card-md-image
-            src="https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: 28.10.2022</p>
-        <p>Mode: 5v5</p>
-        <p>Teams: 5/10</p>
-      </mat-card-content>
-    </mat-card></mat-grid-tile
-  >
-</mat-grid-list> -->
