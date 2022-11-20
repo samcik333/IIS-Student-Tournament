@@ -1,14 +1,16 @@
-.card {
+mat-card {
   border: 1px solid lightgrey;
   max-width: 300px;
   padding: 10px;
 }
-.card:hover {
+mat-card:hover {
   border: 1px;
   background: lightskyblue;
 }
 
-.example-header-image {
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
-  background-size: cover;
+.container {
+  margin-top: 1cm;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,300px)); /*this */
+  gap:20px;
 }
