@@ -33,10 +33,10 @@ export const validateRegisterUser = async (
         minLength: 8,
       },
       role: {
-        enum: ["admin", "register"],
+        enum: ["admin", "user"],
       },
     },
-    required: ["name", "lastname", "username", "email", "password", "role"],
+    required: ["name", "lastname", "username", "email", "password"],
   };
   const valid = ajv.validate(registerSchema, req.body);
   if (!valid) {

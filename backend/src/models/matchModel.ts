@@ -7,8 +7,8 @@ export default class Match extends Model {
   id!: number;
   tournamentId!: number;
   date!: Date;
-  firstScore!: number;
-  secondScore!: number;
+  firstScore: number = 0;
+  secondScore: number = 0;
   static get tableName() {
     return "matches";
   }

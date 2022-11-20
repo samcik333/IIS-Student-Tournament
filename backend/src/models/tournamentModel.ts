@@ -8,9 +8,13 @@ export default class Tournament extends Model {
   ownerId!: number;
   name!: string;
   date!: Date;
+  place!: string;
+  palyers!: number;
   capacity!: number;
+  logo: string =
+    "https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png";
+  state: "waiting" | "open" | "closed" = "waiting";
   description!: string;
-  prize!: string;
   static get tableName() {
     return "tournaments";
   }
