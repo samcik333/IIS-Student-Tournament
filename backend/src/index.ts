@@ -6,6 +6,8 @@ import Knex from "knex";
 import knexConfiig from "../knexfile";
 import routes from "./routes/index";
 import bodyParser from "body-parser";
+import cors from "cors";
+
 
 const knex = Knex(knexConfiig.development);
 
@@ -14,6 +16,7 @@ Model.knex(knex);
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

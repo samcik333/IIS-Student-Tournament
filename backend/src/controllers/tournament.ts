@@ -3,11 +3,12 @@ import Tournament from "../models/tournamentModel";
 import { findTournament } from "../services/tournamentService/find";
 
 
-export const getAll = async (res: Response, req: Request) => {
-    return await Tournament.query();
+export const getAll = async (req: Request, res: Response) => {
+    const result = await Tournament.query();
+    return res.status(200).send(result);
 }
 
-export const info = async (res: Response, req: Request) => {
+export const info = async (req: Request, res: Response) => {
     const id = req.body.id;
     const result = await findTournament(id);
     if(!result){
