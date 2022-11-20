@@ -6,17 +6,16 @@ export async function up(knex: Knex): Promise<void> {
       table.increments("id").primary().unique();
       table.string("name").notNullable();
       table.string("lastname").notNullable();
-      table.string("username", 30).notNullable().unique();
+      table.string("username", 10).notNullable().unique();
       table.string("email").notNullable().unique();
       table.string("password").notNullable();
+      table.enum("role", ["user", "admin"]);
       table.string("photo");
-      table.enum("role", ["admin", "register"]).notNullable();
       table.integer("gold");
       table.integer("silver");
       table.integer("bronze");
       table.integer("numberOfGames");
       table.integer("numberOfWins");
-      table.integer("numberOfLoses");
     })
     .createTable("teams", (table) => {
       table.increments("id").primary().unique();
@@ -35,7 +34,6 @@ export async function up(knex: Knex): Promise<void> {
       table.integer("bronze");
       table.integer("numberOfGames");
       table.integer("numberOfWins");
-      table.integer("numberOfLoses");
     })
     .createTable("tournaments", (table) => {
       table.increments("id").primary().unique();
@@ -47,10 +45,13 @@ export async function up(knex: Knex): Promise<void> {
         .onDelete("CASCADE")
         .index();
       table.string("name").notNullable();
+      table.string("place").notNullable();
       table.datetime("date").notNullable();
+      table.integer("players").notNullable();
       table.integer("capacity").notNullable();
+      table.string("logo");
+      table.enum("state", ["waiting", "open", "closed"]);
       table.string("description");
-      table.string("prize").notNullable();
     })
     .createTable("matches", (table) => {
       table.increments("id").primary().unique();
