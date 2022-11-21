@@ -28,3 +28,5 @@ app.use("/", routes);
 app.listen(PORT, () => {
   console.log(`app running on port ${PORT}`);
 });
+
+console.log(1);
