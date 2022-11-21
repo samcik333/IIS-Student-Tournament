@@ -8,5 +8,7 @@ export const getUserId = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  const user = await updateUserInfo(req);
+  await updateUserInfo(req);
+  const user = await findUserById(req.body.id);
+  return res.send(user);
 };

@@ -70,3 +70,38 @@ export const validateLoginUser = async (
   }
   return await next();
 };
+
+export const validateUpdateUser = async (
+  req: Request,
+  res: Response,
+  next: any
+) => {
+  const registerSchema = {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+      },
+      lastname: {
+        type: "string",
+      },
+      username: {
+        type: "string",
+      },
+      email: {
+        type: "string",
+        format: "email",
+      },
+      password: {
+        type: "string",
+        format: "password",
+        minLength: 8,
+      },
+    },
+  };
+  const valid = ajv.validate(registerSchema, req.body);
+  if (!valid) {
+    return res.status(400).send(ajv.errors);
+  }
+  return await next();
+};
