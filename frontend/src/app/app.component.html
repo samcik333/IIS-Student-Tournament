@@ -1,26 +1,42 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a [routerLink]="''" [style.color]="'white'">SJSquad</a>
-    <a [routerLink]="'/user/profile'" [style.color]="'white'" class="right"
-      >username</a
-    >
-    <a
-      (click)="openLoginDialog()"
-      class="right"
-      [style.cursor]="'pointer'"
-      [style.right]="'255px'"
-      [style.color]="'white'"
-      >Log in</a
-    >
-    <a
-      (click)="openRegisterDialog()"
-      class="right"
-      [style.cursor]="'pointer'"
-      [style.right]="'129px'"
-      [style.color]="'white'"
-      >Register</a
-    >
-  </mat-toolbar-row>
-</mat-toolbar>
-
-<router-outlet></router-outlet>
+<html>
+  <head></head>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a [routerLink]="''" [style.color]="'white'">SJSquad</a>
+      <div
+        [routerLink]="'/user/profile'"
+        class="right"
+        [style.cursor]="'pointer'"
+      >
+        Username
+      </div>
+      <div
+        class="right"
+        [style.cursor]="'pointer'"
+        [style.background-color]="'#d90404'"
+        [style.right]="'129px'"
+      >
+        Log out
+      </div>
+      <div
+        (click)="openRegisterDialog()"
+        class="right"
+        [style.cursor]="'pointer'"
+        [style.right]="'254px'"
+      >
+        Register
+      </div>
+      <div
+        (click)="openLoginDialog()"
+        class="right"
+        [style.cursor]="'pointer'"
+        [style.right]="'379px'"
+      >
+        Log in
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <body>
+    <router-outlet></router-outlet>
+  </body>
+</html>

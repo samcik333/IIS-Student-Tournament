@@ -4,6 +4,12 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .right {
   text-align: center;
   position: absolute;
