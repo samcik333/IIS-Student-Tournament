@@ -6,7 +6,7 @@ export const showTeams = async (req: Request, res: Response) => {
 	if (teams) {
 		return res.status(200).send(teams);
 	} else {
-		return res.status(409).json({ message: "Teams does not exist" });
+		return res.status(200);
 	}
 };
 
