@@ -15,4 +15,9 @@ export class TournamentService {
   getTournaments(): Observable<Tournament> {
     return this.http.get<Tournament>(endpoint);
   }
+
+  find(id:string): Observable<Tournament>{
+    return this.http.get<Tournament>(endpoint + "tournament/" + id);
+  }
+
 }

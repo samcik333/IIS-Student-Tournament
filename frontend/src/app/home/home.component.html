@@ -3,22 +3,26 @@
 <body>
   <div class="container">
     <mat-card *ngFor="let tournament of tournaments">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>{{ tournament.name }}</mat-card-title>
-          <mat-card-subtitle>STATE</mat-card-subtitle>
-          <img
-            mat-card-md-image
-            [src]=""
-            alt="Photo of STATE"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Date: {{ tournament.date }}</p>
-        <p>Mode: xxx</p>
-        <p>Teams: x/{{ tournament.capacity }}</p>
-      </mat-card-content>
+      <div (click)="info(tournament.id)">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ tournament.name }}</mat-card-title>
+            <mat-card-subtitle
+              [style.color]="'white'"
+              [style.background-color]="'green'"
+              [style.width]="'110px'">{{ tournament.state }}</mat-card-subtitle>
+            <img
+              mat-card-md-image
+              src="{{ tournament.logo }}"
+            />
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Date: {{ tournament.date }}</p>
+          <p>Mode: xxx</p>
+          <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
+        </mat-card-content>
+      </div>
     </mat-card>
   </div>
 

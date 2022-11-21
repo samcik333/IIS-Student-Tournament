@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'user', component: PlayerComponent },
   { path: 'team', component: TeamComponent },
 
-  { path: 'tournament/info', component: InfoComponent },
+  { path: 'tournament/:id', component: InfoComponent },
   { path: 'tournament/players', component: PlayersComponent },
   { path: 'tournament/playoff', component: PlayoffComponent },
 ];

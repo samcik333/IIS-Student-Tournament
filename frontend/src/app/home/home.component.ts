@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { TournamentService } from '../shared/tournament.service';
 
@@ -10,9 +11,11 @@ import { TournamentService } from '../shared/tournament.service';
 export class HomeComponent implements OnInit {
   restTournament:TournamentService;
   tournaments:any = [];
+  router:Router;
 
-  constructor(restTournament:TournamentService) {
+  constructor(restTournament:TournamentService, router:Router) {
     this.restTournament=restTournament;
+    this.router=router;
   }
 
   async ngOnInit() {
@@ -20,33 +23,8 @@ export class HomeComponent implements OnInit {
     this.tournaments = await lastValueFrom(tournaments$);
   }
 
+  async info(id:string){
+    this.router.navigate(["tournament", id]);
+  }
 
-
-  cards: {
-    title: string;
-    date: string;
-    mode: string;
-    teams: string;
-    state: string;
-    image: string;
-  }[] = [
-    {
-      title: 'LoL Tournament',
-      date: '28.11.2022',
-      mode: '5v5',
-      teams: '5/10',
-      state: 'Open',
-      image:
-        'https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg',
-    },
-    {
-      title: 'LoL Tournament',
-      date: '28.11.2022',
-      mode: '5v5',
-      teams: '5/10',
-      state: 'Open',
-      image:
-        'https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg',
-    },
-  ];
 }
