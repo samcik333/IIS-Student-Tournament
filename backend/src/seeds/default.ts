@@ -18,7 +18,7 @@ export async function seed(knex: Knex): Promise<void> {
       lastname: "admin",
       username: "admin",
       email: "admin@gmail.com",
-      password: "123456",
+      password: "$2b$10$WbhwUypOumFjw8lklLGGfuK5M7zkqSaMBZdrD276HZnS4.N0axXCu", //12345678
       role: "admin",
       photo:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
@@ -34,7 +34,7 @@ export async function seed(knex: Knex): Promise<void> {
       lastname: "Mrkvička",
       username: "janko1",
       email: "janko@gmail.com",
-      password: "123456",
+      password: "$2b$10$WbhwUypOumFjw8lklLGGfuK5M7zkqSaMBZdrD276HZnS4.N0axXCu", // 12345678
       role: "user",
       photo:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
@@ -50,7 +50,7 @@ export async function seed(knex: Knex): Promise<void> {
       lastname: "Pavol",
       username: "pavol1",
       email: "pavol@gmail.com",
-      password: "123456",
+      password: "$2b$10$WbhwUypOumFjw8lklLGGfuK5M7zkqSaMBZdrD276HZnS4.N0axXCu", //12345678
       role: "user",
       photo:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
