@@ -2,7 +2,7 @@
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
-      <a
+      <a *ngIf="tournament"
         mat-list-item
         [routerLink]="['/tournament/', tournament.id]"
         routerLinkActive="active-list-item"

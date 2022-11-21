@@ -3,7 +3,7 @@ import { findTournament } from "../services/tournamentService/find";
 import { getAll } from "../services/tournamentService/getAll";
 
 export const tournaments = async (req: Request, res: Response) => {
-  const result = await getAll();
+  const result = await getAll(req.query);
   return res.status(200).send(result);
 };
 

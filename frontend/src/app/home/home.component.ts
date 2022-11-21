@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { debounceTime, distinct, distinctUntilChanged, lastValueFrom, Observable, switchMap } from 'rxjs';
+import { Tournament } from '../model/tournament';
 import { TournamentService } from '../shared/tournament.service';
 
 @Component({
@@ -10,20 +12,34 @@ import { TournamentService } from '../shared/tournament.service';
 })
 export class HomeComponent implements OnInit {
   restTournament:TournamentService;
-  tournaments:any = [];
+  public tournamentList:Array<Tournament> = [];
   router:Router;
+
+  searchForm:FormGroup = new FormGroup({
+    search:new FormControl('')
+  })
 
   constructor(restTournament:TournamentService, router:Router) {
     this.restTournament=restTournament;
     this.router=router;
+    this.searchForm.get('search')?.valueChanges
+    .pipe(
+      debounceTime(100),
+      distinctUntilChanged(),
+      switchMap((result)=>this.restTournament.findByName(result)),
+    )
+    .subscribe((result) => {
+      this.tournamentList = result;
+      console.log(this.tournamentList);
+    })
   }
 
   async ngOnInit() {
     const tournaments$ = this.restTournament.getTournaments();
-    this.tournaments = await lastValueFrom(tournaments$);
+    this.tournamentList = await lastValueFrom(tournaments$);
   }
 
-  async info(id:string){
+  async info(id:number){
     this.router.navigate(["tournament", id]);
   }
 

@@ -1,7 +1,6 @@
 mat-card {
   border: 1px solid lightgrey;
   max-width: 300px;
-  padding: 10px;
 }
 mat-card:hover {
   border: 1px;
@@ -10,7 +9,40 @@ mat-card:hover {
 
 .container {
   margin-top: 1cm;
+  width: 100%;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,280px)); /*this */
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(100px,300px)); /*this */
+  gap:30px;
 }
+
+.search {
+  width: 25%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.wrap{
+  margin: 2%;
+  min-width: 180px;
+}
+
+.red{color: red;}
+.green{color: green;}
+.gray{color: gray;}
+
+

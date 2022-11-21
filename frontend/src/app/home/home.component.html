@@ -1,28 +1,46 @@
 <html>
 <head></head>
 <body>
-  <div class="container">
-    <mat-card *ngFor="let tournament of tournaments">
-      <div (click)="info(tournament.id)">
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>{{ tournament.name }}</mat-card-title>
-            <mat-card-subtitle
-              [style.color]="'white'"
-              [style.background-color]="'green'"
-              [style.width]="'110px'">{{ tournament.state }}</mat-card-subtitle>
-            <img
-              mat-card-md-image
-              src="{{ tournament.logo }}"
-            />
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Date: {{ tournament.date }}</p>
-          <p>Mode: xxx</p>
-          <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
-        </mat-card-content>
-      </div>
-    </mat-card>
+  <div class="wrap">
+    <form [formGroup]="searchForm" class="search">
+      <input placeholder="Search tournament" type="text" name="" formControlName="search" class="searchTerm" id="">
+    </form>
   </div>
 
+  <ng-container *ngIf="tournamentList && tournamentList.length;else notFound;">
+    <div class="container">
+      <mat-card *ngFor="let tournament of tournamentList">
+        <div (click)="info(tournament.id)" [style.margin]="'5px'">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>{{ tournament.name }}</mat-card-title>
+              <mat-card-subtitle
+                [ngStyle]="{'background-color': (tournament.state === 'open') ? 'green' : (tournament.state === 'closed') ? 'red' : (tournament.state === 'waiting') ? 'gray' : ''}"
+                [style.color]="'white'"
+                [style.width]="'110px'">{{ tournament.state }}</mat-card-subtitle>
+              <img style="margin : 5px"
+                mat-card-md-image
+                src="{{ tournament.logo }}"
+              />
+            </mat-card-title-group>
+          </mat-card-header>
+          <div [style.background-color]="'#006dcc'" [style.padding]="'3px'">
+            <mat-card-content [style.color]="'white'"  [style.font-weight]="'bold'">
+              <p>Date: {{ tournament.date }}</p>
+              <p>Mode: xxx</p>
+              <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <ng-template #notFound>
+    <div class="p-2 m-2 border-2 border-blue-200 text-blue-500">
+      Not found!
+    </div>
+  </ng-template>
+</body>
+
+</html>

@@ -12,12 +12,16 @@ const endpoint = 'http://localhost:5005/';
 export class TournamentService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  getTournaments(): Observable<Tournament> {
-    return this.http.get<Tournament>(endpoint);
+  getTournaments(): Observable<Tournament[]> {
+    return this.http.get<Tournament[]>(endpoint);
   }
 
   find(id:string): Observable<Tournament>{
     return this.http.get<Tournament>(endpoint + "tournament/" + id);
+  }
+
+  findByName(name:string):Observable<Tournament[]> {
+    return this.http.get<Tournament[]>(`${endpoint}?name=${name}`);
   }
 
 }
