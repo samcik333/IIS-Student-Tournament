@@ -15,3 +15,7 @@ export const findRegisteredUser = async (
 export const findUserByUsername = async (username: string) => {
   return await User.query().findOne("username", username);
 };
+
+export const findUserById = async (id: number) => {
+  return await User.query().findById(id);
+};

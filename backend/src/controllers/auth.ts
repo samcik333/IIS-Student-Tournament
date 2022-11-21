@@ -9,7 +9,7 @@ import encryptPassword from "../services/registerService/cryptPassword";
 import { login } from "../services/registerService/login";
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { name, lastname, username, email, password, role } = req.body;
+  const { name, lastname, username, email, password } = req.body;
   const userToRegister = await findRegisteredUser(username, email);
 
   if (userToRegister === "username") {
