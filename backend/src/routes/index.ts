@@ -6,9 +6,7 @@ import team from "./teams";
 import { getAll } from "../controllers/tournament";
 const router = express.Router();
 
-router.use(authRoute, tournament, user);
-router.use("/", authRoute, tournament);
-router.use("/", authRoute, team);
+router.use(authRoute, user, team, tournament);
 
 router.get("/", getAll);
 
