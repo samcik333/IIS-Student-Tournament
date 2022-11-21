@@ -1,11 +1,11 @@
 import express from "express";
-import { getAll } from "../controllers/tournament";
+import { tournaments } from "../controllers/tournament";
 import authRoute from "./auth";
 import tournament from "./tournaments";
 const router = express.Router();
 
 router.use("/", authRoute, tournament);
 
-router.get("/", getAll);
+router.get("/", tournaments);
 
 export default router;

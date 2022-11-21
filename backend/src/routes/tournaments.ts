@@ -1,5 +1,5 @@
 import express from "express";
-import { getAll, info } from "../controllers/tournament";
+import { tournaments, info } from "../controllers/tournament";
 const router = express.Router();
 
 router.get("/tournament/:id", info);

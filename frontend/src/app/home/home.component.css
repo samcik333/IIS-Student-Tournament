@@ -11,6 +11,6 @@ mat-card:hover {
 .container {
   margin-top: 1cm;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,300px)); /*this */
+  grid-template-columns:repeat(auto-fit,minmax(200px,280px)); /*this */
   gap:20px;
 }
