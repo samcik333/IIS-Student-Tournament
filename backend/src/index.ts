@@ -19,9 +19,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+var distDir = __dirname + "/dist/";
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(distDir));
 app.use(bodyParser.json());
 app.use("/", routes);
 
 app.listen(PORT, () => {
-	console.log(`app running on port ${PORT}`);
+  console.log(`app running on port ${PORT}`);
 });

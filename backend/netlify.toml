@@ -1,0 +1,5 @@
+// netlify.toml
+[build]
+command = "CI='' npm run build"
+publish = "dist/theme-customization"
+functions = "functions"
