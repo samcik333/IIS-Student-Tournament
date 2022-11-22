@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, distinct, distinctUntilChanged, lastValueFrom, Observable, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, lastValueFrom, switchMap } from 'rxjs';
 import { Tournament } from '../model/tournament';
 import { TournamentService } from '../shared/tournament.service';
 
@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
     )
     .subscribe((result) => {
       this.tournamentList = result;
-      console.log(this.tournamentList);
     })
   }
 

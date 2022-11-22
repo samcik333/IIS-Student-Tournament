@@ -1,5 +1,5 @@
 mat-card {
-  border: 1px solid lightgrey;
+  border: 3px solid #006dcc;
   max-width: 300px;
 }
 mat-card:hover {
@@ -45,4 +45,10 @@ mat-card:hover {
 .green{color: green;}
 .gray{color: gray;}
 
-
+.not{
+  font-size: 30px;
+  font-family: 'georgia';
+  font-weight: bold;
+  text-align: center;
+  color: #006dcc;
+}

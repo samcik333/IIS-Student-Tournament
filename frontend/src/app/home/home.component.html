@@ -17,16 +17,19 @@
               <mat-card-subtitle
                 [ngStyle]="{'background-color': (tournament.state === 'open') ? 'green' : (tournament.state === 'closed') ? 'red' : (tournament.state === 'waiting') ? 'gray' : ''}"
                 [style.color]="'white'"
-                [style.width]="'110px'">{{ tournament.state }}</mat-card-subtitle>
-              <img style="margin : 5px"
+                [style.width]="'110px'"
+                [style.border-radius]="'5px'"
+                [style.text-transfor]="'uppercase'"
+                [style.text-align]="'center'">{{ tournament.state }}</mat-card-subtitle>
+              <img style="margin : 5px; border: 2px solid #006dcc; border-radius: 3px;"
                 mat-card-md-image
                 src="{{ tournament.logo }}"
               />
             </mat-card-title-group>
           </mat-card-header>
-          <div [style.background-color]="'#006dcc'" [style.padding]="'3px'">
+          <div [style.background-color]="'#006dcc'" [style.padding]="'3px'" [style.border-radius]="'5px'">
             <mat-card-content [style.color]="'white'"  [style.font-weight]="'bold'">
-              <p>Date: {{ tournament.date }}</p>
+              <p>Date: {{ tournament.date | date:'short' }}</p>
               <p>Mode: xxx</p>
               <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
             </mat-card-content>
@@ -37,10 +40,12 @@
   </ng-container>
 
   <ng-template #notFound>
-    <div class="p-2 m-2 border-2 border-blue-200 text-blue-500">
-      Not found!
-    </div>
+    <div class="not">Not Found!</div>
   </ng-template>
 </body>
+
+<script>
+
+</script>
 
 </html>
