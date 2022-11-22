@@ -1,14 +1,54 @@
-.card {
-  border: 1px solid lightgrey;
+mat-card {
+  border: 3px solid #006dcc;
   max-width: 300px;
-  padding: 10px;
 }
-.card:hover {
+mat-card:hover {
   border: 1px;
   background: lightskyblue;
 }
 
-.example-header-image {
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
-  background-size: cover;
+.container {
+  margin-top: 1cm;
+  width: 100%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(100px,300px)); /*this */
+  gap:30px;
+}
+
+.search {
+  width: 25%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.wrap{
+  margin: 2%;
+  min-width: 180px;
+}
+
+.red{color: red;}
+.green{color: green;}
+.gray{color: gray;}
+
+.not{
+  font-size: 30px;
+  font-family: 'georgia';
+  font-weight: bold;
+  text-align: center;
+  color: #006dcc;
 }

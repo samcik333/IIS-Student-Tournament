@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, lastValueFrom, switchMap } from 'rxjs';
+import { Tournament } from '../model/tournament';
 import { TournamentService } from '../shared/tournament.service';
 
 @Component({
@@ -9,44 +12,34 @@ import { TournamentService } from '../shared/tournament.service';
 })
 export class HomeComponent implements OnInit {
   restTournament:TournamentService;
-  tournaments:any = [];
+  public tournamentList:Array<Tournament> = [];
+  router:Router;
 
-  constructor(restTournament:TournamentService) {
+  searchForm:FormGroup = new FormGroup({
+    search:new FormControl('')
+  })
+
+  constructor(restTournament:TournamentService, router:Router) {
     this.restTournament=restTournament;
+    this.router=router;
+    this.searchForm.get('search')?.valueChanges
+    .pipe(
+      debounceTime(100),
+      distinctUntilChanged(),
+      switchMap((result)=>this.restTournament.findByName(result)),
+    )
+    .subscribe((result) => {
+      this.tournamentList = result;
+    })
   }
 
   async ngOnInit() {
     const tournaments$ = this.restTournament.getTournaments();
-    this.tournaments = await lastValueFrom(tournaments$);
+    this.tournamentList = await lastValueFrom(tournaments$);
   }
 
+  async info(id:number){
+    this.router.navigate(["tournament", id]);
+  }
 
-
-  cards: {
-    title: string;
-    date: string;
-    mode: string;
-    teams: string;
-    state: string;
-    image: string;
-  }[] = [
-    {
-      title: 'LoL Tournament',
-      date: '28.11.2022',
-      mode: '5v5',
-      teams: '5/10',
-      state: 'Open',
-      image:
-        'https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg',
-    },
-    {
-      title: 'LoL Tournament',
-      date: '28.11.2022',
-      mode: '5v5',
-      teams: '5/10',
-      state: 'Open',
-      image:
-        'https://www.chillblast.com/learn/wp-content/uploads/2021/07/esports-player.jpg',
-    },
-  ];
 }

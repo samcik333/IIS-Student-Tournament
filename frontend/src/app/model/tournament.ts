@@ -6,4 +6,8 @@ export class Tournament{
   capacity!: number;
   description!: string;
   prize!: string;
+  logo!: string;
+  state!: string;
+  players!: number;
+  place!: string;
 };
