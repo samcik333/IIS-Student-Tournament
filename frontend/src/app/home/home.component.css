@@ -1,18 +1,18 @@
 mat-card {
-  border: 3px solid #006dcc;
-  max-width: 300px;
+  border: 2px solid #006dcc;
+  max-width: 700px;
 }
 mat-card:hover {
-  border: 1px;
+  border: 2px solid #006dcc;
   background: lightskyblue;
 }
 
 .container {
   margin-top: 1cm;
   width: 100%;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(100px,300px)); /*this */
-  gap:30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px)); /*this */
+  gap: 30px;
 }
 
 .search {
@@ -29,25 +29,31 @@ mat-card:hover {
   height: 60px;
   border-radius: 5px 5px 5px 5px;
   outline: none;
-  color: #9DBFAF;
+  color: #9dbfaf;
 }
 
-.searchTerm:focus{
-  color: #00B4CC;
+.searchTerm:focus {
+  color: #00b4cc;
 }
 
-.wrap{
+.wrap {
   margin: 2%;
   min-width: 180px;
 }
 
-.red{color: red;}
-.green{color: green;}
-.gray{color: gray;}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.gray {
+  color: gray;
+}
 
-.not{
+.not {
   font-size: 30px;
-  font-family: 'georgia';
+  font-family: "georgia";
   font-weight: bold;
   text-align: center;
   color: #006dcc;
