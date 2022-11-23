@@ -1,51 +1,69 @@
-<html>
-<head></head>
-<body>
-  <div class="wrap">
-    <form [formGroup]="searchForm" class="search">
-      <input placeholder="Search tournament" type="text" name="" formControlName="search" class="searchTerm" id="">
-    </form>
-  </div>
+<div class="wrap">
+  <form [formGroup]="searchForm" class="search">
+    <input
+      placeholder="Search tournament"
+      type="text"
+      name=""
+      formControlName="search"
+      class="searchTerm"
+      id=""
+    />
+  </form>
+</div>
 
-  <ng-container *ngIf="tournamentList && tournamentList.length;else notFound;">
-    <div class="container">
-      <mat-card *ngFor="let tournament of tournamentList">
-        <div (click)="info(tournament.id)" [style.margin]="'5px'">
-          <mat-card-header>
-            <mat-card-title-group>
-              <mat-card-title>{{ tournament.name }}</mat-card-title>
-              <mat-card-subtitle
-                [ngStyle]="{'background-color': (tournament.state === 'open') ? 'green' : (tournament.state === 'closed') ? 'red' : (tournament.state === 'waiting') ? 'gray' : ''}"
-                [style.color]="'white'"
-                [style.width]="'110px'"
-                [style.border-radius]="'5px'"
-                [style.text-transfor]="'uppercase'"
-                [style.text-align]="'center'">{{ tournament.state }}</mat-card-subtitle>
-              <img style="margin : 5px; border: 2px solid #006dcc; border-radius: 3px;"
-                mat-card-md-image
-                src="{{ tournament.logo }}"
-              />
-            </mat-card-title-group>
-          </mat-card-header>
-          <div [style.background-color]="'#006dcc'" [style.padding]="'3px'" [style.border-radius]="'5px'">
-            <mat-card-content [style.color]="'white'"  [style.font-weight]="'bold'">
-              <p>Date: {{ tournament.date | date:'short' }}</p>
-              <p>Mode: xxx</p>
-              <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
-            </mat-card-content>
-          </div>
+<ng-container *ngIf="tournamentList && tournamentList.length; else notFound">
+  <div class="container">
+    <mat-card *ngFor="let tournament of tournamentList">
+      <div (click)="info(tournament.id)" [style.margin]="'5px'">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ tournament.name }}</mat-card-title>
+            <mat-card-subtitle
+              [ngStyle]="{
+                'background-color':
+                  tournament.state === 'open'
+                    ? 'green'
+                    : tournament.state === 'closed'
+                    ? 'red'
+                    : tournament.state === 'waiting'
+                    ? 'gray'
+                    : ''
+              }"
+              [style.color]="'white'"
+              [style.width]="'110px'"
+              [style.border-radius]="'5px'"
+              [style.text-transfor]="'uppercase'"
+              [style.text-align]="'center'"
+              >{{ tournament.state }}</mat-card-subtitle
+            >
+            <img
+              style="margin: 5px; border: 2px solid #006dcc; border-radius: 3px"
+              mat-card-md-image
+              src="{{ tournament.logo }}"
+            />
+          </mat-card-title-group>
+        </mat-card-header>
+        <div
+          [style.background-color]="'#006dcc'"
+          [style.padding]="'3px'"
+          [style.border-radius]="'5px'"
+        >
+          <mat-card-content
+            [style.color]="'white'"
+            [style.font-weight]="'bold'"
+          >
+            <p>Date: {{ tournament.date | date: "short" }}</p>
+            <p>Mode: xxx</p>
+            <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
+          </mat-card-content>
         </div>
-      </mat-card>
-    </div>
-  </ng-container>
+      </div>
+    </mat-card>
+  </div>
+</ng-container>
 
-  <ng-template #notFound>
-    <div class="not">Not Found!</div>
-  </ng-template>
-</body>
+<ng-template #notFound>
+  <div class="not">Not Found!</div>
+</ng-template>
 
-<script>
-
-</script>
-
-</html>
+<script></script>

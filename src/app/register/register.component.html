@@ -6,7 +6,7 @@
   </mat-toolbar>
 </div>
 
-<form class="normal-form">
+<form [formGroup]="registerGroup">
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile
       ><div class="controles-container">
@@ -35,7 +35,12 @@
       <div class="controles-container">
         <input type="hidden" />
         <mat-form-field>
-          <input id:pwd formControlName="pwd" matInput placeholder="Password" />
+          <input
+            id:pwd
+            formControlName="password"
+            matInput
+            placeholder="Password"
+          />
         </mat-form-field>
         <mat-form-field>
           <input
