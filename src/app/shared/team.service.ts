@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Team } from '../model/team';
+import { environment } from 'src/environments/environment';
 
-const baseUrl = 'http://localhost:5005';
+const baseUrl = environment.Base_Url;
 
 @Injectable({
   providedIn: 'root',
