@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Tournament } from '../model/tournament';
 
-const endpoint = environment.Base_Url;
+const endpoint = `${environment.Base_Url}/`;
 
 @Injectable({
   providedIn: 'root',

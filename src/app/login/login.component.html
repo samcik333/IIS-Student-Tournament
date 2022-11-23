@@ -6,7 +6,7 @@
   </mat-toolbar>
 </div>
 
-<form class="normal-form">
+<form [formGroup]="loginGroup">
   <mat-grid-list cols="1" rowHeight="200px">
     <mat-grid-tile
       ><div class="controles-container">
@@ -20,7 +20,12 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <input id:pwd formControlName="pwd" matInput placeholder="Password" />
+          <input
+            id:pwd
+            formControlName="password"
+            matInput
+            placeholder="Password"
+          />
         </mat-form-field>
         <div [style.margin-top]="'3em'">
           <button class="center" mat-raised-button [style.width]="'100px'">

@@ -2,7 +2,8 @@
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
-      <a *ngIf="tournament"
+      <a
+        *ngIf="tournament"
         mat-list-item
         [routerLink]="['/tournament/', tournament.id]"
         routerLinkActive="active-list-item"
@@ -15,8 +16,8 @@
   </mat-sidenav>
 
   <!-- Content or body of your page-->
-  <mat-sidenav-content *ngIf="tournament">
-    <div>{{tournament.name}}</div>
-    <img src="{{tournament.logo}}">
+  <mat-sidenav-content style="height: 93vh" *ngIf="tournament">
+    <div>{{ tournament.name }}</div>
+    <img src="{{ tournament.logo }}" />
   </mat-sidenav-content>
 </mat-sidenav-container>
