@@ -6,7 +6,7 @@
   </mat-toolbar>
 </div>
 
-<form [formGroup]="loginGroup">
+<form [formGroup]="loginGroup" (ngSubmit)="onSubmit()">
   <mat-grid-list cols="1" rowHeight="200px">
     <mat-grid-tile
       ><div class="controles-container">
@@ -28,7 +28,7 @@
           />
         </mat-form-field>
         <div [style.margin-top]="'3em'">
-          <button class="center" mat-raised-button [style.width]="'100px'">
+          <button class="center" mat-raised-button [style.width]="'100px'" (click)="onSubmit()">
             Enter
           </button>
         </div>
