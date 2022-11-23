@@ -20,4 +20,8 @@ export class TeamService {
   create(data: any): Observable<any> {
     return this.http.post(endpoint + `teams`, data);
   }
+
+  find(id: string): Observable<Team> {
+    return this.http.get<Team>(endpoint + 'team/' + id);
+  }
 }
