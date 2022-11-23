@@ -15,4 +15,8 @@ export class TeamService {
   getTeams(): Observable<Team> {
     return this.http.get<Team>(`${baseUrl}/teams`);
   }
+
+  create(data: any): Observable<any> {
+    return this.http.post(`${baseUrl}/teams`, data);
+  }
 }
