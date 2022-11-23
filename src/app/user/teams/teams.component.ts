@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { Team } from 'src/app/model/team';
 import { TeamService } from 'src/app/shared/team.service';
 
 @Component({
@@ -10,26 +11,31 @@ import { TeamService } from 'src/app/shared/team.service';
 })
 export class TeamsComponent implements OnInit {
   teams: any = [];
+  router: Router;
 
-  team: Team = {
-    id: 1,
-    ownerId: 1,
-    name: '',
-    capacity: 0,
-    logo: '',
-    gold: 0,
-    silver: 0,
-    bronze: 0,
-    numberOfGames: 0,
-    numberOfWins: 0,
-  };
+  teamForm: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    logo: new FormControl(''),
+  });
 
-  constructor(private teamService: TeamService) {}
+  constructor(private teamService: TeamService, router: Router) {
+    this.router = router;
+  }
 
   async ngOnInit() {
     const teams$ = this.teamService.getTeams();
     this.teams = await lastValueFrom(teams$);
   }
 
-  createTeam() {}
+  createTeam() {
+    console.log(this.teamForm.value);
+
+    this.teamService.create(this.teamForm.value).subscribe((result) => {
+      console.log(result);
+    });
+  }
+
+  info(id: number) {
+    this.router.navigate(['team', id]);
+  }
 }

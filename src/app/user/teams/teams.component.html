@@ -32,14 +32,9 @@
           <div>
             <mat-form-field id:team-name appearance="fill">
               <mat-label>Team name</mat-label>
-              <input
-                matInput
-                class="form-control"
-                id="name"
-                name="name"
-                required
-                [(ngModel)]="team.name"
-              />
+              <form [formGroup]="teamForm">
+                <input matInput id="name" formControlName="name" required />
+              </form>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -59,7 +54,9 @@
                 height="24px"
               />
               <mat-label>Photo</mat-label>
-              <input ype="Photo" matInput />
+              <form [formGroup]="teamForm">
+                <input matInput type="Photo" formControlName="logo" />
+              </form>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -69,16 +66,11 @@
         </mat-grid-tile>
       </mat-grid-list>
 
-      <mat-card [routerLink]="['/team']" *ngFor="let team of teams">
+      <mat-card (click)="info(team.id)" *ngFor="let team of teams">
         <mat-card-header>
           <mat-card-title-group>
             <img mat-card-avatar src="{{ team.logo }}" />
-            <mat-card-title
-              [routerLink]="['/team']"
-              routerLinkActive="router-link-active"
-              class="label-name"
-              >{{ team.name }}</mat-card-title
-            >
+            <mat-card-title class="label-name">{{ team.name }}</mat-card-title>
           </mat-card-title-group>
           <mat-card-content class="label-capacity">
             {{ team.capacity }}

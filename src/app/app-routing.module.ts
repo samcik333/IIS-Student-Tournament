@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'user/tournaments', component: TournamentsComponent },
 
   { path: 'user', component: PlayerComponent },
-  { path: 'team', component: TeamComponent },
+  { path: 'team/:id', component: TeamComponent },
 
   { path: 'tournament/:id', component: InfoComponent },
   { path: 'tournament/players', component: PlayersComponent },
