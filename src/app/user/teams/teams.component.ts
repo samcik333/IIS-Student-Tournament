@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { TeamService } from 'src/app/shared/team.service';
@@ -28,14 +28,20 @@ export class TeamsComponent implements OnInit {
   }
 
   createTeam() {
-    console.log(this.teamForm.value);
-
-    this.teamService.create(this.teamForm.value).subscribe((result) => {
-      console.log(result);
+    this.teamService.create(this.teamForm.value).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
     });
   }
 
-  info(id: number) {
+  async info(id: number) {
     this.router.navigate(['team', id]);
+  }
+
+  deleteTeam(name: string) {
+    this.teamService.delete(name).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
+    });
   }
 }

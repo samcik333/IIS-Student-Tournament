@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Team } from '../model/team';
 import { environment } from 'src/environments/environment';
 
-const endpoint = `${environment.Base_Url}/`;
+const endpoint = `http://localhost:5005/`;
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +18,17 @@ export class TeamService {
   }
 
   create(data: any): Observable<any> {
-    return this.http.post(endpoint + `teams`, data);
+    return this.http.post(endpoint + `teams`, data, { withCredentials: true });
   }
 
   find(id: string): Observable<Team> {
     return this.http.get<Team>(endpoint + 'team/' + id);
+  }
+
+  delete(name: string): Observable<any> {
+    return this.http.delete(endpoint + 'teams', {
+      body: { name },
+      withCredentials: true,
+    });
   }
 }

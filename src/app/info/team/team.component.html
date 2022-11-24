@@ -1,7 +1,14 @@
-<mat-grid-list cols="5" rowHeight="200" style="margin-bottom: 5rem">
+<mat-grid-list
+  cols="5"
+  rowHeight="200"
+  style="margin-bottom: 5rem"
+  *ngIf="team"
+>
   <mat-grid-tile>
     <div>
-      <p class="username"><b>Team name</b></p>
+      <p class="username">
+        <b>{{ team.name }}</b>
+      </p>
       <img
         class="center"
         [style.width]="'125px'"
