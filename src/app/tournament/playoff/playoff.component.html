@@ -1,16 +1,10 @@
 <mat-sidenav-container>
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="'/tournament/info'"> Info </a>
-      <a mat-list-item [routerLink]="'/tournament/players'"> Players </a>
-      <a
-        mat-list-item
-        [routerLink]="'/tournament/playoff'"
-        routerLinkActive="active-list-item"
-      >
-        Playoff
-      </a>
+    <mat-nav-list *ngIf="tournament">
+      <a mat-list-item [routerLink]="['/tournament/', tournament.id]"> Info </a>
+      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'players']"> Players </a>
+      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'playoff']" routerLinkActive="active-list-item"> Playoff </a>
     </mat-nav-list>
   </mat-sidenav>
 

@@ -20,8 +20,8 @@ const routes: Routes = [
   { path: 'team/:id', component: TeamComponent },
 
   { path: 'tournament/:id', component: InfoComponent },
-  { path: 'tournament/players', component: PlayersComponent },
-  { path: 'tournament/playoff', component: PlayoffComponent },
+  { path: 'tournament/:id/players', component: PlayersComponent },
+  { path: 'tournament/:id/playoff', component: PlayoffComponent },
 ];
 
 @NgModule({

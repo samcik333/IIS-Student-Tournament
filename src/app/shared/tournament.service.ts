@@ -24,4 +24,8 @@ export class TournamentService {
   findByName(name: string): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(`${endpoint}?name=${name}`);
   }
+
+  getParticipants(id: string): Observable<any[]>{
+    return this.http.get<any[]>(`${endpoint}participants?id=${id}`);
+  }
 }

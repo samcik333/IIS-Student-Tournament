@@ -18,6 +18,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdnTournamentTreeModule } from '@adonsio/adn-tournament';
+import { NgTournamentTreeModule } from 'ng-tournament-tree/public-api';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AdnTournamentTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent],
