@@ -1,0 +1,38 @@
+#tab {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 5%;
+  width: 60%;
+}
+
+#tab td, #tab th {
+  border: 3px solid #006dcc;
+  border-radius: 3px;
+  padding: 8px;
+}
+
+img{
+  height: 2cm;
+  width: auto;
+}
+
+#tab table {
+  border: 3px solid #006dcc;
+  border-radius: 3px;
+}
+
+#tab td{
+  text-align: center;
+  align-content: center;
+}
+
+#tab tr:nth-child(even){background-color: #f2f2f2;}
+
+#tab tr:hover {background-color: #ddd;}
+
+#tab th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #006dcc;
+  color: white;
+}

@@ -1,7 +1,7 @@
-<mat-sidenav-container>
+<mat-sidenav-container *ngIf="tournament">
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
-    <mat-nav-list *ngIf="tournament">
+    <mat-nav-list>
       <a mat-list-item [routerLink]="['/tournament/', tournament.id]"> Info </a>
       <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'players']"  routerLinkActive="active-list-item"> Players </a>
       <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'playoff']"> Playoff </a>
@@ -10,8 +10,22 @@
 
   <!-- Content or body of your page-->
   <mat-sidenav-content>
-    <div style="height: 90vh">Players component</div>
+    <div *ngIf="teams && teams.length > 0">
+      <table id="tab">
+        <thead>
+          <th></th>
+          <th>Logo</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams; let i = index">
+            <td [style.width]="'1cm'">{{i+1}}</td>
+            <td [style.width]="'4cm'"><img src="{{ team.logo }}"></td>
+            <td>{{team.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="users && users.length > 0">Users</div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<p>Players component</p>
