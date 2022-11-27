@@ -1,42 +1,26 @@
 <html>
-  <head></head>
-  <body>
-    <mat-toolbar color="primary">
-      <mat-toolbar-row>
-        <a [routerLink]="''" [style.color]="'white'">SJSquad</a>
-        <div
-          [routerLink]="'/user/profile'"
-          class="right"
-          [style.cursor]="'pointer'"
-        >
-          Username
-        </div>
-        <div
-          class="right"
-          [style.cursor]="'pointer'"
-          [style.background-color]="'#d90404'"
-          [style.right]="'129px'"
-        >
-          Log out
-        </div>
-        <div
-          (click)="openRegisterDialog()"
-          class="right"
-          [style.cursor]="'pointer'"
-          [style.right]="'254px'"
-        >
-          Register
-        </div>
-        <div
-          (click)="openLoginDialog()"
-          class="right"
-          [style.cursor]="'pointer'"
-          [style.right]="'379px'"
-        >
-          Log in
-        </div>
-      </mat-toolbar-row>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
-  </body>
+
+<head></head>
+
+<body>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a [routerLink]="''" [style.color]="'white'">SJSquad</a>
+      <div *ngIf="(this.userInfo?.id !== 0)" [routerLink]="'/user/profile'" class="right" [style.cursor]="'pointer'" [style.right]="'129px'">
+        <span>{{userInfo?.username}}</span>
+      </div>
+      <div *ngIf="(this.userInfo?.id !== 0)" class="right" [style.cursor]="'pointer'" [style.background-color]="'#d90404'" (click)="logOut()">
+        Log out
+      </div>
+      <div *ngIf="!(this.userInfo?.id !== 0)&& userIsLoggedIn" (click)="openRegisterDialog()" class="right" [style.cursor]="'pointer'">
+        Register
+      </div>
+      <div *ngIf="!(this.userInfo?.id !== 0)&& userIsLoggedIn" (click)="openLoginDialog()" class="right" [style.cursor]="'pointer'" [style.right]="'129px'">
+        Log in
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</body>
+
 </html>

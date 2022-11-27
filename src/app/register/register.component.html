@@ -7,27 +7,32 @@
 </div>
 
 <form [formGroup]="registerGroup">
+  <div *ngIf="isUserExist" [style.color]="'red'">
+    <span>User already exist</span>
+  </div>
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile
       ><div class="controles-container">
         <input type="hidden" />
-        <mat-form-field>
+        <mat-form-field >
           <input
-            id:username
-            formControlName="username"
+            id:name
+            formControlName="name"
             matInput
-            placeholder="Username"
+            placeholder="Name"
+            required
           />
         </mat-form-field>
         <mat-form-field>
-          <input id:name formControlName="name" matInput placeholder="Name" />
+          <input id:username formControlName="username" matInput placeholder="Username" required/>
         </mat-form-field>
         <mat-form-field>
           <input
-            id:surname
-            formControlName="surname"
+            id:email
+            formControlName="email"
             matInput
-            placeholder="Surname"
+            placeholder="Email"
+            required
           />
         </mat-form-field></div
     ></mat-grid-tile>
@@ -36,22 +41,25 @@
         <input type="hidden" />
         <mat-form-field>
           <input
-            id:pwd
-            formControlName="password"
+            id:lastname
+            formControlName="lastname"
             matInput
-            placeholder="Password"
+            placeholder="Lastname"
+            required
           />
         </mat-form-field>
         <mat-form-field>
           <input
-            id:email
-            formControlName="email"
+            id:pwd
+            formControlName="password"
             matInput
-            placeholder="Email"
+            placeholder="Password"
+            type="password"
+            required
           />
         </mat-form-field>
         <div [style.margin-top]="'4em'">
-          <button class="center" mat-raised-button [style.width]="'100px'">
+          <button class="center" mat-raised-button [style.width]="'100px'" (click)="onSubmit()">
             Enter
           </button>
         </div>
