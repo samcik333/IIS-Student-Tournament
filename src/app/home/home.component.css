@@ -29,7 +29,7 @@ mat-card:hover {
   height: 60px;
   border-radius: 5px 5px 5px 5px;
   outline: none;
-  color: #9dbfaf;
+  color: #006dcc;
 }
 
 .searchTerm:focus {

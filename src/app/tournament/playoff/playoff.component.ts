@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Tournament } from 'src/app/model/tournament';
 import { TournamentService } from 'src/app/shared/tournament.service';
@@ -9,7 +10,6 @@ import { TournamentService } from 'src/app/shared/tournament.service';
   styleUrls: ['./playoff.component.css']
 })
 export class PlayoffComponent implements OnInit {
-
   myParam!: string;
   tournament!: Tournament;
   constructor(private route: ActivatedRoute, private routerTournament:TournamentService) { }

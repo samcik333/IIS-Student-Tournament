@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdnTournamentTreeModule } from '@adonsio/adn-tournament';
 import { NgTournamentTreeModule } from 'ng-tournament-tree/public-api';
+import { Ver2Component } from './tournament_bracket/ver2/ver2.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { NgTournamentTreeModule } from 'ng-tournament-tree/public-api';
     LoginComponent,
     PlayerComponent,
     TeamComponent,
+    Ver2Component,
   ],
   imports: [
     BrowserModule,

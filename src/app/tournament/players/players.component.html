@@ -26,6 +26,21 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="users && users.length > 0">Users</div>
+    <div *ngIf="users && users.length > 0">
+      <table id="tab">
+        <thead>
+          <th></th>
+          <th>Photo</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td [style.width]="'1cm'">{{i+1}}</td>
+            <td [style.width]="'4cm'"><img src="{{ user.photo }}"></td>
+            <td>{{user.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
