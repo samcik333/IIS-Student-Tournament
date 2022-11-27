@@ -29,12 +29,10 @@ export class InfoComponent implements OnInit {
 
   join(id:string){
     if(this.tournament.players == 1){
-      id = localStorage.getItem('') || '';
       console.log("Join user with id: " + id + " to the current tournament");
     }
     console.log("Join team with id: " + id + " to the current tournament");
   }
-
 
 
 
