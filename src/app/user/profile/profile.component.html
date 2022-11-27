@@ -1,158 +1,171 @@
-<mat-sidenav-container>
-  <!-- This is your sidenav -->
-  <mat-sidenav mode="side" opened>
-    <mat-nav-list>
-      <a
-        mat-list-item
-        [routerLink]="'/user/profile'"
-        routerLinkActive="active-list-item"
-      >
-        Profile
-      </a>
-      <a mat-list-item [routerLink]="'/user/teams'"> Teams </a>
-      <a mat-list-item [routerLink]="'/user/tournaments'"> Tournamets </a>
-    </mat-nav-list>
-  </mat-sidenav>
+<form [formGroup]="saveGroup">
+  <mat-sidenav-container>
+    <!-- This is your sidenav -->
+    <mat-sidenav mode="side" opened>
+      <mat-nav-list>
+        <a
+          mat-list-item
+          [routerLink]="'/user/profile'"
+          routerLinkActive="active-list-item"
+        >
+          Profile
+        </a>
+        <a mat-list-item [routerLink]="'/user/teams'"> Teams </a>
+        <a mat-list-item [routerLink]="'/user/tournaments'"> Tournamets </a>
+      </mat-nav-list>
+    </mat-sidenav>
 
-  <!-- Content or body of your page-->
-  <mat-sidenav-content>
-    <div style="height: 93vh">
-      <mat-grid-list cols="5" rowHeight="200">
-        <mat-grid-tile>
-          <div class="profile_photo">
-            <img
-              [style.width]="'125px'"
-              [style.height]="'125px'"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-            />
-          </div>
-        </mat-grid-tile>
-
-        <mat-grid-tile>
-          <p
-            class="center"
-            style="
-              position: absolute;
-              top: 56px;
-              font-size: large;
-              text-decoration: underline;
-            "
-          >
-            <b>Tournament trophies</b>
-          </p>
-          <div class="center" style="position: absolute; top: 90px">
-            <img
-              [style.width]="'40px'"
-              [style.height]="'40px'"
-              src="https://us.123rf.com/450wm/barks/barks1712/barks171200548/91810358-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-oro-1er-lugar-.jpg?ver=6"
-            />
-            <b style="font-size: 20px">2</b>
-            <img
-              [style.margin]="'0 0 0 25px'"
-              [style.width]="'40px'"
-              [style.height]="'40px'"
-              src="https://us.123rf.com/450wm/barks/barks1712/barks171200558/91752771-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-plata-2do-lugar-.jpg"
-            />
-            <b style="font-size: 20px">4</b>
-            <img
-              [style.margin]="'0 0 0 25px'"
-              [style.width]="'40px'"
-              [style.height]="'40px'"
-              src="https://us.123rf.com/450wm/barks/barks1712/barks171200566/91807719-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-bronce-3er-lugar-.jpg?ver=6"
-            />
-            <b style="font-size: 20px">8</b>
-          </div>
-
-          <div
-            class="center"
-            style="position: absolute; top: 150px; font-size: 17px"
-          >
-            <b>Number of wins: </b>16 <br />
-            <b>Number of games: </b>32
-          </div>
-        </mat-grid-tile>
-
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-
-        <mat-grid-tile>
-          <div>
-            <mat-form-field id:profile-photo appearance="fill">
+    <!-- Content or body of your page-->
+    <mat-sidenav-content>
+      <div style="height: 93vh">
+        <mat-grid-list cols="5" rowHeight="200">
+          <mat-grid-tile>
+            <div class="profile_photo">
               <img
-                matPrefix
-                class="input-icon"
-                src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
-                width="24px"
-                height="24px"
+                [style.width]="'125px'"
+                [style.height]="'125px'"
+                src="{{user?.photo}}"
               />
-              <mat-label>Photo</mat-label>
-              <input ype="Photo" matInput />
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+            </div>
+          </mat-grid-tile>
 
-        <mat-grid-tile>
-          <div>
-            <mat-form-field id:username appearance="fill">
-              <mat-label>Username</mat-label>
-              <input matInput />
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+          <mat-grid-tile>
+            <p
+              class="center"
+              style="
+                position: absolute;
+                top: 56px;
+                font-size: large;
+                text-decoration: underline;
+              "
+            >
+              <b>Tournament trophies</b>
+            </p>
+            <div class="center" style="position: absolute; top: 90px">
+              <img
+                [style.width]="'40px'"
+                [style.height]="'40px'"
+                src="https://us.123rf.com/450wm/barks/barks1712/barks171200548/91810358-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-oro-1er-lugar-.jpg?ver=6"
+              />
+              <b style="font-size: 20px"><span>
+                {{this.user?.gold}}
+              </span></b>
+              <img
+                [style.margin]="'0 0 0 25px'"
+                [style.width]="'40px'"
+                [style.height]="'40px'"
+                src="https://us.123rf.com/450wm/barks/barks1712/barks171200558/91752771-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-plata-2do-lugar-.jpg"
+              />
+              <b style="font-size: 20px"><span>
+                {{this.user?.silver}}
+              </span></b>
+              <img
+                [style.margin]="'0 0 0 25px'"
+                [style.width]="'40px'"
+                [style.height]="'40px'"
+                src="https://us.123rf.com/450wm/barks/barks1712/barks171200566/91807719-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-bronce-3er-lugar-.jpg?ver=6"
+              />
+              <b style="font-size: 20px"><span>
+                {{this.user?.bronze}}
+              </span></b>
+            </div>
 
-        <mat-grid-tile
-          ><div>
-            <mat-form-field id:pwd appearance="fill">
-              <mat-label>Password</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" />
-              <button
-                mat-icon-button
-                matSuffix
-                (click)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide"
-              >
-                <mat-icon>
-                  {{ hide ? "visibility_off" : "visibility" }}
-                </mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+            <div
+              class="center"
+              style="position: absolute; top: 150px; font-size: 17px"
+            >
+              <b>Number of wins: </b><span>
+                {{this.user?.numberOfWins}}
+              </span> <br />
+              <b>Number of games: </b><span>
+                {{this.user?.numberOfGames}}
+              </span>
+            </div>
+          </mat-grid-tile>
 
-        <mat-grid-tile>
-          <div>
-            <mat-form-field id:email appearance="fill">
-              <mat-label>E-mail</mat-label>
-              <input matInput placeholder="example@gmail.com" />
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
 
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <mat-form-field id:profile-photo appearance="fill"  [floatLabel]="'always'">
+                <img
+                  matPrefix
+                  class="input-icon"
+                  src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+                  width="24px"
+                  height="24px"
+                />
+                <mat-label>Photo</mat-label>
+                <input id:photo formControlName="photo" matInput placeholder="photo URL"/>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
 
-        <mat-grid-tile>
-          <div>
-            <mat-form-field id:name appearance="fill">
-              <mat-label>Name</mat-label>
-              <input matInput />
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <mat-form-field id:username appearance="fill"  [floatLabel]="'always'">
+                <mat-label>Username</mat-label>
+                <input id:username formControlName="username" matInput placeholder="{{user?.username}}"/>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
 
-        <mat-grid-tile>
-          <div>
-            <mat-form-field id:surname appearance="fill">
-              <mat-label>Surname</mat-label>
-              <input matInput />
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+          <mat-grid-tile
+            ><div>
+              <mat-form-field id:pwd appearance="fill"  [floatLabel]="'always'">
+                <mat-label>Password</mat-label>
+                <input id:pwd matInput [type]="hide ? 'password' : 'text'" />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>
+                    {{ hide ? "visibility_off" : "visibility" }}
+                  </mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
 
-        <mat-grid-tile> <button mat-raised-button>Save</button></mat-grid-tile>
-      </mat-grid-list>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          <mat-grid-tile>
+            <div>
+              <mat-form-field id:email appearance="fill"  [floatLabel]="'always'">
+                <mat-label>E-mail</mat-label>
+                <input id:email formControlName="email" matInput placeholder="{{user?.email}}" />
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <mat-form-field id:name appearance="fill" [floatLabel]="'always'">
+                <mat-label>Name</mat-label>
+                <input id:name formControlName="name" matInput placeholder="{{user?.name}}"/>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <mat-form-field id:surname appearance="fill"  [floatLabel]="'always'">
+                <mat-label>Surname</mat-label>
+                <input id:lastname formControlName="lastname" matInput placeholder="{{user?.lastname}}"/>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile> <button mat-raised-button (click)="onSubmit()">Save</button ></mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</form>
+
