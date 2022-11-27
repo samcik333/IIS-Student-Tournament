@@ -6,13 +6,13 @@
   </mat-toolbar>
 </div>
 
-<form [formGroup]="loginGroup" >
+<form [formGroup]="loginGroup">
   <div *ngIf="invalidCredentials" [style.color]="'red'">
     <span>Invalid Email or Password</span>
   </div>
   <mat-grid-list cols="1" rowHeight="200px">
-    <mat-grid-tile
-      ><div class="controles-container">
+    <mat-grid-tile>
+      <div class="controles-container">
         <input type="hidden" />
         <mat-form-field>
           <input

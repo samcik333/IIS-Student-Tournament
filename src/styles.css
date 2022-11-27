@@ -25,7 +25,7 @@
 }
 
 .active-list-item {
-  background-color: #22afff !important; /* Note: You could also use a custom theme */
+  background-color: #22afff !important;
 }
 
 .mat-raised-button {
@@ -37,6 +37,11 @@
 
 .profile_photo {
   margin-top: 3rem;
+}
+
+mat-sidenav {
+  min-width: 125px;
+  width: 125px;
 }
 
 a {

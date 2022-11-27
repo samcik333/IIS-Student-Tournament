@@ -9,6 +9,8 @@ import { PlayersComponent } from './tournament/players/players.component';
 import { PlayoffComponent } from './tournament/playoff/playoff.component';
 import { PlayerComponent } from './info/player/player.component';
 import { TeamComponent } from './info/team/team.component';
+import { UserManagerComponent } from './admin/user-manager/user-manager.component';
+import { TournamentManagerComponent } from './admin/tournament-manager/tournament-manager.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +24,9 @@ const routes: Routes = [
   { path: 'tournament/:id', component: InfoComponent },
   { path: 'tournament/:id/players', component: PlayersComponent },
   { path: 'tournament/:id/playoff', component: PlayoffComponent },
+
+  { path: 'admin/userManager', component: UserManagerComponent },
+  { path: 'admin/teamManager', component: TournamentManagerComponent },
 ];
 
 @NgModule({
