@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
-import {switchMap} from "rxjs";
+import {lastValueFrom, switchMap} from "rxjs";
 import {User} from "src/app/model/user";
 import {TournamentService} from "src/app/shared/tournament.service";
 
@@ -10,6 +10,7 @@ import {TournamentService} from "src/app/shared/tournament.service";
 	styleUrls: ["./tournaments.component.css"],
 })
 export class TournamentsComponent implements OnInit {
+	tournaments: any = [];
 	constructor(private tournamentService: TournamentService) {}
 	createGroup = new FormGroup({
 		name: new FormControl(),
@@ -21,15 +22,19 @@ export class TournamentsComponent implements OnInit {
 		description: new FormControl(),
 	});
 
-	async ngOnInit() {}
+	async ngOnInit() {
+		const tournaments$ = this.tournamentService.getTournamentsByOwner();
+		this.tournaments = await lastValueFrom(tournaments$);
+	}
 
 	onSubmit(): void {
-		let authFlow = this.tournamentService
-			.create(this.createGroup.value)
-			.pipe(switchMap(() => this.tournamentService.getTournaments()));
-
-		authFlow.subscribe({
-			next: () => {},
+		let tournamentRes = this.tournamentService.create(
+			this.createGroup.value
+		);
+		tournamentRes.subscribe({
+			next: () => {
+				this.ngOnInit();
+			},
 			error: (error) => {},
 		});
 	}

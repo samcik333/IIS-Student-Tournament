@@ -15,7 +15,9 @@ export class TeamService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(endpoint + `teams`, { withCredentials: true });
+    return this.http.get<Team[]>(endpoint + `teams`, {
+      withCredentials: true,
+    });
   }
 
   getOwnedTeams(): Observable<Team[]> {
@@ -52,7 +54,9 @@ export class TeamService {
   }
 
   create(data: any): Observable<any> {
-    return this.http.post(endpoint + `teams`, data, { withCredentials: true });
+    return this.http.post(endpoint + `teams`, data, {
+      withCredentials: true,
+    });
   }
 
   findTeam(id: string): Observable<Team> {
