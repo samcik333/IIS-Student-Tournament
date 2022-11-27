@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { Team } from 'src/app/model/team';
 import { TeamService } from 'src/app/shared/team.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { TeamService } from 'src/app/shared/team.service';
   styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent implements OnInit {
-  teams: any = [];
+  teamList: Array<Team> = [];
   router: Router;
 
   teamForm: FormGroup = new FormGroup({
@@ -24,7 +25,7 @@ export class TeamsComponent implements OnInit {
 
   async ngOnInit() {
     const teams$ = this.teamService.getTeams();
-    this.teams = await lastValueFrom(teams$);
+    this.teamList = await lastValueFrom(teams$);
   }
 
   createTeam() {

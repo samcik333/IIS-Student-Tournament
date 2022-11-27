@@ -72,19 +72,22 @@
         </mat-grid-tile>
       </mat-grid-list>
 
-      <mat-card *ngFor="let team of teams" [style.margin]="'0 0 4px 3rem'">
+      <mat-card
+        *ngFor="let team of teamList"
+        [style.cursor]="'pointer'"
+        [style.margin]="'0 0 4px 3rem'"
+      >
         <mat-card-content (click)="info(team.id)">
           <mat-card-header>
             <mat-card-title-group>
               <img mat-card-avatar src="{{ team.logo }}" />
-              <mat-card-title class="label-name">{{
-                team.name
-              }}</mat-card-title>
+              <mat-card-title class="label-name">
+                {{ team.name }}
+              </mat-card-title>
             </mat-card-title-group>
             <mat-card-content class="label-capacity">
               {{ team.capacity }}
             </mat-card-content>
-            <mat-card-actions> </mat-card-actions>
           </mat-card-header>
         </mat-card-content>
         <button mat-button (click)="deleteTeam(team.name)">-</button>

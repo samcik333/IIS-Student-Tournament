@@ -1,12 +1,14 @@
-<mat-grid-list cols="5" rowHeight="200">
+<mat-grid-list cols="5" rowHeight="200" *ngIf="user">
   <mat-grid-tile>
     <div>
-      <p class="username"><b>Username</b></p>
+      <p class="username">
+        <b>{{ user.username }}</b>
+      </p>
       <img
         class="center"
         [style.width]="'125px'"
         [style.height]="'125px'"
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        src="{{ user.photo }}"
       />
     </div>
   </mat-grid-tile>
@@ -29,26 +31,26 @@
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200548/91810358-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-oro-1er-lugar-.jpg?ver=6"
       />
-      <b style="font-size: 20px">2</b>
+      <b style="font-size: 20px">{{ user.gold }}</b>
       <img
         [style.margin]="'0 0 0 25px'"
         [style.width]="'40px'"
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200558/91752771-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-plata-2do-lugar-.jpg"
       />
-      <b style="font-size: 20px">4</b>
+      <b style="font-size: 20px">{{ user.silver }}</b>
       <img
         [style.margin]="'0 0 0 25px'"
         [style.width]="'40px'"
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200566/91807719-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-bronce-3er-lugar-.jpg?ver=6"
       />
-      <b style="font-size: 20px">8</b>
+      <b style="font-size: 20px">{{ user.bronze }}</b>
     </div>
 
     <div class="center" style="position: absolute; top: 150px; font-size: 17px">
-      <b>Number of wins: </b>16 <br />
-      <b>Number of games: </b>32
+      <b>Number of wins: </b>{{ user.numberOfWins }} <br />
+      <b>Number of games: </b>{{ user.numberOfGames }}
     </div>
   </mat-grid-tile>
 </mat-grid-list>

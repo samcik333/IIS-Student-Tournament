@@ -13,7 +13,7 @@
         class="center"
         [style.width]="'125px'"
         [style.height]="'125px'"
-        src="https://www.pngkey.com/png/detail/66-661551_white-blank-shield-logo-school-logo-template-free.png"
+        src="{{ team.logo }}"
       />
     </div>
   </mat-grid-tile>
@@ -36,40 +36,107 @@
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200548/91810358-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-oro-1er-lugar-.jpg?ver=6"
       />
-      <b style="font-size: 20px">2</b>
+      <b style="font-size: 20px">{{ team.gold }}</b>
       <img
         [style.margin]="'0 0 0 25px'"
         [style.width]="'40px'"
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200558/91752771-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-plata-2do-lugar-.jpg"
       />
-      <b style="font-size: 20px">4</b>
+      <b style="font-size: 20px">{{ team.silver }}</b>
       <img
         [style.margin]="'0 0 0 25px'"
         [style.width]="'40px'"
         [style.height]="'40px'"
         src="https://us.123rf.com/450wm/barks/barks1712/barks171200566/91807719-ilustraci%C3%B3n-del-icono-de-la-taza-del-trofeo-bronce-3er-lugar-.jpg?ver=6"
       />
-      <b style="font-size: 20px">8</b>
+      <b style="font-size: 20px">{{ team.bronze }}</b>
     </div>
 
     <div class="center" style="position: absolute; top: 150px; font-size: 17px">
-      <b>Number of wins: </b>16 <br />
-      <b>Number of games: </b>32
+      <b>Number of wins: </b>{{ team.numberOfWins }} <br />
+      <b>Number of games: </b>{{ team.numberOfGames }}
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div style="position: absolute; left: 80px; top: 60px" class="center">
+      <mat-form-field id:team-name appearance="fill">
+        <mat-label>Team name</mat-label>
+        <form [formGroup]="teamForm">
+          <input matInput id="name" formControlName="name" />
+        </form>
+      </mat-form-field>
+
+      <mat-form-field id:team-photo appearance="fill">
+        <img
+          matPrefix
+          class="input-icon"
+          src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Photo_Add-RoundedBlack-512.png"
+          width="24px"
+          height="24px"
+        />
+        <mat-label>Photo</mat-label>
+        <form [formGroup]="teamForm">
+          <input matInput type="Photo" formControlName="logo" />
+        </form>
+      </mat-form-field>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div style="position: absolute; left: 60px; top: 150px">
+      <button mat-raised-button (click)="updateTeam()">Change</button>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile></mat-grid-tile>
+
+  <mat-grid-tile>
+    <div style="position: absolute; left: 60px">
+      <p class="center" style="font-size: large">
+        <b>Add player</b>
+      </p>
+      <mat-form-field id:add-player appearance="fill">
+        <mat-label>Player username</mat-label>
+        <form [formGroup]="userForm">
+          <input matInput id="username" formControlName="username" />
+        </form>
+      </mat-form-field>
+    </div>
+
+    <div style="position: absolute; left: 60px; top: 150px">
+      <button mat-raised-button (click)="addPlayer()">Add</button>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-card>
-  <mat-card-header>
+<mat-card
+  *ngFor="let player of playerList"
+  [style.cursor]="'pointer'"
+  [style.margin]="'0 0 4px 4rem'"
+>
+  <mat-card-header (click)="userInfo(player.id)">
     <mat-card-title-group>
       <img
         mat-card-avatar
         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
       />
-      <mat-card-title class="label-name">Kentan</mat-card-title>
-      <mat-card-content class="label-capacity">5/20</mat-card-content>
-      <mat-card-actions><button mat-button>-</button></mat-card-actions>
+      <mat-card-title class="label-name">{{ player.username }}</mat-card-title>
     </mat-card-title-group>
   </mat-card-header>
+  <button
+    mat-button
+    *ngIf="!(this.owner == player.username)"
+    (click)="deletePlayer(player.username)"
+  >
+    -
+  </button>
+  <div
+    class="label-owner"
+    (click)="userInfo(player.id)"
+    *ngIf="this.owner == player.username"
+  >
+    <b>OWNER</b>
+  </div>
 </mat-card>

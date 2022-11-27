@@ -3,7 +3,7 @@
   background-color: red;
   color: white;
   height: 35px;
-  top: 20px;
+  top: 27px;
   left: 575px;
   border-radius: 2em;
 }
@@ -11,13 +11,13 @@
 .label-name {
   position: absolute;
   left: 100px;
-  top: 22px;
+  top: 28px;
 }
 
 .label-capacity {
   position: absolute;
   left: 500px;
-  top: 20px;
+  top: 29px;
   border-radius: 2em;
   padding: 5px;
   background-color: lightgrey;
