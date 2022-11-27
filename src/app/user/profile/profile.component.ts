@@ -62,8 +62,11 @@ export class ProfileComponent implements OnInit {
 		authFlow.subscribe({
 			next: (user: User) => {
 				this.loginService.saveUserToLocalStorage(user);
+				this.ngOnInit();
 			},
-			error: (error) => {},
+			error: (error) => {
+				console.log(error);
+			},
 		});
 	}
 	hide = true;

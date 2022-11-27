@@ -1,4 +1,4 @@
-import {HttpHeaderResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpHeaderResponse} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
 				this.loginService.saveUserToLocalStorage(user);
 				this.dialog.closeAll();
 			},
-			error: (error) => {
+			error: (error: HttpErrorResponse) => {
+				//TODO errors
 				this.invalidCredentials = true;
 				setTimeout(() => {
 					this.invalidCredentials = false;
