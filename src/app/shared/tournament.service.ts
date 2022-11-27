@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Tournament } from '../model/tournament';
 
-const endpoint = `${environment.Base_Url}/`;
+//const endpoint = `${environment.Base_Url}/`;
+const endpoint = 'http://localhost:5005/'
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +24,9 @@ export class TournamentService {
 
   findByName(name: string): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(`${endpoint}?name=${name}`);
+  }
+
+  getParticipants(id: string): Observable<any[]>{
+    return this.http.get<any[]>(`${endpoint}participants?id=${id}`);
   }
 }

@@ -1,23 +1,72 @@
-<mat-sidenav-container>
+<mat-sidenav-container  *ngIf="tournament">
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
       <a
-        *ngIf="tournament"
         mat-list-item
         [routerLink]="['/tournament/', tournament.id]"
         routerLinkActive="active-list-item"
       >
         Info
       </a>
-      <a mat-list-item [routerLink]="'/tournament/players'"> Players </a>
-      <a mat-list-item [routerLink]="'/tournament/playoff'"> Playoff </a>
+      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'players']"> Players </a>
+      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'playoff']"> Playoff </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <!-- Content or body of your page-->
   <mat-sidenav-content style="height: 93vh" *ngIf="tournament">
-    <div>{{ tournament.name }}</div>
-    <img src="{{ tournament.logo }}" />
+    <div id="container">
+      <div class="product-details">
+
+      <h1>{{tournament.name}}</h1>
+      <span class="hint">
+        <i [ngStyle]="{
+          'background-color':
+            tournament.state === 'open'
+              ? 'green'
+              : tournament.state === 'closed'
+              ? 'red'
+              : tournament.state === 'waiting'
+              ? 'gray'
+              : ''
+        }"
+        [style.color]="'white'"
+        [style.width]="'150px'"
+        [style.border-radius]="'5px'"
+        [style.text-transfor]="'uppercase'"
+        [style.text-align]="'center'"
+        >{{ tournament.state }}</i>
+      </span>
+
+          <p class="information"></p>
+
+
+
+    <div class="control">
+
+    </div>
+
+    </div>
+
+    <div class="product-image">
+
+      <img src="{{ tournament.logo }}" alt="">
+
+
+    <div class="info">
+      <h2> Information</h2>
+      <ul>
+        <li><strong>Place : </strong>{{tournament.place}}</li>
+        <li><strong>Date : </strong>{{ tournament.date | date: "short" }}</li>
+        <li><strong>Capacity : </strong>{{tournament.capacity}}</li>
+        <li><strong>Players: </strong>{{tournament.players}}</li>
+        <li><strong>Prize: </strong>{{tournament.prize}}</li>
+
+      </ul>
+    </div>
+    </div>
+
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
