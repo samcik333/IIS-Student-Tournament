@@ -13,7 +13,10 @@
 
 <ng-container *ngIf="tournamentList && tournamentList.length; else notFound">
   <div class="container">
-    <mat-card *ngFor="let tournament of tournamentList">
+    <mat-card
+      *ngFor="let tournament of tournamentList"
+      [style.cursor]="'pointer'"
+    >
       <div (click)="info(tournament.id)" [style.margin]="'5px'">
         <mat-card-header>
           <mat-card-title-group>

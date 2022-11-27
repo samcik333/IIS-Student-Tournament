@@ -11,7 +11,7 @@
   color: white;
   height: 35px;
   top: 20px;
-  left: 575px;
+  left: 400px;
   border-radius: 2em;
 }
 
@@ -21,11 +21,18 @@
   top: 22px;
 }
 
-.label-capacity {
+.label-owner {
   position: absolute;
-  left: 500px;
-  top: 20px;
-  border: 2px solid lightgrey;
-  border-radius: 2em;
-  padding: 5px;
+  top: 25px;
+  left: 400px;
+}
+
+mat-card {
+  border: 2px solid #006dcc;
+  max-width: 500px;
+  margin: 5px;
+}
+mat-card:hover {
+  border: 2px solid #006dcc;
+  background: lightskyblue;
 }
