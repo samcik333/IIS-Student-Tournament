@@ -19,7 +19,7 @@
     <div id="container">
       <div class="product-details">
 
-      <h1>{{tournament.name}}</h1>
+      <h1>{{tournament.name}}</h1><br>
       <span class="hint">
         <i [ngStyle]="{
           'background-color':
@@ -44,11 +44,19 @@
 
 
     <div class="control">
-      <button class="btn">
-        <span *ngIf="tournament.players != 1" class="select"><select name="mods" #version (click)="join(version.value)">
-          <option [value]="1">My team</option></select></span>
-        <span class="join">Join now</span>
-      </button>
+      <span *ngIf="tournament.players != 1" class="select">
+        <select name="mods" #version [disabled]="tournament.state != 'open'">
+          <option [value]="1">My team</option>
+        </select>
+        <button class="btn" [disabled]="tournament.state != 'open'">
+          <span class="join" (click)="join(version.value)">Join now</span>
+        </button>
+      </span>
+      <span *ngIf="tournament.players == 1">
+        <button class="btn" [disabled]="tournament.state != 'open'">
+          <span class="join" (click)="join('user')">Join now</span>
+        </button>
+      </span>
     </div>
 
     </div>

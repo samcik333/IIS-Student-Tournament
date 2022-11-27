@@ -91,7 +91,7 @@ font-family: 'EB Garamond', serif;
     line-height: 1.8;
     text-align: left;
     font-size: 105%;
-    cursor: no-drop;
+    cursor: pointer;
     color: #FFF;
     height: 100%;
     width: 100%;
@@ -143,6 +143,23 @@ font-family: 'EB Garamond', serif;
 	margin:0;
 }
 
-.select{
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}
+
+select{
   border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+  padding: 5px;
+  margin: 2px;
+}
+
+select:disabled,
+select[disabled]{
+  display: none;
 }

@@ -36,3 +36,12 @@ img{
   background-color: #006dcc;
   color: white;
 }
+
+.not {
+  margin: 10%;
+  font-size: 30px;
+  font-family: "georgia";
+  font-weight: bold;
+  text-align: center;
+  color: #006dcc;
+}
