@@ -18,6 +18,9 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdnTournamentTreeModule } from '@adonsio/adn-tournament';
+import { NgTournamentTreeModule } from 'ng-tournament-tree/public-api';
+import { Ver2Component } from './tournament_bracket/ver2/ver2.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     PlayerComponent,
     TeamComponent,
+    Ver2Component,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AdnTournamentTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

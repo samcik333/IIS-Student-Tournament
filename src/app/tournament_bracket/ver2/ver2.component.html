@@ -1,0 +1,554 @@
+
+<select name="mods" #version (change)="generateTree(version.value)" class="searchTerm">
+  <option [value]="2">2 participants</option>
+  <option [value]="4">4 participants</option>
+  <option [value]="8">8 participants</option>
+  <option [value]="16">16 participants</option>
+</select>
+
+
+<table class="spider">
+  <tbody>
+  <div *ngIf="v2">
+    <tr>
+      <td class="name">A</td>
+      <td class="score">1</td>
+    </tr>
+
+    <tr>
+      <td class="name">B</td>
+      <td class="score">2</td>
+    </tr>
+  </div>
+
+    <tr *ngIf="v4">
+      <td class="name">A</td>
+      <td class="score">1</td>
+      <td class="border_down"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td class="name">B</td>
+      <td class="score">2</td>
+      <td class="border_top"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_left"> </td>
+      <td class="name">A</td>
+      <td class="score">2</td>
+      <td *ngIf="v8" class="border_down"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="border_top"> </td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td *ngIf="v8" class="border_right"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td class="name">C</td>
+      <td class="score">4</td>
+      <td class="border_down"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v8" class="border_right"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td *ngIf="v8 || v16" class="name">D</td>
+      <td *ngIf="v8 || v16" class="score">3</td>
+      <td *ngIf="v8 || v16" class="border_top"> </td>
+      <td *ngIf="v8 || v16" class="empty_short"> </td>
+      <td *ngIf="v8 || v16" class="empty_long"> </td>
+      <td *ngIf="v8 || v16" class="empty_short"> </td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">D</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">3</td>
+      <td *ngIf="v4 && !v8 && !v16" class="border_top"> </td>
+      <td *ngIf="v4 && !v8 && !v16" class="empty_short"> </td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">E</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">2</td>
+      <td *ngIf="v8" class="border_right"> </td>
+      <td *ngIf="v8" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v4">
+      <td *ngIf="v8 || v16" class="empty_long"></td>
+      <td *ngIf="v8 || v16" class="empty_short"></td>
+      <td *ngIf="v8 || v16" class="empty_short"></td>
+      <td *ngIf="v8 || v16" class="empty_short"></td>
+      <td *ngIf="v8 || v16" class="empty_long"></td>
+      <td *ngIf="v8 || v16" class="empty_short"></td>
+      <td *ngIf="v4 && !v8 && !v16" class="empty_long"></td>
+      <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
+      <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
+      <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">F</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">6</td>
+      <td *ngIf="v8" class="border_right"></td>
+      <td *ngIf="v8" class="border_down"></td>
+      <td *ngIf="v8" class="name">A</td>
+      <td *ngIf="v8" class="score">1</td>
+      <td *ngIf="v16" class="border_down"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="border_right"></td>
+      <td class="empty_short"></td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="name">A</td>
+      <td class="score">1</td>
+      <td class="border_down"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr  *ngIf="v8">
+      <td class="name">B</td>
+      <td class="score">2</td>
+      <td class="border_top"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="!v16" class="name">K</td>
+      <td *ngIf="!v16" class="score">7</td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_left"> </td>
+      <td class="name">A</td>
+      <td class="score">2</td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="!v16" class="name">C</td>
+      <td *ngIf="!v16" class="score">4</td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="border_top"> </td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="name">C</td>
+      <td class="score">4</td>
+      <td class="border_down"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v8">
+      <td class="name">D</td>
+      <td class="score">3</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="border_right"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+      <td *ngIf="v16" class="empty_long"> </td>
+      <td *ngIf="v16" class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="name">Y</td>
+      <td class="score">0</td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="border_top"> </td>
+      <td class="name">X</td>
+      <td class="score">0</td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">A</td>
+      <td class="score">1</td>
+      <td class="border_down"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">B</td>
+      <td class="score">2</td>
+      <td class="border_top"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="name">Q</td>
+      <td class="score">2</td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_left"> </td>
+      <td class="name">A</td>
+      <td class="score">2</td>
+      <td class="border_down"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="name">W</td>
+      <td class="score">1</td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="border_top"> </td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">C</td>
+      <td class="score">4</td>
+      <td class="border_down"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">D</td>
+      <td class="score">3</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="border_right"></td>
+      <td class="empty_short"></td>
+      <td class="name">A</td>
+      <td class="score">1</td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_short"></td>
+      <td class="empty_long"></td>
+      <td class="empty_short"></td>
+      <td class="border_right"></td>
+      <td class="border_top"></td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">A</td>
+      <td class="score">1</td>
+      <td class="border_down"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">B</td>
+      <td class="score">2</td>
+      <td class="border_top"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_left"> </td>
+      <td class="name">A</td>
+      <td class="score">2</td>
+      <td class="border_right"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="border_right"> </td>
+      <td class="border_top"> </td>
+      <td class="name">B</td>
+      <td class="score">1</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">C</td>
+      <td class="score">4</td>
+      <td class="border_down"> </td>
+      <td class="border_left"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+
+    <tr *ngIf="v16">
+      <td class="name">D</td>
+      <td class="score">3</td>
+      <td class="border_top"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
+    </tr>
+  </tbody>
+</table>

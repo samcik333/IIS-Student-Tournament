@@ -9,7 +9,7 @@ import { RegisterComponent } from './register/register.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'SJS Squad';
 
   constructor(private dialog: MatDialog) {}
 

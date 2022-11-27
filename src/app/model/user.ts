@@ -5,8 +5,7 @@ export class User {
   username!: string;
   email!: string;
   password!: string;
-  photo: string =
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  photo: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
   role: 'admin' | 'user' = 'user';
   gold: number = 0;
   silver: number = 0;
