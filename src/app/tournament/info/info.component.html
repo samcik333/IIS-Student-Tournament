@@ -44,7 +44,11 @@
 
 
     <div class="control">
-
+      <button class="btn">
+        <span *ngIf="tournament.players != 1" class="select"><select name="mods" #version (click)="join(version.value)">
+          <option [value]="1">My team</option></select></span>
+        <span class="join">Join now</span>
+      </button>
     </div>
 
     </div>
@@ -55,13 +59,12 @@
 
 
     <div class="info">
-      <h2> Information</h2>
       <ul>
         <li><strong>Place : </strong>{{tournament.place}}</li>
         <li><strong>Date : </strong>{{ tournament.date | date: "short" }}</li>
         <li><strong>Capacity : </strong>{{tournament.capacity}}</li>
-        <li><strong>Players: </strong>{{tournament.players}}</li>
-        <li><strong>Prize: </strong>{{tournament.prize}}</li>
+        <li><strong>Mode: </strong>{{tournament.players}} vs. {{tournament.players}}</li>
+        <li><strong>Description: </strong>{{tournament.description}}</li>
 
       </ul>
     </div>

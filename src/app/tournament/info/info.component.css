@@ -107,3 +107,42 @@ font-family: 'EB Garamond', serif;
 
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
+
+.control{
+	position: absolute;
+	bottom: 20%;
+	left: 22.8%;
+  border-radius: 5px;
+}
+
+.btn {
+	transform: translateY(0px);
+	transition: 0.3s linear;
+	background:  #809fff;
+	border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: #eee;
+	padding: 0;
+	margin: 0;
+
+}
+
+.btn:hover{transform: translateY(-6px);
+	background: #17499f;}
+
+.btn span {
+	font-family: 'Farsan', cursive;
+	transition: transform 0.3s;
+	display: inline-block;
+  padding: 10px 20px;
+	font-size: 1.2em;
+	margin:0;
+}
+
+.select{
+  border-radius: 5px;
+}
