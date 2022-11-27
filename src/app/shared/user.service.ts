@@ -22,4 +22,7 @@ export class UserService {
 			withCredentials: true,
 		});
 	}
+	getUserById(id:string):Observable<User> {
+		return this.http.get<User>(baseUrl + "user/" + id, {withCredentials: true});
+	}
 }

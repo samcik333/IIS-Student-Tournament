@@ -34,8 +34,10 @@ export class TournamentService {
 			withCredentials: true,
 		});
 	}
-
 	getBracket(id:string){
 		return this.http.get<Bracket>(`${endpoint}bracket?id=${id}`);
+	}
+	updateSchedule(bracket:Bracket){
+		return this.http.post(endpoint + "schedule", bracket, {withCredentials: true});
 	}
 }
