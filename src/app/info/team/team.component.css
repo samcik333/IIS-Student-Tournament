@@ -1,7 +1,7 @@
 .username {
   margin-top: 20px;
   text-align: center;
-  font-size: large;
+  font-size: x-large;
   color: blue;
 }
 
@@ -11,7 +11,7 @@
   color: white;
   height: 35px;
   top: 20px;
-  left: 400px;
+  left: 387px;
   border-radius: 2em;
 }
 
