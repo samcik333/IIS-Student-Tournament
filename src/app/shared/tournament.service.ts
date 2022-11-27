@@ -3,52 +3,68 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
-import { Bracket } from "../model/bracket";
+import {Bracket} from "../model/bracket";
 import {Tournament} from "../model/tournament";
 
 const endpoint = `http://localhost:5005/`;
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class TournamentService {
-  constructor(private http: HttpClient, private router: Router) {}
+	constructor(private http: HttpClient, private router: Router) {}
 
-  getTournaments(): Observable<Tournament[]> {
-    return this.http.get<Tournament[]>(endpoint);
-  }
+	getTournaments(): Observable<Tournament[]> {
+		return this.http.get<Tournament[]>(endpoint);
+	}
+	getTournamentsByOwner(): Observable<Tournament[]> {
+		return this.http.get<Tournament[]>(endpoint + "user/tournaments", {
+			withCredentials: true,
+		});
+	}
 
-  find(id: string): Observable<Tournament> {
-    return this.http.get<Tournament>(endpoint + 'tournament/' + id);
-  }
+	find(id: string): Observable<Tournament> {
+		return this.http.get<Tournament>(endpoint + "tournament/" + id);
+	}
 
-  findByName(name: string): Observable<Tournament[]> {
-    return this.http.get<Tournament[]>(`${endpoint}?name=${name}`);
-  }
+	findByName(name: string): Observable<Tournament[]> {
+		return this.http.get<Tournament[]>(`${endpoint}?name=${name}`);
+	}
 
-  getParticipants(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`${endpoint}participants?id=${id}`);
-  }
+	getParticipants(id: string): Observable<any[]> {
+		return this.http.get<any[]>(`${endpoint}participants?id=${id}`);
+	}
 
-  create(data: any) {
-    console.log(data);
-    return this.http.post(endpoint + 'tournaments', data, {
-      withCredentials: true,
-    });
-  }
+	delete(id: string, ownerId: string) {
+		return this.http.delete(
+			endpoint + `tournaments?id=${id}&owner=${ownerId}`,
+			{
+				withCredentials: true,
+			}
+		);
+	}
 
-  updateState(id: number) {
-    return this.http.put(endpoint + 'tournamentState/' + id, '');
-  }
+	create(data: any) {
+		console.log(data);
+		return this.http.post(endpoint + "tournaments", data, {
+			withCredentials: true,
+		});
+	}
 
-  delete(id: number) {
-    return this.http.delete(endpoint + 'tournament/' + id);
-  }
-  
-  getBracket(id:string){
+	updateState(id: number) {
+		return this.http.put(endpoint + "tournamentState/" + id, "");
+	}
+
+	deleteByAdmin(id: number) {
+		return this.http.delete(endpoint + "tournament/" + id);
+	}
+
+	getBracket(id: string) {
 		return this.http.get<Bracket>(`${endpoint}bracket?id=${id}`);
 	}
-  
-	updateSchedule(bracket:Bracket){
-		return this.http.post(endpoint + "schedule", bracket, {withCredentials: true});
+
+	updateSchedule(bracket: Bracket) {
+		return this.http.post(endpoint + "schedule", bracket, {
+			withCredentials: true,
+		});
 	}
 }
