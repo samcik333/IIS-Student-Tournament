@@ -60,11 +60,21 @@
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <div style="position: absolute; left: 80px; top: 60px" class="center">
-      <mat-form-field id:team-name appearance="fill">
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 80px; top: 60px"
+      class="center"
+    >
+      <mat-form-field id:team-name appearance="fill" [floatLabel]="'always'">
         <mat-label>Team name</mat-label>
         <form [formGroup]="teamForm">
-          <input matInput id="name" formControlName="name" />
+          <input
+            matInput
+            id="name"
+            required
+            formControlName="name"
+            placeholder="{{ team.name }}"
+          />
         </form>
       </mat-form-field>
 
@@ -85,28 +95,59 @@
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <div style="position: absolute; left: 60px; top: 150px">
-      <button mat-raised-button (click)="updateTeam()">Change</button>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 60px; top: 150px"
+    >
+      <button
+        mat-raised-button
+        (click)="updateTeam()"
+        [disabled]="teamForm.invalid"
+      >
+        Change
+      </button>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile></mat-grid-tile>
 
   <mat-grid-tile>
-    <div style="position: absolute; left: 60px">
-      <p class="center" style="font-size: large">
-        <b>Add player</b>
-      </p>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 80px; top: 75px"
+    >
       <mat-form-field id:add-player appearance="fill">
         <mat-label>Player username</mat-label>
         <form [formGroup]="userForm">
-          <input matInput id="username" formControlName="username" />
+          <input matInput required id="username" formControlName="username" />
         </form>
       </mat-form-field>
     </div>
 
-    <div style="position: absolute; left: 60px; top: 150px">
-      <button mat-raised-button (click)="addPlayer()">Add</button>
+    <div
+      *ngIf="this.loggedUser.username == this.owner"
+      style="position: absolute; left: 128px; top: 150px"
+    >
+      <button
+        mat-raised-button
+        (click)="addPlayer()"
+        [disabled]="userForm.invalid"
+      >
+        Add
+      </button>
+    </div>
+
+    <div
+      *ngIf="!(this.loggedUser.username == this.owner)"
+      style="position: absolute; left: 80px; top: 50px"
+    >
+      <button
+        mat-raised-button
+        [style.background-color]="'red'"
+        (click)="leaveTeam(this.loggedUser.username)"
+      >
+        Leave
+      </button>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
@@ -127,10 +168,12 @@
   </mat-card-header>
   <button
     mat-button
-    *ngIf="!(this.owner == player.username)"
+    *ngIf="
+      !(this.owner == player.username) && this.loggedUser.username == this.owner
+    "
     (click)="deletePlayer(player.username)"
   >
-    -
+    Remove
   </button>
   <div
     class="label-owner"

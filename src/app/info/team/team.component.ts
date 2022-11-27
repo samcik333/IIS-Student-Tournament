@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Team } from 'src/app/model/team';
 import { User } from 'src/app/model/user';
+import { LoginService } from 'src/app/shared/login.service';
 import { TeamService } from 'src/app/shared/team.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class TeamComponent implements OnInit {
   router: Router;
   owner!: string;
   teamData!: Team;
+  loggedUser!: User;
 
   teamForm: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -29,6 +31,7 @@ export class TeamComponent implements OnInit {
 
   constructor(
     private teamService: TeamService,
+    private loginService: LoginService,
     private route: ActivatedRoute,
     router: Router,
     private formBuilder: FormBuilder
@@ -44,6 +47,8 @@ export class TeamComponent implements OnInit {
       this.team = response;
       this.fillUpData(this.team);
     });
+
+    this.loggedUser = this.loginService.loadUserFromLocalStorage();
 
     this.getOwner();
     this.showPlayers(this.myParam);
@@ -84,6 +89,14 @@ export class TeamComponent implements OnInit {
       console.log(res);
       this.ngOnInit();
     });
+  }
+
+  leaveTeam(username: string) {
+    this.teamService.deletePlayer(this.myParam, username).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
+    });
+    this.router.navigate(['user/teams']);
   }
 
   updateTeam() {
