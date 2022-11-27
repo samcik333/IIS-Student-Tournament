@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
+import { Bracket } from "../model/bracket";
 import {Tournament} from "../model/tournament";
 
 const endpoint = `http://localhost:5005/`;
@@ -32,5 +33,9 @@ export class TournamentService {
 		return this.http.post(endpoint + "tournaments", data, {
 			withCredentials: true,
 		});
+	}
+
+	getBracket(id:string){
+		return this.http.get<Bracket>(`${endpoint}bracket?id=${id}`);
 	}
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
+import { TournamentService } from 'src/app/shared/tournament.service';
 
 @Component({
   selector: 'app-ver2',
@@ -12,11 +14,20 @@ export class Ver2Component implements OnInit {
   v4:boolean = false;
   v8:boolean = false;
   v16:boolean = false;
-  constructor(public fb:FormBuilder) { }
+
+  id:string = "1234567";
+
+  constructor(public fb:FormBuilder, public restTournaments:TournamentService) { }
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({version:2});
     this.generateTree("2");
+    this.createSchedule();
+  }
+
+  async createSchedule(){
+    const bracket$ = this.restTournaments.getBracket(this.id);
+    console.log(await lastValueFrom(bracket$));
   }
 
   generateTree(data:string){
