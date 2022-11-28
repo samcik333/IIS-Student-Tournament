@@ -83,6 +83,12 @@
               <img mat-card-avatar src="{{ team.logo }}" />
               <mat-card-title class="label-name">
                 {{ team.name }}
+                <p
+                  *ngIf="this.loggedUser.id == team.ownerId"
+                  style="font-size: 11px; color: blue"
+                >
+                  OWNER
+                </p>
               </mat-card-title>
             </mat-card-title-group>
             <mat-card-content class="label-capacity">
@@ -90,7 +96,15 @@
             </mat-card-content>
           </mat-card-header>
         </mat-card-content>
-        <button mat-button (click)="deleteTeam(team.name)">Delete</button>
+        <mat-card-footer>
+          <button
+            *ngIf="this.loggedUser.id == team.ownerId"
+            mat-button
+            (click)="deleteTeam(team.name)"
+          >
+            Delete
+          </button>
+        </mat-card-footer>
       </mat-card>
     </div>
   </mat-sidenav-content>

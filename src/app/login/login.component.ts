@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.dialog.closeAll();
         // admin side
         if (this.loginGroup.value.username == 'admin') {
-          this.info();
+          this.adminInfo();
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async info() {
+  async adminInfo() {
     this.router.navigate(['admin/userManager']);
   }
 }
