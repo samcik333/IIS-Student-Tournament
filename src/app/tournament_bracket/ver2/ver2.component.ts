@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Params, Route} from "@angular/router";
 import {lastValueFrom} from "rxjs";
 import {myMatch} from "src/app/interface/myMatch";
@@ -38,7 +38,7 @@ export class Ver2Component implements OnInit {
   TeamB!:Team;
   UserA!:User;
   UserB!:User;
-  participants!:any[];
+  participants!:any;
   spider = new Bracket();
 
   eightMatches: Array<myMatch> = [];
@@ -46,6 +46,14 @@ export class Ver2Component implements OnInit {
   semiMatches: Array<myMatch> = [];
   final: Array<myMatch> = [];
   bronze: Array<myMatch> = [];
+
+  matchForm: FormGroup = new FormGroup({
+    tournamentId: new FormControl(""),
+    firstScore: new FormControl(""),
+    secondScore: new FormControl(""),
+    firstTeam: new FormControl(""),
+    secondTeam: new FormControl(""),
+	});
   
 
   constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
@@ -78,6 +86,11 @@ export class Ver2Component implements OnInit {
     this.createBracketMatches(this.spider.semifinals, this.semiMatches);
     this.createBracketMatches(this.spider.bronze, this.bronze);
     this.createBracketMatches(this.spider.final, this.final);
+
+
+    if(!this.spider.eightfinals || this.spider.eightfinals.length == 0){
+      this.generateSchedule();
+    }
 
     this.render=true;
     ///Get Tournament by ID
@@ -122,8 +135,24 @@ export class Ver2Component implements OnInit {
     }
   }
 
-  generateSchedule(){
-
+  async generateSchedule(){
+    const participants$ = this.restTournaments.getParticipants(this.myParam);
+    this.participants = await lastValueFrom(participants$);
+    if(this.participants.result.type == "teams"){
+      this.participants = this.participants.result.teams;
+    }else if(this.participants.result.type == "users"){
+      this.participants = this.participants.result.users;
+    }
+    this.participants = this.shuffle(this.participants);
+    for (let i = 0; i < this.participants.length; i+=2) {
+      const match = {
+        date: new Date(),
+        tournamentId: this.myParam,
+        firstTeam: this.participants[i].id,
+        secondTeam: this.participants[i+1].id,
+      }
+      this.restMatch.create(match).subscribe();
+    }
   }
 
   evaluate(){
