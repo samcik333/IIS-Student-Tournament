@@ -19,9 +19,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let team of teams; let i = index">
-            <td [style.width]="'1cm'">{{i+1}}</td>
-            <td [style.width]="'4cm'"><img src="{{ team.logo }}"></td>
-            <td>{{team.name}}</td>
+            <td [style.width]="'1cm'"><a [routerLink]="['/team', team.id]">{{i+1}}</a></td>
+            <td [style.width]="'4cm'"><a [routerLink]="['/team', team.id]"><img src="{{ team.logo }}"></a></td>
+            <td><a [routerLink]="['/team', team.id]">{{team.name}}</a></td>
           </tr>
         </tbody>
       </table>
@@ -35,9 +35,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of users; let i = index">
-            <td [style.width]="'1cm'">{{i+1}}</td>
-            <td [style.width]="'4cm'"><img src="{{ user.photo }}"></td>
-            <td>{{user.name}}</td>
+            <td [style.width]="'1cm'"><a [routerLink]="['/user', user.id]">{{i+1}}</a></td>
+            <td [style.width]="'4cm'"><a [routerLink]="['/user', user.id]"><img src="{{ user.photo }}"></a></td>
+            <td><a [routerLink]="['/user', user.id]">{{user.username}}</a></td>
           </tr>
         </tbody>
       </table>
