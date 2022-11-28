@@ -9,12 +9,6 @@ h1 {
   font-family: 'Bree Serif', serif;
 }
 
-.hint {
-	display: inline-block;
-	margin-left: 0.5em;
-	width: 50%;
-}
-
 #container{
 	box-shadow: 0 15px 30px 1px grey;
 	background: rgba(255, 255, 255, 0.90);
@@ -43,23 +37,6 @@ h1 {
 	font-size: 30px;
 	color: #17499f;
 	margin: 0;
-}
-
-#container .product-details h1:before{
-	position: absolute;
-	content: '';
-	right: 0%;
-	top: 0%;
-	transform: translate(25px, -15px);
-	font-family: 'Bree Serif', serif;
-	display: inline-block;
-	background: #ffe6e6;
-	border-radius: 5px;
-	font-size: 14px;
-	padding: 5px;
-	color: white;
-	margin: 0;
-	animation: chan-sh 6s ease infinite;
 }
 
 #container .product-details > p {
@@ -91,7 +68,7 @@ font-family: 'EB Garamond', serif;
     line-height: 1.8;
     text-align: left;
     font-size: 105%;
-    cursor: no-drop;
+    cursor: pointer;
     color: #FFF;
     height: 100%;
     width: 100%;
@@ -107,3 +84,59 @@ font-family: 'EB Garamond', serif;
 
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
+
+.control{
+	position: absolute;
+	bottom: 20%;
+	left: 22.8%;
+  border-radius: 5px;
+}
+
+.btn {
+	transform: translateY(0px);
+	transition: 0.3s linear;
+	background:  #809fff;
+	border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: #eee;
+	padding: 0;
+	margin: 0;
+
+}
+
+.btn:hover{transform: translateY(-6px);
+	background: #17499f;}
+
+.btn span {
+	font-family: 'Farsan', cursive;
+	transition: transform 0.3s;
+	display: inline-block;
+  padding: 10px 20px;
+	font-size: 1.2em;
+	margin:0;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}
+
+select{
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+  padding: 5px;
+  margin: 2px;
+}
+
+select:disabled,
+select[disabled]{
+  display: none;
+}

@@ -55,9 +55,9 @@
             [style.color]="'white'"
             [style.font-weight]="'bold'"
           >
-            <p>Date: {{ tournament.date | date: "short" }}</p>
-            <p>Mode: xxx</p>
-            <p>Teams: {{ tournament.players }}/{{ tournament.capacity }}</p>
+            <p>{{ tournament.date | date: "short" }}</p>
+            <p>Mode: {{ tournament.players/2 }} vs. {{ tournament.players/2 }}</p>
+            <p>Capacity: {{ tournament.capacity }}</p>
           </mat-card-content>
         </div>
       </div>
