@@ -67,28 +67,11 @@ export class TournamentService {
     });
   }
 
-	update(data: any, tourId: number) {
-		return this.http.patch(
-			endpoint + `user/tournaments?id=${tourId}`,
-			data
-		);
+  update(data: any, tourId: number) {
+    return this.http.patch(endpoint + `user/tournaments?id=${tourId}`, data);
+  }
 
   addPlayer(tournamentId: number): Observable<User> {
-    return this.http.post<User>(
-      endpoint + `tournamentAddPlayer/` + tournamentId,
-      '',
-      { withCredentials: true }
-    );
-  }
-
-  addTeam(tournamentId: number, teamId: string): Observable<Team> {
-    return this.http.post<Team>(
-      endpoint + `tournamentAddTeam/` + tournamentId,
-      { teamId }
-    );
-  }
-}
-addPlayer(tournamentId: number): Observable<User> {
     return this.http.post<User>(
       endpoint + `tournamentAddPlayer/` + tournamentId,
       '',
