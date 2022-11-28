@@ -25,11 +25,13 @@ export class Ver2Component implements OnInit {
   v8:boolean = false;
   v16:boolean = false;
   render:boolean = false;
+  popup:boolean = false;
 
 
   myParam!:string;
   tournament!:Tournament;
   match!:Match;
+  userID!:number;
   participantA!:string;
   participantB!:string;
   TeamA!:Team;
@@ -55,6 +57,7 @@ export class Ver2Component implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.userID = parseInt(localStorage.getItem('userID') || "");
     ///Get Tournament by ID
     this.route.params.subscribe((params: Params) => this.myParam = params['id']);
     this.restTournaments.find(this.myParam).subscribe(async (response:Tournament) => {
@@ -64,7 +67,6 @@ export class Ver2Component implements OnInit {
     ///Get TournamentBracket by IDofTournament
       const bracket$ = this.restTournaments.getBracket(this.myParam);
       this.spider = await lastValueFrom(bracket$);
-      console.log(this.tournament,this.spider);
     ///Get TournamentBracket by IDofTournament
 
     ///Generate spider depends on capacity
