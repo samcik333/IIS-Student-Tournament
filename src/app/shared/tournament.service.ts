@@ -58,11 +58,10 @@ export class TournamentService {
 		return this.http.get<Bracket>(`${endpoint}bracket?id=${id}`);
 	}
 
-	updateSchedule(bracket: Bracket) {
-		return this.http.post(endpoint + "schedule", bracket, {
-			withCredentials: true,
-		});
+	updateSchedule(bracket: Bracket):Observable<Bracket> {
+		return this.http.post<Bracket>(endpoint + "schedule", bracket);
 	}
+	
 	update(data: any, tourId: number) {
 		return this.http.patch(
 			endpoint + `user/tournaments?id=${tourId}`,

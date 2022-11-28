@@ -9,7 +9,7 @@
 <div *ngIf="tournament">
   <button [hidden]="tournament.ownerId != userID" [disabled]="eightMatches.length > 0 && tournament.ownerId != userID" (click)="generateSchedule()" class="searchTerm">Generate</button>
   <button [hidden]="tournament.ownerId != userID" [disabled]="final.length > 0 && tournament.ownerId != userID" (click)="evaluate()" class="searchTerm">Evaluate</button>
-  <button (click)="generateSchedule()">Generate TEST</button>
+  <!--<button (click)="generateSchedule()">Generate TEST</button>-->
 </div>
 
 <div class="overlay" *ngIf="popup">
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<table class="spider" *ngIf="render">
+<table class="spider" *ngIf="eightMatches && eightMatches.length > 0">
   <tbody>
   <div *ngIf="v2">
     <tr>

@@ -23,4 +23,8 @@ export class MatchService {
 			withCredentials: true,
 		});
 	}
+
+	getAll(tournamentId:number):Observable<any>{
+		return this.http.get<any>(baseUrl + "matches/" + tournamentId);
+	}
 }

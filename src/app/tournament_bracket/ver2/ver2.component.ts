@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Params, Route} from "@angular/router";
+import * as e from "express";
 import {lastValueFrom} from "rxjs";
 import {myMatch} from "src/app/interface/myMatch";
 import {Bracket} from "src/app/model/bracket";
@@ -24,7 +25,6 @@ export class Ver2Component implements OnInit {
   v4:boolean = false;
   v8:boolean = false;
   v16:boolean = false;
-  render:boolean = false;
   popup:boolean = false;
 
 
@@ -39,6 +39,7 @@ export class Ver2Component implements OnInit {
   UserA!:User;
   UserB!:User;
   participants!:any;
+  matches!:any;
   spider = new Bracket();
 
   eightMatches: Array<myMatch> = [];
@@ -46,15 +47,6 @@ export class Ver2Component implements OnInit {
   semiMatches: Array<myMatch> = [];
   final: Array<myMatch> = [];
   bronze: Array<myMatch> = [];
-
-  matchForm: FormGroup = new FormGroup({
-    tournamentId: new FormControl(""),
-    firstScore: new FormControl(""),
-    secondScore: new FormControl(""),
-    firstTeam: new FormControl(""),
-    secondTeam: new FormControl(""),
-	});
-  
 
   constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
     this.spider.eightfinals = [];
@@ -67,51 +59,46 @@ export class Ver2Component implements OnInit {
   async ngOnInit(): Promise<void> {
     this.userID = parseInt(localStorage.getItem('userID') || "");
     ///Get Tournament by ID
-    this.route.params.subscribe((params: Params) => this.myParam = params['id']);
-    this.restTournaments.find(this.myParam).subscribe(async (response:Tournament) => {
-      this.tournament = response;
-    });
-
-    ///Get TournamentBracket by IDofTournament
-      const bracket$ = this.restTournaments.getBracket(this.myParam);
-      this.spider = await lastValueFrom(bracket$);
-    ///Get TournamentBracket by IDofTournament
+      this.route.params.subscribe((params: Params) => this.myParam = params['id']);
+      const $tournament = this.restTournaments.find(this.myParam);
+      this.tournament = await lastValueFrom($tournament);
 
     ///Generate spider depends on capacity
       this.generateTree((this.tournament.capacity).toString());
-    ///Generate spider depends on capacity
 
+    ///Fill bracket - Spider
+      this.fillBracket();
+  }
+
+  
+  async fillBracket(){
+    const bracket$ = this.restTournaments.getBracket(this.myParam);
+    this.spider = await lastValueFrom(bracket$);
     this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
     this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
     this.createBracketMatches(this.spider.semifinals, this.semiMatches);
     this.createBracketMatches(this.spider.bronze, this.bronze);
     this.createBracketMatches(this.spider.final, this.final);
-
-
-    if(!this.spider.eightfinals || this.spider.eightfinals.length == 0){
-      this.generateSchedule();
-    }
-
-    this.render=true;
-    ///Get Tournament by ID
   }
-
-  async createSchedule(){
-    this.spider.quarterfinals = this.shuffle(this.spider.quarterfinals);
+  
+  async updateSchedule(){
     this.restTournaments.updateSchedule(this.spider);
+    await this.fillBracket();
   }
 
   async createBracketMatches(spider_array:string[], matches:Array<myMatch>){
     ///Generate BracketMatches
-    if(spider_array.length > 0){
+    if(spider_array && spider_array.length > 0){
       spider_array.forEach(async element => {
         const mat$ = this.restMatch.getMatch(element);
+        if(!mat$){return};
         this.match = await lastValueFrom(mat$);
         const scoreA = this.match.firstScore;
         const scoreB = this.match.secondScore;
         if(this.tournament.mode == 1){
           const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
           const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
+          if(!userA$ && !userB$){return};
           this.UserA = (await lastValueFrom(userA$));
           this.UserB = (await lastValueFrom(userB$));
           this.participantA = this.UserA.username;
@@ -119,6 +106,7 @@ export class Ver2Component implements OnInit {
         }else{
           const teamA$ = this.restTeam.findTeam((this.match.firstTeam).toString());
           const teamB$ = this.restTeam.findTeam((this.match.secondTeam).toString());
+          if(!teamA$ && !teamB$){return};
           this.TeamA = await lastValueFrom(teamA$);
           this.TeamB = await lastValueFrom(teamB$);
           this.participantA = this.TeamA.name;
@@ -136,6 +124,7 @@ export class Ver2Component implements OnInit {
   }
 
   async generateSchedule(){
+    if(this.spider.eightfinals && this.spider.eightfinals.length > 0){return;}
     const participants$ = this.restTournaments.getParticipants(this.myParam);
     this.participants = await lastValueFrom(participants$);
     if(this.participants.result.type == "teams"){
@@ -153,9 +142,21 @@ export class Ver2Component implements OnInit {
       }
       this.restMatch.create(match).subscribe();
     }
+    const match$ = this.restMatch.getAll(parseInt(this.myParam));
+    this.matches = await lastValueFrom(match$);
+    this.matches.forEach((element:Match) => {
+      this.spider.eightfinals.push((element.id).toString());
+    });
+    await this.updateSchedule();
+    return;
   }
 
   evaluate(){
+    this.eightMatches.forEach(element => {
+      if(element.ScoreA > 0 || element.ScoreB > 0){
+
+      }
+    });
   }
 
 	generateTree(data: string) {

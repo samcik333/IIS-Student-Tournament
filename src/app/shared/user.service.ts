@@ -23,7 +23,7 @@ export class UserService {
   }
 
   getUserById(id: string): Observable<User> {
-    return this.http.get<User>(endpoint + 'user/' + id, {
+    return this.http.get<User>(endpoint + 'getuser/' + id, {
       withCredentials: true,
     });
   }
