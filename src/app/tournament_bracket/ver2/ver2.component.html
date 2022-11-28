@@ -6,25 +6,38 @@
   <option [value]="16">16 participants</option>
 </select>
 -->
+<div *ngIf="tournament">
+  <button [hidden]="tournament.ownerId != userID" [disabled]="eightMatches.length > 0 && tournament.ownerId != userID" (click)="generateSchedule()" class="searchTerm">Generate</button>
+  <button [hidden]="tournament.ownerId != userID" [disabled]="final.length > 0 && tournament.ownerId != userID" (click)="evaluate()" class="searchTerm">Evaluate</button>
+</div>
 
+<div class="overlay" *ngIf="popup">
+  <div class="popup">
+      <h2>Here i am</h2>
+      <a class="close" (click)="popup = false">&times;</a>
+      <div class="content">
+      you have selected this event
+      </div>
+  </div>
+</div>
 
-<table class="spider" *ngIf="bracketMatches && tournament">
-  <tbody *ngIf="bracketMatches.length == tournament.capacity/2">
-  <div *ngIf="v2" >
+<table class="spider" *ngIf="render">
+  <tbody>
+  <div *ngIf="v2">
     <tr>
-      <td class="name">{{bracketMatches[0].TeamA}}</td>
-      <td class="score">{{bracketMatches[0].ScoreA}}</td>
+      <td class="name">{{eightMatches[0]?.TeamA}}</td>
+      <td class="score">{{eightMatches[0]?.ScoreA}}</td>
     </tr>
 
     <tr>
-      <td class="name">{{bracketMatches[0].TeamB}}</td>
-      <td class="score">{{bracketMatches[0].ScoreB}}</td>
+      <td class="name">{{eightMatches[0]?.TeamB}}</td>
+      <td class="score">{{eightMatches[0]?.ScoreB}}</td>
     </tr>
   </div>
 
-    <tr *ngIf="v4 && bracketMatches.length > 0">
-      <td class="name">{{bracketMatches[0].TeamA}}</td>
-      <td class="score">{{bracketMatches[0].ScoreA}}</td>
+    <tr *ngIf="v4">
+      <td class="name" (click)="popup = true">{{eightMatches[0]?.TeamA}}</td>
+      <td class="score">{{eightMatches[0]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -40,8 +53,8 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td class="name">{{bracketMatches[0].TeamB}}</td>
-      <td class="score">{{bracketMatches[0].ScoreB}}</td>
+      <td class="name">{{eightMatches[0]?.TeamB}}</td>
+      <td class="score">{{eightMatches[0]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -61,8 +74,8 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">A</td>
-      <td class="score">2</td>
+      <td class="name">{{quarterMatches[0]?.TeamA}}</td>
+      <td class="score">{{quarterMatches[0]?.ScoreA}}</td>
       <td *ngIf="v8" class="border_down"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -78,8 +91,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{quarterMatches[0]?.TeamB}}</td>
+      <td class="score">{{quarterMatches[0]?.ScoreB}}</td>
       <td *ngIf="v8" class="border_right"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -91,8 +104,8 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td class="name">C</td>
-      <td class="score">4</td>
+      <td class="name">{{eightMatches[1]?.TeamA}}</td>
+      <td class="score">{{eightMatches[1]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -108,18 +121,18 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td *ngIf="v8 || v16" class="name">D</td>
-      <td *ngIf="v8 || v16" class="score">3</td>
+      <td *ngIf="v8 || v16" class="name">{{eightMatches[1]?.TeamB}}</td>
+      <td *ngIf="v8 || v16" class="score">{{eightMatches[1]?.ScoreB}}</td>
       <td *ngIf="v8 || v16" class="border_top"> </td>
       <td *ngIf="v8 || v16" class="empty_short"> </td>
       <td *ngIf="v8 || v16" class="empty_long"> </td>
       <td *ngIf="v8 || v16" class="empty_short"> </td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">D</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">3</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">{{eightMatches[1]?.TeamB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">{{eightMatches[1]?.ScoreB}}</td>
       <td *ngIf="v4 && !v8 && !v16" class="border_top"> </td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"> </td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">E</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">2</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">{{bronze[0]?.TeamA}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">{{bronze[0]?.ScoreA}}</td>
       <td *ngIf="v8" class="border_right"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -141,12 +154,12 @@
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">F</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">6</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name">{{bronze[0]?.TeamB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score">{{bronze[0]?.ScoreB}}</td>
       <td *ngIf="v8" class="border_right"></td>
       <td *ngIf="v8" class="border_down"></td>
-      <td *ngIf="v8" class="name">A</td>
-      <td *ngIf="v8" class="score">1</td>
+      <td *ngIf="v8" class="name">{{semiMatches[0]?.TeamA}}</td>
+      <td *ngIf="v8" class="score">{{semiMatches[0]?.ScoreA}}</td>
       <td *ngIf="v16" class="border_down"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -162,8 +175,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="empty_short"></td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{semiMatches[0]?.TeamB}}</td>
+      <td class="score">{{semiMatches[0]?.ScoreB}}</td>
       <td *ngIf="v16" class="border_right"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -171,8 +184,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">A</td>
-      <td class="score">1</td>
+      <td class="name">{{eightMatches[2]?.TeamA}}</td>
+      <td class="score">{{eightMatches[2]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -188,16 +201,16 @@
     </tr>
 
     <tr  *ngIf="v8">
-      <td class="name">B</td>
-      <td class="score">2</td>
+      <td class="name">{{eightMatches[2]?.TeamB}}</td>
+      <td class="score">{{eightMatches[2]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="!v16" class="name">K</td>
-      <td *ngIf="!v16" class="score">7</td>
+      <td *ngIf="!v16" class="name">{{bronze[0]?.TeamA}}</td>
+      <td *ngIf="!v16" class="score">{{bronze[0]?.ScoreA}}</td>
       <td *ngIf="v16" class="empty_long"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="border_right"> </td>
@@ -211,12 +224,12 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">A</td>
-      <td class="score">2</td>
+      <td class="name">{{quarterMatches[1]?.TeamA}}</td>
+      <td class="score">{{quarterMatches[1]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="!v16" class="name">C</td>
-      <td *ngIf="!v16" class="score">4</td>
+      <td *ngIf="!v16" class="name">{{bronze[0]?.TeamB}}</td>
+      <td *ngIf="!v16" class="score">{{bronze[0]?.ScoreB}}</td>
       <td *ngIf="v16" class="empty_long"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="border_right"> </td>
@@ -230,8 +243,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{quarterMatches[1]?.TeamB}}</td>
+      <td class="score">{{quarterMatches[1]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -243,8 +256,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">C</td>
-      <td class="score">4</td>
+      <td class="name">{{eightMatches[3]?.TeamA}}</td>
+      <td class="score">{{eightMatches[3]?.ScoreB}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -260,8 +273,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">D</td>
-      <td class="score">3</td>
+      <td class="name">{{eightMatches[3]?.TeamB}}</td>
+      <td class="score">{{eightMatches[3]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -289,8 +302,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">Y</td>
-      <td class="score">0</td>
+      <td class="name">{{final[0]?.TeamA}}</td>
+      <td class="score">{{final[0]?.ScoreA}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -306,13 +319,13 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">X</td>
-      <td class="score">0</td>
+      <td class="name">{{final[0]?.TeamB}}</td>
+      <td class="score">{{final[0]?.ScoreB}}</td>
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">A</td>
-      <td class="score">1</td>
+      <td class="name">{{eightMatches[4]?.TeamA}}</td>
+      <td class="score">{{eightMatches[4]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -328,8 +341,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">B</td>
-      <td class="score">2</td>
+      <td class="name">{{eightMatches[4]?.TeamB}}</td>
+      <td class="score">{{eightMatches[4]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -340,8 +353,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">Q</td>
-      <td class="score">2</td>
+      <td class="name">{{bronze[0]?.TeamA}}</td>
+      <td class="score">{{bronze[0]?.ScoreA}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -349,16 +362,16 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">A</td>
-      <td class="score">2</td>
+      <td class="name">{{quarterMatches[2]?.TeamA}}</td>
+      <td class="score">{{quarterMatches[2]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">W</td>
-      <td class="score">1</td>
+      <td class="name">{{bronze[0]?.TeamB}}</td>
+      <td class="score">{{bronze[0]?.ScoreB}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -366,8 +379,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{quarterMatches[2]?.TeamB}}</td>
+      <td class="score">{{quarterMatches[2]?.ScoreB}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -379,8 +392,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">C</td>
-      <td class="score">4</td>
+      <td class="name">{{eightMatches[5]?.TeamA}}</td>
+      <td class="score">{{eightMatches[5]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -396,8 +409,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">D</td>
-      <td class="score">3</td>
+      <td class="name">{{eightMatches[5]?.TeamB}}</td>
+      <td class="score">{{eightMatches[5]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -421,8 +434,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="empty_short"></td>
-      <td class="name">A</td>
-      <td class="score">1</td>
+      <td class="name">{{semiMatches[1]?.TeamA}}</td>
+      <td class="score">{{semiMatches[1]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -438,8 +451,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="border_top"></td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{semiMatches[1]?.TeamB}}</td>
+      <td class="score">{{semiMatches[1]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -451,8 +464,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">A</td>
-      <td class="score">1</td>
+      <td class="name">{{eightMatches[6]?.TeamA}}</td>
+      <td class="score">{{eightMatches[6]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -468,8 +481,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">B</td>
-      <td class="score">2</td>
+      <td class="name">{{eightMatches[6]?.TeamB}}</td>
+      <td class="score">{{eightMatches[6]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -489,8 +502,8 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">A</td>
-      <td class="score">2</td>
+      <td class="name">{{quarterMatches[3]?.TeamA}}</td>
+      <td class="score">{{quarterMatches[3]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -506,8 +519,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">B</td>
-      <td class="score">1</td>
+      <td class="name">{{quarterMatches[3]?.TeamB}}</td>
+      <td class="score">{{quarterMatches[3]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -519,8 +532,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">C</td>
-      <td class="score">4</td>
+      <td class="name">{{eightMatches[7]?.TeamA}}</td>
+      <td class="score">{{eightMatches[7]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -536,8 +549,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">D</td>
-      <td class="score">3</td>
+      <td class="name">{{eightMatches[7]?.TeamB}}</td>
+      <td class="score">{{eightMatches[7]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>

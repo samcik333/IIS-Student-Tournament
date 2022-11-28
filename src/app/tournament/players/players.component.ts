@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Router } from 'express';
 import { Team } from 'src/app/model/team';
 import { Tournament } from 'src/app/model/tournament';
 import { User } from 'src/app/model/user';
@@ -35,5 +36,6 @@ export class PlayersComponent implements OnInit {
         if(this.users && this.users.length > 0){this.hasParticipants=true;}
     });
   }
+
 
 }
