@@ -18,6 +18,8 @@ export class TournamentsComponent implements OnInit {
 	tourn = new Tournament();
 	hideValues = false;
 	edit = false;
+	isdeleting = false;
+	loggedUser!: User;
 	constructor(
 		private tournamentService: TournamentService,
 		private loginService: LoginService,
@@ -35,8 +37,10 @@ export class TournamentsComponent implements OnInit {
 	});
 
 	async ngOnInit() {
+		this.loggedUser = this.loginService.loadUserFromLocalStorage();
 		const tournaments$ = this.tournamentService.getTournamentsByOwner();
 		this.tournaments = await lastValueFrom(tournaments$);
+		this.isdeleting = false;
 	}
 
 	onSubmit(): void {
@@ -85,6 +89,7 @@ export class TournamentsComponent implements OnInit {
 		tournamentDelete.subscribe({
 			next: () => {
 				this.createGroup.reset();
+				this.edit = false;
 				this.ngOnInit();
 			},
 			error: (error) => {},
