@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { myMatch } from 'src/app/interface/myMatch';
 import { Bracket } from 'src/app/model/bracket';
 import { Match } from 'src/app/model/match';
+import { Team } from 'src/app/model/team';
 import { Tournament } from 'src/app/model/tournament';
 import { User } from 'src/app/model/user';
 import { MatchService } from 'src/app/shared/match.service';
@@ -30,9 +31,13 @@ export class Ver2Component implements OnInit {
   match!:Match;
   participantA!:string;
   participantB!:string;
+  TeamA!:Team;
+  TeamB!:Team;
+  UserA!:User;
+  UserB!:User;
   participants!:any[];
   spider = new Bracket();
-  bracketMatches!: Array<myMatch>;
+  bracketMatches: Array<myMatch> = [];
 
   constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
     this.spider.quarterfinals = [];
@@ -51,6 +56,10 @@ export class Ver2Component implements OnInit {
     this.spider = await lastValueFrom(bracket$);
     ///Get TournamentBracket by IDofTournament
 
+     ///Generate spider depends on capacity
+     this.generateTree((this.tournament.players).toString());
+     ///Generate spider depends on capacity
+
     ///Generate BracketMatches
     if(this.spider.quarterfinals.length > 0){
       this.spider.quarterfinals.forEach(async element => {
@@ -61,13 +70,17 @@ export class Ver2Component implements OnInit {
         if(this.tournament.players == 1){
           const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
           const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
-          this.participantA = (await lastValueFrom(userA$)).username;
-          this.participantB = (await lastValueFrom(userB$)).username;
+          this.UserA = (await lastValueFrom(userA$));
+          this.UserB = (await lastValueFrom(userB$));
+          this.participantA = this.UserA.username;
+          this.participantB = this.UserB.username;
         }else{
           const teamA$ = this.restTeam.findTeam((this.match.firstTeam).toString());
           const teamB$ = this.restTeam.findTeam((this.match.secondTeam).toString());
-          this.participantA = (await lastValueFrom(teamA$)).name;
-          this.participantB = (await lastValueFrom(teamB$)).name;
+          this.TeamA = await lastValueFrom(teamA$);
+          this.TeamB = await lastValueFrom(teamB$);
+          this.participantA = this.TeamA.name;
+          this.participantB = this.TeamB.name;
         }
         let a: myMatch = {
           TeamA: this.participantA,
@@ -75,19 +88,14 @@ export class Ver2Component implements OnInit {
           ScoreA: scoreA,
           ScoreB: scoreB
         }
-        console.log(a);
         this.bracketMatches.push(a);
       });
     }
     ///Generate BracketMatches
     
-    ///Generate spider depends on capacity
-    this.generateTree((this.tournament.players).toString());
-    ///Generate spider depends on capacity
-    
     ///Get participants
-    const participants$ = this.restTournaments.getParticipants(this.myParam);
-    this.participants.push(lastValueFrom(participants$));
+    //const participants$ = this.restTournaments.getParticipants(this.myParam);
+    //this.participants.push(lastValueFrom(participants$));
     ///Get participants
 
   }
@@ -98,23 +106,7 @@ export class Ver2Component implements OnInit {
   }
 
   async createBracketMatches(){
-    /*for(var i = 0; i < this.spider.quarterfinals.length; i +=2){
-      const dataA$ = this.restTeam.getTeam(this.spider.quarterfinals[i]);
-      const TeamA = lastValueFrom(dataA$).score;
-      const dataB$ = this.restTeam.getTeam(this.spider.quarterfinals[i+1]);
-      const TeamB = lastValueFrom(dataB$);
-      let mat: myMatch = {
-        TeamA: TeamA.;
-        TeamB: TeamB;
-      }
-    }
-    this.spider.quarterfinals.forEach(e => {
-      let mat: myMatch = {
-        TeamA: e.scoreA,
 
-      }
-      this.bracketMatches.push()
-    });*/
   }
 
   generateTree(data:string){
