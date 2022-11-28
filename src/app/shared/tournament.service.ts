@@ -10,7 +10,7 @@ import { User } from '../model/user';
 
 const endpoint = `http://localhost:5005/`;
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class TournamentService {
   constructor(private http: HttpClient, private router: Router) {}
@@ -18,6 +18,7 @@ export class TournamentService {
   getTournaments(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(endpoint);
   }
+  
   getTournamentsByOwner(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(endpoint + 'user/tournaments', {
       withCredentials: true,

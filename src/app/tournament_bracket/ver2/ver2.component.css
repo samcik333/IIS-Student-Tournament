@@ -12,7 +12,7 @@
   border: 3px solid #17499f;
   cursor: pointer;
   background-color: #4d75ba;
-  color: whitesmoke;
+  color: whitesmoke
 }
 
 .score {
@@ -65,7 +65,7 @@
 }
 
 button:disabled,
-button[disabled] {
+button[disabled]{
   background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
@@ -109,7 +109,7 @@ button[disabled] {
   color: #333;
 }
 .popup .close:hover {
-  color: #06d85f;
+  color: #06D85F;
   cursor: pointer;
 }
 .popup .content {

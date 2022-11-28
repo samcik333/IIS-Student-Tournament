@@ -1,3 +1,4 @@
+import {formatDate} from "@angular/common";
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -45,6 +46,7 @@ export class TournamentsComponent implements OnInit {
 		tournamentRes.subscribe({
 			next: () => {
 				this.edit = false;
+				this.createGroup.reset();
 				this.ngOnInit();
 			},
 			error: (error) => {},
@@ -57,6 +59,7 @@ export class TournamentsComponent implements OnInit {
 		);
 		tournamentRes.subscribe({
 			next: () => {
+				this.createGroup.reset();
 				this.edit = false;
 				this.ngOnInit();
 			},
@@ -81,6 +84,7 @@ export class TournamentsComponent implements OnInit {
 		let tournamentDelete = this.tournamentService.delete(teamId, userId);
 		tournamentDelete.subscribe({
 			next: () => {
+				this.createGroup.reset();
 				this.ngOnInit();
 			},
 			error: (error) => {},
