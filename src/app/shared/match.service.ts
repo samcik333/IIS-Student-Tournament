@@ -17,4 +17,10 @@ export class MatchService {
 	getMatch(id:string): Observable<Match> {
 		return this.http.get<Match>(baseUrl + "match/" + id);
 	}
+
+	create(match:any):Observable<any>{
+		return this.http.post(baseUrl + "match/create", match, {
+			withCredentials: true,
+		});
+	}
 }
