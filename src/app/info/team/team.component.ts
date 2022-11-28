@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Team } from 'src/app/model/team';
@@ -34,7 +35,7 @@ export class TeamComponent implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     router: Router,
-    private formBuilder: FormBuilder
+    private snackBar: MatSnackBar
   ) {
     this.router = router;
   }
@@ -52,6 +53,10 @@ export class TeamComponent implements OnInit {
 
     this.getOwner();
     this.showPlayers(this.myParam);
+  }
+
+  openSnackBar(errMessage: string) {
+    this.snackBar.open(errMessage, '', { duration: 2500 });
   }
 
   fillUpData(team: Team) {
@@ -75,12 +80,16 @@ export class TeamComponent implements OnInit {
   }
 
   addPlayer() {
-    this.teamService
-      .addPlayer(this.myParam, this.userForm.value)
-      .subscribe((res) => {
+    this.teamService.addPlayer(this.myParam, this.userForm.value).subscribe({
+      next: (res) => {
         console.log(res);
         this.ngOnInit();
-      });
+      },
+      error: (e) => {
+        console.log(e);
+        this.openSnackBar(e.error.message);
+      },
+    });
     this.userForm.reset();
   }
 
@@ -100,11 +109,15 @@ export class TeamComponent implements OnInit {
   }
 
   updateTeam() {
-    this.teamService
-      .updateTeam(this.myParam, this.teamForm.value)
-      .subscribe((res) => {
+    this.teamService.updateTeam(this.myParam, this.teamForm.value).subscribe({
+      next: (res) => {
         console.log(res);
         this.ngOnInit();
-      });
+      },
+      error: (e) => {
+        console.log(e);
+        this.openSnackBar(e.error.message);
+      },
+    });
   }
 }

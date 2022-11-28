@@ -1,0 +1,64 @@
+<mat-sidenav-container>
+  <!-- This is your sidenav -->
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/admin/userManager'"> Users </a>
+      <a
+        mat-list-item
+        [routerLink]="'/admin/teamManager'"
+        routerLinkActive="active-list-item"
+      >
+        Tournaments
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content or body of your page-->
+  <mat-sidenav-content>
+    <div class="wrap">
+      <form [formGroup]="searchForm" class="search">
+        <input
+          placeholder="Search tournament"
+          type="text"
+          name=""
+          formControlName="search"
+          class="searchTerm"
+          id=""
+        />
+      </form>
+    </div>
+
+    <div style="height: 79vh">
+      <div *ngFor="let tournament of tournamentList">
+        <mat-card
+          *ngIf="tournament.state === 'waiting'"
+          [style.cursor]="'pointer'"
+          [style.margin]="'0 0 4px 4rem'"
+        >
+          <mat-card-header (click)="info(tournament.id)">
+            <mat-card-title-group>
+              <img mat-card-avatar src="{{ tournament.logo }}" />
+              <mat-card-title class="label-name">
+                {{ tournament.name }}
+              </mat-card-title>
+            </mat-card-title-group>
+          </mat-card-header>
+          <button
+            mat-button
+            style="background-color: green; left: 420px"
+            (click)="accept(tournament.id)"
+          >
+            ✓
+          </button>
+          <button
+            mat-button
+            style="background-color: red; left: 510px"
+            (click)="reject(tournament.id)"
+          >
+            X
+          </button>
+        </mat-card>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

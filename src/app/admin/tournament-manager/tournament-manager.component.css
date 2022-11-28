@@ -1,0 +1,62 @@
+.search {
+  width: 25%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #006dcc;
+}
+
+.searchTerm:focus {
+  color: #00b4cc;
+}
+
+.wrap {
+  margin: 2%;
+  min-width: 180px;
+}
+
+.username {
+  margin-top: 20px;
+  text-align: center;
+  font-size: x-large;
+  color: blue;
+}
+
+.mat-button {
+  position: absolute;
+  color: white;
+  height: 35px;
+  top: 20px;
+  border-radius: 2em;
+}
+
+.label-name {
+  position: absolute;
+  left: 100px;
+  top: 22px;
+}
+
+.label-owner {
+  position: absolute;
+  top: 25px;
+  left: 400px;
+}
+
+mat-card {
+  border: 2px solid #006dcc;
+  max-width: 600px;
+  margin: 5px;
+}
+mat-card:hover {
+  border: 2px solid #006dcc;
+  background: lightskyblue;
+}

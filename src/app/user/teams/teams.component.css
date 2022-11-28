@@ -3,21 +3,21 @@
   background-color: red;
   color: white;
   height: 35px;
-  top: 27px;
+  top: 19px;
   left: 575px;
   border-radius: 2em;
 }
 
 .label-name {
   position: absolute;
-  left: 100px;
-  top: 28px;
+  left: 110px;
+  top: 22px;
 }
 
 .label-capacity {
   position: absolute;
   left: 500px;
-  top: 29px;
+  top: 21px;
   border-radius: 2em;
   padding: 5px;
   background-color: lightgrey;
