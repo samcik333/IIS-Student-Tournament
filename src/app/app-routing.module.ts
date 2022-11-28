@@ -28,7 +28,6 @@ const routes: Routes = [
   { path: 'admin/userManager', component: UserManagerComponent },
   { path: 'admin/tournamentManager', component: TournamentManagerComponent },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
