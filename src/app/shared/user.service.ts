@@ -33,6 +33,6 @@ export class UserService {
   }
 
   deleteUser(username: string): Observable<User> {
-    return this.http.delete<User>(endpoint + `delUser`, { body: { username } });
+    return this.http.delete<User>(endpoint + `user`, { body: { username } });
   }
 }

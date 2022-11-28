@@ -48,7 +48,17 @@ export class TournamentManagerComponent implements OnInit {
     this.router.navigate(['tournament', id]);
   }
 
-  async accept() {}
+  async accept(id: number) {
+    this.tournamentService.updateState(id).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
+    });
+  }
 
-  async reject() {}
+  async reject(id: number) {
+    this.tournamentService.delete(id).subscribe((res) => {
+      console.log(res);
+      this.ngOnInit();
+    });
+  }
 }
