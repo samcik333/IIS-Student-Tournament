@@ -96,7 +96,7 @@ export class Ver2Component implements OnInit {
         this.match = await lastValueFrom(mat$);
         const scoreA = this.match.firstScore;
         const scoreB = this.match.secondScore;
-        if(this.tournament.players == 1){
+        if(this.tournament.mode == 1){
           const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
           const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
           this.UserA = (await lastValueFrom(userA$));
