@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { Team } from 'src/app/model/team';
 import { Tournament } from 'src/app/model/tournament';
+import { TeamService } from 'src/app/shared/team.service';
 import { TournamentService } from 'src/app/shared/tournament.service';
 
 @Component({
@@ -11,12 +15,16 @@ import { TournamentService } from 'src/app/shared/tournament.service';
 export class InfoComponent implements OnInit {
   myParam!: string;
   tournament!: Tournament;
+  teamList: Array<Team> = [];
+
   constructor(
     private route: ActivatedRoute,
-    private routerTournament: TournamentService
+    private routerTournament: TournamentService,
+    private teamService: TeamService,
+    private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => (this.myParam = params['id'])
     );
@@ -25,18 +33,37 @@ export class InfoComponent implements OnInit {
       .subscribe((response: Tournament) => {
         this.tournament = response;
       });
+
+    const teams$ = this.teamService.getOwnedTeams();
+    this.teamList = await lastValueFrom(teams$);
   }
 
-  join(id:string){
-    if(id == "user"){
+  openSnackBar(errMessage: string) {
+    this.snackBar.open(errMessage, '', { duration: 2500 });
+  }
+
+  join(tournamentId: number, id: string) {
+    if (id == 'user') {
       id = localStorage.getItem('userID') || '';
-      console.log("Join user with id: " + id + " to the current tournament");
-    }else{
-      console.log("Join team with id: " + id + " to the current tournament");
+      this.routerTournament.addPlayer(tournamentId).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (e) => {
+          console.log(e);
+          this.openSnackBar(e.error.message);
+        },
+      });
+    } else {
+      this.routerTournament.addTeam(tournamentId, id).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (e) => {
+          console.log(e);
+          this.openSnackBar(e.error.message);
+        },
+      });
     }
   }
-
-
-
-
 }

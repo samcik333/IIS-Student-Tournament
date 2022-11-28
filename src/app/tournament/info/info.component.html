@@ -9,8 +9,18 @@
       >
         Info
       </a>
-      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'players']"> Players </a>
-      <a mat-list-item [routerLink]="['/tournament/', tournament.id, 'playoff']"> Playoff </a>
+      <a
+        mat-list-item
+        [routerLink]="['/tournament/', tournament.id, 'players']"
+      >
+        Players
+      </a>
+      <a
+        mat-list-item
+        [routerLink]="['/tournament/', tournament.id, 'playoff']"
+      >
+        Playoff
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -18,66 +28,78 @@
   <mat-sidenav-content style="height: 93vh" *ngIf="tournament">
     <div id="container">
       <div class="product-details">
+        <h1>{{ tournament.name }}</h1>
+        <br />
+        <span class="hint">
+          <i
+            [ngStyle]="{
+              'background-color':
+                tournament.state === 'open'
+                  ? 'green'
+                  : tournament.state === 'closed'
+                  ? 'red'
+                  : tournament.state === 'waiting'
+                  ? 'gray'
+                  : ''
+            }"
+            [style.color]="'white'"
+            [style.width]="'150px'"
+            [style.border-radius]="'5px'"
+            [style.text-transfor]="'uppercase'"
+            [style.text-align]="'center'"
+          >
+            {{ tournament.state }}
+          </i>
+        </span>
 
-      <h1>{{tournament.name}}</h1><br>
-      <span class="hint">
-        <i [ngStyle]="{
-          'background-color':
-            tournament.state === 'open'
-              ? 'green'
-              : tournament.state === 'closed'
-              ? 'red'
-              : tournament.state === 'waiting'
-              ? 'gray'
-              : ''
-        }"
-        [style.color]="'white'"
-        [style.width]="'150px'"
-        [style.border-radius]="'5px'"
-        [style.text-transfor]="'uppercase'"
-        [style.text-align]="'center'"
-        >{{ tournament.state }}</i>
-      </span>
+        <p class="information"></p>
 
-          <p class="information"></p>
+        <div class="control">
+          <span *ngIf="tournament.players != 1" class="select">
+            <select
+              name="mods"
+              #version
+              [disabled]="tournament.state != 'open'"
+            >
+              <option *ngFor="let team of teamList" [value]="team.id">
+                {{ team.name }}
+              </option>
+            </select>
+            <button class="btn" [disabled]="tournament.state != 'open'">
+              <span class="join" (click)="join(tournament.id, version.value)">
+                Join now
+              </span>
+            </button>
+          </span>
 
+          <span *ngIf="tournament.players == 1">
+            <button class="btn" [disabled]="tournament.state != 'open'">
+              <span class="join" (click)="join(tournament.id, 'user')">
+                Join now
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
 
+      <div class="product-image">
+        <img src="{{ tournament.logo }}" alt="" />
 
-    <div class="control">
-      <span *ngIf="tournament.players != 1" class="select">
-        <select name="mods" #version [disabled]="tournament.state != 'open'">
-          <option [value]="1">My team</option>
-        </select>
-        <button class="btn" [disabled]="tournament.state != 'open'">
-          <span class="join" (click)="join(version.value)">Join now</span>
-        </button>
-      </span>
-      <span *ngIf="tournament.players == 1">
-        <button class="btn" [disabled]="tournament.state != 'open'">
-          <span class="join" (click)="join('user')">Join now</span>
-        </button>
-      </span>
-    </div>
-
-    </div>
-
-    <div class="product-image">
-
-      <img src="{{ tournament.logo }}" alt="">
-
-
-    <div class="info">
-      <ul>
-        <li><strong>Place : </strong>{{tournament.place}}</li>
-        <li><strong>Date : </strong>{{ tournament.date | date: "short" }}</li>
-        <li><strong>Capacity : </strong>{{tournament.capacity}}</li>
-        <li><strong>Mode: </strong>{{tournament.players/2}} vs. {{tournament.players/2}}</li>
-        <li><strong>Description: </strong>{{tournament.description}}</li>
-
-      </ul>
-    </div>
-    </div>
-
+        <div class="info">
+          <ul>
+            <li><strong>Place : </strong>{{ tournament.place }}</li>
+            <li>
+              <strong>Date : </strong>{{ tournament.date | date: "short" }}
+            </li>
+            <li><strong>Capacity : </strong>{{ tournament.capacity }}</li>
+            <li>
+              <strong>Mode: </strong>{{ tournament.players / 2 }} vs.
+              {{ tournament.players / 2 }}
+            </li>
+            <li><strong>Description: </strong>{{ tournament.description }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
