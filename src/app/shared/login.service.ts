@@ -59,15 +59,16 @@ export class LoginService {
       );
   }
 
-  profile(): Observable<User> {
-    return this.http.get<User>(`${baseUrl}` + 'user/profile', {
-      withCredentials: true,
-    });
-  }
-  saveUserToLocalStorage(user: User) {
-    this.userProfile.next(user);
-    localStorage.setItem('user-profile', JSON.stringify(user));
-  }
+	profile(): Observable<User> {
+		return this.http.get<User>(`${baseUrl}` + "user/profile", {
+			withCredentials: true,
+		});
+	}
+	saveUserToLocalStorage(user: User) {
+		this.userProfile.next(user);
+		localStorage.setItem("user-profile", JSON.stringify(user));
+    localStorage.setItem("userID", JSON.stringify(user.id));
+	}
 
   logout() {
     return this.http.get(baseUrl + 'logout', { withCredentials: true });

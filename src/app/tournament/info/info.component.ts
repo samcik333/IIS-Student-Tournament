@@ -26,4 +26,17 @@ export class InfoComponent implements OnInit {
         this.tournament = response;
       });
   }
+
+  join(id:string){
+    if(id == "user"){
+      id = localStorage.getItem('userID') || '';
+      console.log("Join user with id: " + id + " to the current tournament");
+    }else{
+      console.log("Join team with id: " + id + " to the current tournament");
+    }
+  }
+
+
+
+
 }

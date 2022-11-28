@@ -9,7 +9,7 @@
   </mat-sidenav>
 
   <!-- Content or body of your page-->
-  <mat-sidenav-content>
+  <mat-sidenav-content *ngIf="hasParticipants">
     <div *ngIf="teams && teams.length > 0">
       <table id="tab">
         <thead>
@@ -43,4 +43,11 @@
       </table>
     </div>
   </mat-sidenav-content>
+
+  <mat-dialog-content *ngIf="!hasParticipants">
+    <div class="not">No participants... Yet</div>
+  </mat-dialog-content>
+
+
+
 </mat-sidenav-container>

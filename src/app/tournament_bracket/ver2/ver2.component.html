@@ -1,37 +1,38 @@
-
+<!--
 <select name="mods" #version (change)="generateTree(version.value)" class="searchTerm">
   <option [value]="2">2 participants</option>
   <option [value]="4">4 participants</option>
   <option [value]="8">8 participants</option>
   <option [value]="16">16 participants</option>
 </select>
+-->
 
 
-<table class="spider">
-  <tbody>
-  <div *ngIf="v2">
+<table class="spider" *ngIf="bracketMatches && tournament">
+  <tbody *ngIf="bracketMatches.length == tournament.capacity/2">
+  <div *ngIf="v2" >
     <tr>
-      <td class="name">A</td>
-      <td class="score">1</td>
+      <td class="name">{{bracketMatches[0].TeamA}}</td>
+      <td class="score">{{bracketMatches[0].ScoreA}}</td>
     </tr>
 
     <tr>
-      <td class="name">B</td>
-      <td class="score">2</td>
+      <td class="name">{{bracketMatches[0].TeamB}}</td>
+      <td class="score">{{bracketMatches[0].ScoreB}}</td>
     </tr>
   </div>
 
-    <tr *ngIf="v4">
-      <td class="name">A</td>
-      <td class="score">1</td>
+    <tr *ngIf="v4 && bracketMatches.length > 0">
+      <td class="name">{{bracketMatches[0].TeamA}}</td>
+      <td class="score">{{bracketMatches[0].ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="v8" class="empty_short"> </td>
-      <td *ngIf="v8" class="empty_short"> </td>
-      <td *ngIf="v16" class="empty_long"> </td>
-      <td *ngIf="v16" class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_long"> </td>
+      <td class="empty_short"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -39,14 +40,14 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td class="name">B</td>
-      <td class="score">2</td>
+      <td class="name">{{bracketMatches[0].TeamB}}</td>
+      <td class="score">{{bracketMatches[0].ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="v8" class="empty_short"> </td>
-      <td *ngIf="v8" class="empty_short"> </td>
+      <td class="empty_short"> </td>
+      <td class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
