@@ -21,6 +21,7 @@ export class TeamComponent implements OnInit {
   owner!: string;
   teamData!: Team;
   loggedUser!: User;
+  isMember!: boolean;
 
   teamForm: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -66,6 +67,9 @@ export class TeamComponent implements OnInit {
   async showPlayers(id: string) {
     const players$ = this.teamService.getPlayers(id);
     this.playerList = await lastValueFrom(players$);
+    if (this.playerList.some((e) => e.id === this.loggedUser.id)) {
+      this.isMember = true;
+    }
   }
 
   async getOwner() {
