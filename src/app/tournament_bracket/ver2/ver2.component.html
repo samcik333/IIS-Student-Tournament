@@ -6,10 +6,20 @@
   <option [value]="16">16 participants</option>
 </select>
 -->
+<div *ngIf="tournament">
+  <button [hidden]="tournament.ownerId != userID" [disabled]="eightMatches.length > 0 && tournament.ownerId != userID" (click)="generateSchedule()" class="searchTerm">Generate</button>
+  <button [hidden]="tournament.ownerId != userID" [disabled]="final.length > 0 && tournament.ownerId != userID" (click)="evaluate()" class="searchTerm">Evaluate</button>
+</div>
 
-<button [disabled]="eightMatches.length > 0" (click)="generateSchedule()" class="searchTerm">Generate</button>
-<button (click)="evaluate()" class="searchTerm">Evaluate</button>
-
+<div class="overlay" *ngIf="popup">
+  <div class="popup">
+      <h2>Here i am</h2>
+      <a class="close" (click)="popup = false">&times;</a>
+      <div class="content">
+      you have selected this event
+      </div>
+  </div>
+</div>
 
 <table class="spider" *ngIf="render">
   <tbody>
@@ -26,7 +36,7 @@
   </div>
 
     <tr *ngIf="v4">
-      <td class="name">{{eightMatches[0]?.TeamA}}</td>
+      <td class="name" (click)="popup = true">{{eightMatches[0]?.TeamA}}</td>
       <td class="score">{{eightMatches[0]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
