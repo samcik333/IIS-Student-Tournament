@@ -2,7 +2,6 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {environment} from "src/environments/environment";
 import {Bracket} from "../model/bracket";
 import {Tournament} from "../model/tournament";
 
@@ -34,12 +33,9 @@ export class TournamentService {
 		return this.http.get<any[]>(`${endpoint}participants?id=${id}`);
 	}
 
-	delete(id: string, ownerId: string) {
+	delete(id: string, ownerId: number) {
 		return this.http.delete(
-			endpoint + `tournaments?id=${id}&owner=${ownerId}`,
-			{
-				withCredentials: true,
-			}
+			endpoint + `user/tournaments?id=${id}&owner=${ownerId}`
 		);
 	}
 
@@ -66,5 +62,11 @@ export class TournamentService {
 		return this.http.post(endpoint + "schedule", bracket, {
 			withCredentials: true,
 		});
+	}
+	update(data: any, tourId: number) {
+		return this.http.patch(
+			endpoint + `user/tournaments?id=${tourId}`,
+			data
+		);
 	}
 }

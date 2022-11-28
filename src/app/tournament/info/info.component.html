@@ -44,7 +44,7 @@
 
 
     <div class="control">
-      <span *ngIf="tournament.players != 1" class="select">
+      <span *ngIf="tournament.mode != 1" class="select">
         <select name="mods" #version [disabled]="tournament.state != 'open'">
           <option [value]="1">My team</option>
         </select>
@@ -52,7 +52,7 @@
           <span class="join" (click)="join(version.value)">Join now</span>
         </button>
       </span>
-      <span *ngIf="tournament.players == 1">
+      <span *ngIf="tournament.mode == 1">
         <button class="btn" [disabled]="tournament.state != 'open'">
           <span class="join" (click)="join('user')">Join now</span>
         </button>
@@ -71,7 +71,7 @@
         <li><strong>Place : </strong>{{tournament.place}}</li>
         <li><strong>Date : </strong>{{ tournament.date | date: "short" }}</li>
         <li><strong>Capacity : </strong>{{tournament.capacity}}</li>
-        <li><strong>Mode: </strong>{{tournament.players/2}} vs. {{tournament.players/2}}</li>
+        <li><strong>Mode: </strong>{{tournament.mode/2}} vs. {{tournament.mode/2}}</li>
         <li><strong>Description: </strong>{{tournament.description}}</li>
 
       </ul>

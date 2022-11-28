@@ -1,13 +1,9 @@
-.description {
-  width: 300px;
-}
-
 .mat-button {
   position: absolute;
   background-color: red;
   color: white;
   height: 35px;
-  top: 22px;
+  top: 20px;
   left: 575px;
   border-radius: 2em;
 }
@@ -15,14 +11,24 @@
 .label-name {
   position: absolute;
   left: 100px;
-  top: 28px;
+  top: 24px;
 }
 
 .label-capacity {
   position: absolute;
   left: 500px;
-  top: 22.5px;
-  border: 2px solid lightgrey;
+  top: 20px;
   border-radius: 2em;
-  padding: 5px;
+  padding: 8px;
+  background-color: lightgrey;
+}
+
+mat-card {
+  border: 2px solid #006dcc;
+  max-width: 700px;
+  margin: 5px;
+}
+mat-card:hover {
+  border: 2px solid #006dcc;
+  background: lightskyblue;
 }
