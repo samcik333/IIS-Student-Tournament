@@ -21,10 +21,12 @@ export class UserService {
       withCredentials: true,
     });
   }
-  
-  getUserById(id:string):Observable<User> {
-		return this.http.get<User>(baseUrl + "user/" + id, {withCredentials: true});
-	}
+
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(endpoint + 'user/' + id, {
+      withCredentials: true,
+    });
+  }
 
   updateUser(data: any) {
     return this.http.patch<User>(endpoint + `user/profile`, data, {
