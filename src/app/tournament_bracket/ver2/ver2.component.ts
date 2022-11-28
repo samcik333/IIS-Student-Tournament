@@ -19,110 +19,113 @@ import {UserService} from "src/app/shared/user.service";
 	styleUrls: ["./ver2.component.css"],
 })
 export class Ver2Component implements OnInit {
-	contactForm!: FormGroup;
-	v2: boolean = false;
-	v4: boolean = false;
-	v8: boolean = false;
-	v16: boolean = false;
+  contactForm!:FormGroup;
+  v2:boolean = false;
+  v4:boolean = false;
+  v8:boolean = false;
+  v16:boolean = false;
+  render:boolean = false;
 
-	myParam!: string;
-	tournament!: Tournament;
-	match!: Match;
-	participantA!: string;
-	participantB!: string;
-	TeamA!: Team;
-	TeamB!: Team;
-	UserA!: User;
-	UserB!: User;
-	participants!: any[];
-	spider = new Bracket();
-	bracketMatches: Array<myMatch> = [];
 
-	constructor(
-		public fb: FormBuilder,
-		public restTournaments: TournamentService,
-		public route: ActivatedRoute,
-		public restMatch: MatchService,
-		public restUser: UserService,
-		public restTeam: TeamService
-	) {
-		this.spider.quarterfinals = [];
-	}
+  myParam!:string;
+  tournament!:Tournament;
+  match!:Match;
+  participantA!:string;
+  participantB!:string;
+  TeamA!:Team;
+  TeamB!:Team;
+  UserA!:User;
+  UserB!:User;
+  participants!:any[];
+  spider = new Bracket();
 
-	async ngOnInit(): Promise<void> {
-		///Get Tournament by ID
-		this.route.params.subscribe(
-			(params: Params) => (this.myParam = params["id"])
-		);
-		this.restTournaments
-			.find(this.myParam)
-			.subscribe((response: Tournament) => {
-				this.tournament = response;
-			});
-		///Get Tournament by ID
+  eightMatches: Array<myMatch> = [];
+  quarterMatches: Array<myMatch> = [];
+  semiMatches: Array<myMatch> = [];
+  final: Array<myMatch> = [];
+  bronze: Array<myMatch> = [];
+  
 
-		///Get TournamentBracket by IDofTournament
-		const bracket$ = this.restTournaments.getBracket(this.myParam);
-		this.spider = await lastValueFrom(bracket$);
-		///Get TournamentBracket by IDofTournament
+  constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
+    this.spider.eightfinals = [];
+    this.spider.quarterfinals = [];
+    this.spider.semifinals = [];
+    this.spider.bronze = [];
+    this.spider.final = [];
+  }
 
-		///Generate spider depends on capacity
-		this.generateTree(this.tournament.mode.toString());
-		///Generate spider depends on capacity
+  async ngOnInit(): Promise<void> {
+    ///Get Tournament by ID
+    this.route.params.subscribe((params: Params) => this.myParam = params['id']);
+    this.restTournaments.find(this.myParam).subscribe(async (response:Tournament) => {
+      this.tournament = response;
+    });
 
-		///Generate BracketMatches
-		if (this.spider.quarterfinals.length > 0) {
-			this.spider.quarterfinals.forEach(async (element) => {
-				const mat$ = this.restMatch.getMatch(element);
-				this.match = await lastValueFrom(mat$);
-				const scoreA = this.match.firstScore;
-				const scoreB = this.match.secondScore;
-				if (this.tournament.mode == 1) {
-					const userA$ = this.restUser.getUserById(
-						this.match.firstTeam.toString()
-					);
-					const userB$ = this.restUser.getUserById(
-						this.match.secondTeam.toString()
-					);
-					this.UserA = await lastValueFrom(userA$);
-					this.UserB = await lastValueFrom(userB$);
-					this.participantA = this.UserA.username;
-					this.participantB = this.UserB.username;
-				} else {
-					const teamA$ = this.restTeam.findTeam(
-						this.match.firstTeam.toString()
-					);
-					const teamB$ = this.restTeam.findTeam(
-						this.match.secondTeam.toString()
-					);
-					this.TeamA = await lastValueFrom(teamA$);
-					this.TeamB = await lastValueFrom(teamB$);
-					this.participantA = this.TeamA.name;
-					this.participantB = this.TeamB.name;
-				}
-				let a: myMatch = {
-					TeamA: this.participantA,
-					TeamB: this.participantB,
-					ScoreA: scoreA,
-					ScoreB: scoreB,
-				};
-				this.bracketMatches.push(a);
-			});
-		}
-		///Generate BracketMatches
+    ///Get TournamentBracket by IDofTournament
+      const bracket$ = this.restTournaments.getBracket(this.myParam);
+      this.spider = await lastValueFrom(bracket$);
+      console.log(this.tournament,this.spider);
+    ///Get TournamentBracket by IDofTournament
 
-		///Get participants
-		//const participants$ = this.restTournaments.getParticipants(this.myParam);
-		//this.participants.push(lastValueFrom(participants$));
-		///Get participants
-	}
+    ///Generate spider depends on capacity
+      this.generateTree((this.tournament.capacity).toString());
+    ///Generate spider depends on capacity
 
-	async createSchedule() {
-		this.spider.quarterfinals = this.shuffle(this.spider.quarterfinals);
-		this.restTournaments.updateSchedule(this.spider);
-	}
+    this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
+    this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
+    this.createBracketMatches(this.spider.semifinals, this.semiMatches);
+    this.createBracketMatches(this.spider.bronze, this.bronze);
+    this.createBracketMatches(this.spider.final, this.final);
 
-	async createBracketMatches() {}
+    this.render=true;
+    ///Get Tournament by ID
+  }
+
+  async createSchedule(){
+    this.spider.quarterfinals = this.shuffle(this.spider.quarterfinals);
+    this.restTournaments.updateSchedule(this.spider);
+  }
+
+  async createBracketMatches(spider_array:string[], matches:Array<myMatch>){
+    ///Generate BracketMatches
+    if(spider_array.length > 0){
+      spider_array.forEach(async element => {
+        const mat$ = this.restMatch.getMatch(element);
+        this.match = await lastValueFrom(mat$);
+        const scoreA = this.match.firstScore;
+        const scoreB = this.match.secondScore;
+        if(this.tournament.players == 1){
+          const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
+          const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
+          this.UserA = (await lastValueFrom(userA$));
+          this.UserB = (await lastValueFrom(userB$));
+          this.participantA = this.UserA.username;
+          this.participantB = this.UserB.username;
+        }else{
+          const teamA$ = this.restTeam.findTeam((this.match.firstTeam).toString());
+          const teamB$ = this.restTeam.findTeam((this.match.secondTeam).toString());
+          this.TeamA = await lastValueFrom(teamA$);
+          this.TeamB = await lastValueFrom(teamB$);
+          this.participantA = this.TeamA.name;
+          this.participantB = this.TeamB.name;
+        }
+        let a: myMatch = {
+          TeamA: this.participantA,
+          TeamB: this.participantB,
+          ScoreA: scoreA,
+          ScoreB: scoreB
+        }
+        matches.push(a);
+      });
+    }
+  }
+
+  generateSchedule(){
+
+  }
+
+  evaluate(){
+  }
 
 	generateTree(data: string) {
 		const value = parseInt(data);

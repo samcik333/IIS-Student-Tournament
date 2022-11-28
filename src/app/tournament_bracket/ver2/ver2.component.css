@@ -56,3 +56,10 @@
   outline: none;
   color: #006dcc;
 }
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed; 
+}
