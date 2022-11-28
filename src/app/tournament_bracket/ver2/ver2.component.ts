@@ -24,6 +24,7 @@ export class Ver2Component implements OnInit {
   v4:boolean = false;
   v8:boolean = false;
   v16:boolean = false;
+  render:boolean = false;
 
 
   myParam!:string;
@@ -37,32 +38,58 @@ export class Ver2Component implements OnInit {
   UserB!:User;
   participants!:any[];
   spider = new Bracket();
-  bracketMatches: Array<myMatch> = [];
+
+  eightMatches: Array<myMatch> = [];
+  quarterMatches: Array<myMatch> = [];
+  semiMatches: Array<myMatch> = [];
+  final: Array<myMatch> = [];
+  bronze: Array<myMatch> = [];
+  
 
   constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
+    this.spider.eightfinals = [];
     this.spider.quarterfinals = [];
+    this.spider.semifinals = [];
+    this.spider.bronze = [];
+    this.spider.final = [];
   }
 
   async ngOnInit(): Promise<void> {
     ///Get Tournament by ID
     this.route.params.subscribe((params: Params) => this.myParam = params['id']);
-    this.restTournaments.find(this.myParam).subscribe((response:Tournament) => {
+    this.restTournaments.find(this.myParam).subscribe(async (response:Tournament) => {
       this.tournament = response;
     });
+
+    ///Get TournamentBracket by IDofTournament
+      const bracket$ = this.restTournaments.getBracket(this.myParam);
+      this.spider = await lastValueFrom(bracket$);
+      console.log(this.tournament,this.spider);
+    ///Get TournamentBracket by IDofTournament
+
+    ///Generate spider depends on capacity
+      this.generateTree((this.tournament.capacity).toString());
+    ///Generate spider depends on capacity
+
+    this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
+    this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
+    this.createBracketMatches(this.spider.semifinals, this.semiMatches);
+    this.createBracketMatches(this.spider.bronze, this.bronze);
+    this.createBracketMatches(this.spider.final, this.final);
+
+    this.render=true;
     ///Get Tournament by ID
+  }
 
-    ///Get TournamentBracket by IDofTournament
-    const bracket$ = this.restTournaments.getBracket(this.myParam);
-    this.spider = await lastValueFrom(bracket$);
-    ///Get TournamentBracket by IDofTournament
+  async createSchedule(){
+    this.spider.quarterfinals = this.shuffle(this.spider.quarterfinals);
+    this.restTournaments.updateSchedule(this.spider);
+  }
 
-     ///Generate spider depends on capacity
-     this.generateTree((this.tournament.players).toString());
-     ///Generate spider depends on capacity
-
+  async createBracketMatches(spider_array:string[], matches:Array<myMatch>){
     ///Generate BracketMatches
-    if(this.spider.quarterfinals.length > 0){
-      this.spider.quarterfinals.forEach(async element => {
+    if(spider_array.length > 0){
+      spider_array.forEach(async element => {
         const mat$ = this.restMatch.getMatch(element);
         this.match = await lastValueFrom(mat$);
         const scoreA = this.match.firstScore;
@@ -88,24 +115,16 @@ export class Ver2Component implements OnInit {
           ScoreA: scoreA,
           ScoreB: scoreB
         }
-        this.bracketMatches.push(a);
+        matches.push(a);
       });
     }
-    ///Generate BracketMatches
-    
-    ///Get participants
-    //const participants$ = this.restTournaments.getParticipants(this.myParam);
-    //this.participants.push(lastValueFrom(participants$));
-    ///Get participants
+  }
+
+  generateSchedule(){
 
   }
 
-  async createSchedule(){
-    this.spider.quarterfinals = this.shuffle(this.spider.quarterfinals);
-    this.restTournaments.updateSchedule(this.spider);
-  }
-
-  async createBracketMatches(){
+  evaluate(){
 
   }
 
