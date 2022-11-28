@@ -34,8 +34,7 @@ export class Ver2Component implements OnInit {
   spider = new Bracket();
   bracketMatches!: Array<myMatch>;
 
-  constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, 
-    public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
+  constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
     this.spider.quarterfinals = [];
   }
 
@@ -76,6 +75,7 @@ export class Ver2Component implements OnInit {
           ScoreA: scoreA,
           ScoreB: scoreB
         }
+        console.log(a);
         this.bracketMatches.push(a);
       });
     }
