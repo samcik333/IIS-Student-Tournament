@@ -1,4 +1,4 @@
-.spider{
+.spider {
   margin: 5%;
   padding: 5%;
   width: 80%;
@@ -6,7 +6,7 @@
   border-radius: 5px;
 }
 
-.name{
+.name {
   height: 40px;
   width: 200px;
   border: 3px solid #17499f;
@@ -15,7 +15,7 @@
   color: whitesmoke
 }
 
-.score{
+.score {
   flex-basis: 20%;
   height: 40px;
   width: 50px;
@@ -26,29 +26,29 @@
   text-align: center;
 }
 
-.empty_short{
+.empty_short {
   height: 40px;
   width: 50px;
 }
 
-.empty_long{
+.empty_long {
   height: 40px;
   width: 200px;
 }
 
-.border_top{
+.border_top {
   border-top: 3px solid #17499f;
 }
 
-.border_down{
-  border-bottom: 3px solid #17499f;;
+.border_down {
+  border-bottom: 3px solid #17499f;
 }
 
-.border_left{
-  border-left: 3px solid #17499f;;
+.border_left {
+  border-left: 3px solid #17499f;
 }
 
-.border_right{
+.border_right {
   border-right: 3px solid #17499f;
 }
 
@@ -68,7 +68,7 @@ button:disabled,
 button[disabled]{
   background-color: #cccccc;
   color: #666666;
-  cursor: not-allowed; 
+  cursor: not-allowed;
 }
 
 .overlay {
@@ -79,10 +79,9 @@ button[disabled]{
   right: 0;
   background: rgba(0, 0, 0, 0.7);
   transition: opacity 500ms;
-visibility: visible;
+  visibility: visible;
   opacity: 1;
 }
-
 
 .popup {
   margin: 70px auto;
@@ -118,9 +117,8 @@ visibility: visible;
   overflow: auto;
 }
 
-@media screen and (max-width: 700px){
-
-  .popup{
+@media screen and (max-width: 700px) {
+  .popup {
     width: 70%;
   }
 }
