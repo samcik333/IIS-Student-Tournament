@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Params, Route} from "@angular/router";
 import * as e from "express";
-import {lastValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 import {myMatch} from "src/app/interface/myMatch";
 import {Bracket} from "src/app/model/bracket";
 import {Match} from "src/app/model/match";
@@ -38,6 +38,9 @@ export class Ver2Component implements OnInit {
   TeamB!:Team;
   UserA!:User;
   UserB!:User;
+  IDA!:number;
+  IDB!:number;
+  spiderID!:number;
   participants!:any;
   matches!:any;
   spider = new Bracket();
@@ -49,11 +52,6 @@ export class Ver2Component implements OnInit {
   bronze: Array<myMatch> = [];
 
   constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
-    this.spider.eightfinals = [];
-    this.spider.quarterfinals = [];
-    this.spider.semifinals = [];
-    this.spider.bronze = [];
-    this.spider.final = [];
   }
 
   async ngOnInit(): Promise<void> {
@@ -74,16 +72,19 @@ export class Ver2Component implements OnInit {
   async fillBracket(){
     const bracket$ = this.restTournaments.getBracket(this.myParam);
     this.spider = await lastValueFrom(bracket$);
-    this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
-    this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
-    this.createBracketMatches(this.spider.semifinals, this.semiMatches);
-    this.createBracketMatches(this.spider.bronze, this.bronze);
-    this.createBracketMatches(this.spider.final, this.final);
+    if(this.spider){
+      this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
+      this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
+      this.createBracketMatches(this.spider.semifinals, this.semiMatches);
+      this.createBracketMatches(this.spider.bronze, this.bronze);
+      this.createBracketMatches(this.spider.final, this.final);
+    }
   }
   
   async updateSchedule(){
-    this.restTournaments.updateSchedule(this.spider);
-    await this.fillBracket();
+    const ip$ = this.restTournaments.updateSchedule(this.spider);
+    console.log(lastValueFrom(ip$));
+    this.ngOnInit();
   }
 
   async createBracketMatches(spider_array:string[], matches:Array<myMatch>){
@@ -95,6 +96,7 @@ export class Ver2Component implements OnInit {
         this.match = await lastValueFrom(mat$);
         const scoreA = this.match.firstScore;
         const scoreB = this.match.secondScore;
+        const order = this.match.order;
         if(this.tournament.mode == 1){
           const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
           const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
@@ -103,6 +105,8 @@ export class Ver2Component implements OnInit {
           this.UserB = (await lastValueFrom(userB$));
           this.participantA = this.UserA.username;
           this.participantB = this.UserB.username;
+          this.IDA = this.UserA.id;
+          this.IDB = this.UserB.id;
         }else{
           const teamA$ = this.restTeam.findTeam((this.match.firstTeam).toString());
           const teamB$ = this.restTeam.findTeam((this.match.secondTeam).toString());
@@ -111,14 +115,20 @@ export class Ver2Component implements OnInit {
           this.TeamB = await lastValueFrom(teamB$);
           this.participantA = this.TeamA.name;
           this.participantB = this.TeamB.name;
+          this.IDA = this.TeamA.id;
+          this.IDB = this.TeamB.id;
         }
         let a: myMatch = {
+          order: order,
+          idA: this.IDA,
+          idB: this.IDB,
           TeamA: this.participantA,
           TeamB: this.participantB,
           ScoreA: scoreA,
           ScoreB: scoreB
         }
         matches.push(a);
+        matches.sort((a,b) => a.order - b.order);
       });
     }
   }
@@ -133,30 +143,93 @@ export class Ver2Component implements OnInit {
       this.participants = this.participants.result.users;
     }
     this.participants = this.shuffle(this.participants);
+    let order = 0;
     for (let i = 0; i < this.participants.length; i+=2) {
       const match = {
         date: new Date(),
         tournamentId: this.myParam,
         firstTeam: this.participants[i].id,
         secondTeam: this.participants[i+1].id,
-      }
-      this.restMatch.create(match).subscribe();
+        order: order++,
+      };
+      console.log(match);
+      const $mat = this.restMatch.create(match);
+      this.match = await lastValueFrom($mat);
+      this.spider.eightfinals.push((this.match.id).toString());
     }
-    const match$ = this.restMatch.getAll(parseInt(this.myParam));
-    this.matches = await lastValueFrom(match$);
-    this.matches.forEach((element:Match) => {
-      this.spider.eightfinals.push((element.id).toString());
-    });
-    await this.updateSchedule();
-    return;
+    this.restTournaments.updateSchedule(this.spider).subscribe();
+    this.ngOnInit();
   }
 
   evaluate(){
-    this.eightMatches.forEach(element => {
-      if(element.ScoreA > 0 || element.ScoreB > 0){
-
+    if(this.quarterMatches){
+      this.quarterMatches =  [new myMatch,new myMatch,new myMatch,new myMatch];
+      let counter = 0;
+      let pair = true;
+      for (let i = 0; i < this.eightMatches.length; i++) {
+        if(pair){
+          if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
+            this.quarterMatches[counter].TeamA = this.eightMatches[i].TeamA;
+          }else if(this.eightMatches[i].ScoreA < this.eightMatches[i].ScoreB){
+            this.quarterMatches[counter].TeamA = this.eightMatches[i].TeamB;
+          }
+          pair = false;
+        }else if(!pair){
+          if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
+            this.quarterMatches[counter].TeamB = this.eightMatches[i].TeamA;
+          }else if(this.eightMatches[i].ScoreA < this.eightMatches[i].ScoreB){
+            this.quarterMatches[counter].TeamB = this.eightMatches[i].TeamB;
+          }
+          pair = true;
+          counter++;
+        }
       }
-    });
+    }
+    if(this.semiMatches){
+      this.semiMatches =  [new myMatch,new myMatch];
+      let counter = 0;
+      let pair = true;
+      for (let i = 0; i < this.quarterMatches.length; i++) {
+        if(pair){
+          if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
+            this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamA;
+          }else if(this.quarterMatches[i].ScoreA < this.quarterMatches[i].ScoreB){
+            this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamB;
+          }
+          pair = false;
+        }else if(!pair){
+          if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
+            this.semiMatches[counter].TeamB = this.quarterMatches[i].TeamA;
+          }else if(this.quarterMatches[i].ScoreA < this.quarterMatches[i].ScoreB){
+            this.semiMatches[counter].TeamB = this.eightMatches[i].TeamB;
+          }
+          pair = true;
+          counter++;
+        }
+      }
+    }
+    if(this.final && this.bronze){
+      this.final =  [new myMatch];
+      this.bronze =  [new myMatch];
+      if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
+        this.final[0].TeamA = this.semiMatches[0].TeamA;
+        this.bronze[0].TeamA = this.semiMatches[0].TeamB;
+      }else if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
+        this.final[0].TeamA = this.semiMatches[0].TeamB;
+        this.bronze[0].TeamA = this.semiMatches[0].TeamA;
+      }
+      if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
+        this.final[0].TeamB = this.semiMatches[1].TeamA;
+        this.bronze[0].TeamB = this.semiMatches[1].TeamB;
+      }else if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
+        this.final[0].TeamB = this.semiMatches[1].TeamB;
+        this.bronze[0].TeamB = this.semiMatches[1].TeamA;
+      }
+    }
+  }
+
+  saveMatch(matchA:Match,scoreA:number,matchB:Match,scoreB:number){
+
   }
 
 	generateTree(data: string) {
