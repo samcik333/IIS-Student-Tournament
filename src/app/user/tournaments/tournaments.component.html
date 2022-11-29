@@ -152,19 +152,34 @@
           My Tournaments
         </div>
 
-        <mat-card *ngFor="let tournament of tournaments" (click)="onSelect(tournament.id)">
+        <mat-card
+        *ngFor="let tour of tournaments"
+        [style.cursor]="'pointer'"
+        [style.margin]="'0 0 4px 3rem'"
+      >
+        <mat-card-content (click)="onSelect(tour.id)">
           <mat-card-header>
             <mat-card-title-group >
               <img
                 mat-card-avatar
-                src="{{tournament.logo}}"
+                src="{{tour.logo}}"
               />
-              <mat-card-title class="label-name">{{tournament.name}}</mat-card-title>
-              <mat-card-content class="label-capacity">2/{{tournament.capacity}}</mat-card-content>
-              <mat-card-actions><button (click)="onDelete(tournament.id)" mat-button>Delete</button></mat-card-actions>
+              <mat-card-title class="label-name">{{tour.name}}</mat-card-title>
+              <mat-card-content class="label-capacity">{{tour.numberOfPlayers}}/{{tour.capacity}}</mat-card-content>
+              <mat-card-actions></mat-card-actions>
             </mat-card-title-group>
           </mat-card-header>
-        </mat-card>
+        </mat-card-content>
+        <mat-card-footer>
+          <button
+            *ngIf="this.loggedUser.id == tour.ownerId"
+            mat-button
+            (click)="onDelete(tour.id)"
+          >
+            Delete
+          </button>
+        </mat-card-footer>
+      </mat-card>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

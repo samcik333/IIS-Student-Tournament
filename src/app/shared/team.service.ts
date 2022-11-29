@@ -20,6 +20,12 @@ export class TeamService {
 		});
 	}
 
+	getOwnedTeams(): Observable<Team[]> {
+		return this.http.get<Team[]>(endpoint + `ownedTeams`, {
+			withCredentials: true,
+		});
+	}
+
 	getPlayers(id: string): Observable<User[]> {
 		return this.http.get<User[]>(endpoint + `teamPlayerList/` + id);
 	}
