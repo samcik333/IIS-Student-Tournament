@@ -6,5 +6,6 @@ export class Match {
     secondScore: number = 0;
     firstTeam!: number;
     secondTeam!: number;
+    order!: number;
   }
   
