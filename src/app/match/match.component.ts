@@ -35,7 +35,7 @@ export class MatchComponent implements OnInit {
     const valueA = this.matchFormA.value;
     this.match.firstScore = valueA.scoreA;
     const valueB = this.matchFormB.value;
-    this.match.secondScore = valueB;
+    this.match.secondScore = valueB.scoreB;
     this.restMatch.update(this.match).subscribe();
   }
 
