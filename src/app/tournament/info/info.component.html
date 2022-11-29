@@ -89,7 +89,7 @@
             <li>
               <strong>Date : </strong>{{ tournament.date | date: "short" }}
             </li>
-            <li><strong>Capacity : </strong>{{ tournament.capacity }}</li>
+            <li><strong>Capacity : </strong>{{ tournament.numberOfPlayers }}/{{ tournament.capacity }}</li>
             <li>
               <strong>Mode: </strong>{{ tournament.mode }} vs.
               {{ tournament.mode }}

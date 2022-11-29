@@ -58,7 +58,7 @@
           >
             <p>{{ tournament.date | date: "short" }}</p>
             <p>Mode: {{ tournament.mode }} vs. {{ tournament.mode }}</p>
-            <p>Capacity: {{ tournament.capacity }}</p>
+            <p>Capacity: {{ tournament.numberOfPlayers }}/{{ tournament.capacity }}</p>
           </mat-card-content>
         </div>
       </div>
