@@ -1,4 +1,6 @@
-<mat-sidenav-container>
+<mat-sidenav-container
+  *ngIf="this.loggedUser.username == 'admin'; else notFound"
+>
   <!-- This is your sidenav -->
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
@@ -62,3 +64,7 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #notFound>
+  <div class="not">Nice try</div>
+</ng-template>

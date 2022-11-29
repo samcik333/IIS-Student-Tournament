@@ -62,3 +62,12 @@ mat-card:hover {
   border: 2px solid #006dcc;
   background: lightskyblue;
 }
+
+.not {
+  font-size: 100px;
+  font-family: "SF Pro";
+  font-weight: bold;
+  text-align: center;
+  margin-top: 300px;
+  color: #006dcc;
+}
