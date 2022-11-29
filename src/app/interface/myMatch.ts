@@ -1,6 +1,10 @@
-export interface myMatch {
-  TeamA:string;
-  TeamB:string;
-  ScoreA:number;
-  ScoreB:number;
+export class myMatch {
+  id!:number;
+  order!:number;
+  TeamA!:string;
+  TeamB!:string;
+  ScoreA!:number;
+  ScoreB!:number;
+  idA!:number;
+  idB!:number;
 }

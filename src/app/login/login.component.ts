@@ -52,9 +52,11 @@ export class LoginComponent implements OnInit {
           this.adminInfo();
         }
       },
+
       error: (e: HttpErrorResponse) => {
         console.log(e);
         this.helperService.openSnackBarWarn('Invalid username or password');
+
         this.invalidCredentials = true;
         setTimeout(() => {
           this.invalidCredentials = false;

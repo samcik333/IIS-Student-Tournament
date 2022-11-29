@@ -16,9 +16,17 @@ export class MatchService {
     return this.http.get<Match>(baseUrl + 'match/' + id);
   }
 
-  create(match: any): Observable<any> {
-    return this.http.post(baseUrl + 'match/create', match, {
-      withCredentials: true,
-    });
-  }
+	create(match:any): Observable<Match>{
+		return this.http.post<Match>(baseUrl + "match/create", match, {
+			withCredentials: true,
+		});
+	}
+
+	getAll(tournamentId:number):Observable<any>{
+		return this.http.get<any>(baseUrl + "matches/" + tournamentId);
+	}
+
+	update(match: Match) {
+		return this.http.put<any>(`${baseUrl}match/update`, match);
+	}
 }
