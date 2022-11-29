@@ -11,17 +11,21 @@
   <!-- Content or body of your page-->
   <mat-sidenav-content *ngIf="hasParticipants">
     <div *ngIf="teams && teams.length > 0">
+
       <table id="tab">
         <thead>
           <th></th>
           <th>Logo</th>
           <th>Name</th>
+          <th>Remove</th>
         </thead>
         <tbody>
           <tr *ngFor="let team of teams; let i = index">
+
             <td [style.width]="'1cm'"><a [routerLink]="['/team', team.id]">{{i+1}}</a></td>
             <td [style.width]="'4cm'"><a [routerLink]="['/team', team.id]"><img src="{{ team.logo }}"></a></td>
-            <td><a [routerLink]="['/team', team.id]">{{team.name}}</a></td>
+            <td ><a [routerLink]="['/team', team.id]">{{team.name}}</a></td>
+            <td ><button mat-button (click)="onDeleteTeam(tournament.id,team.id)" *ngIf="this.loggedUser.id == team.ownerId"> Delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -32,12 +36,14 @@
           <th></th>
           <th>Photo</th>
           <th>Name</th>
+          <th>Remove</th>
         </thead>
         <tbody>
           <tr *ngFor="let user of users; let i = index">
             <td [style.width]="'1cm'"><a [routerLink]="['/user', user.id]">{{i+1}}</a></td>
             <td [style.width]="'4cm'"><a [routerLink]="['/user', user.id]"><img src="{{ user.photo }}"></a></td>
             <td><a [routerLink]="['/user', user.id]">{{user.username}}</a></td>
+            <td ><button mat-button (click)="onDeleteUser(tournament.id,user.id)" *ngIf="this.loggedUser.id == user.id"> Delete</button></td>
           </tr>
         </tbody>
       </table>

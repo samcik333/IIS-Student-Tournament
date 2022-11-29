@@ -14,17 +14,17 @@ const endpoint = `http://localhost:5005/`;
 export class TeamService {
 	constructor(private http: HttpClient, private router: Router) {}
 
-  getTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(endpoint + `teams`, {
-      withCredentials: true,
-    });
-  }
+	getTeams(): Observable<Team[]> {
+		return this.http.get<Team[]>(endpoint + `teams`, {
+			withCredentials: true,
+		});
+	}
 
-  getOwnedTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(endpoint + `ownedTeams`, {
-      withCredentials: true,
-    });
-  }
+	getOwnedTeams(): Observable<Team[]> {
+		return this.http.get<Team[]>(endpoint + `ownedTeams`, {
+			withCredentials: true,
+		});
+	}
 
 	getPlayers(id: string): Observable<User[]> {
 		return this.http.get<User[]>(endpoint + `teamPlayerList/` + id);
@@ -53,11 +53,11 @@ export class TeamService {
 		});
 	}
 
-  create(data: any): Observable<any> {
-    return this.http.post(endpoint + `teams`, data, {
-      withCredentials: true,
-    });
-  }
+	create(data: any): Observable<any> {
+		return this.http.post(endpoint + `teams`, data, {
+			withCredentials: true,
+		});
+	}
 
 	findTeam(id: string): Observable<Team> {
 		return this.http.get<Team>(endpoint + "team/" + id);
