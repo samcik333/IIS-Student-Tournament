@@ -7,7 +7,7 @@ import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { User } from '../model/user';
 
-const baseUrl = `http://localhost:5005/`;
+const baseUrl = `https://sjsquad.herokuapp.com/`;
 
 @Injectable({
   providedIn: 'root',
@@ -59,16 +59,16 @@ export class LoginService {
       );
   }
 
-	profile(): Observable<User> {
-		return this.http.get<User>(`${baseUrl}` + "user/profile", {
-			withCredentials: true,
-		});
-	}
-	saveUserToLocalStorage(user: User) {
-		this.userProfile.next(user);
-		localStorage.setItem("user-profile", JSON.stringify(user));
-    localStorage.setItem("userID", JSON.stringify(user.id));
-	}
+  profile(): Observable<User> {
+    return this.http.get<User>(`${baseUrl}` + 'user/profile', {
+      withCredentials: true,
+    });
+  }
+  saveUserToLocalStorage(user: User) {
+    this.userProfile.next(user);
+    localStorage.setItem('user-profile', JSON.stringify(user));
+    localStorage.setItem('userID', JSON.stringify(user.id));
+  }
 
   logout() {
     return this.http.get(baseUrl + 'logout', { withCredentials: true });
