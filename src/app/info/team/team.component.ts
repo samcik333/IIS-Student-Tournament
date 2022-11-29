@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Team } from 'src/app/model/team';
 import { User } from 'src/app/model/user';
+import { HelperService } from 'src/app/shared/helper.service';
 import { LoginService } from 'src/app/shared/login.service';
 import { TeamService } from 'src/app/shared/team.service';
 
@@ -34,9 +34,9 @@ export class TeamComponent implements OnInit {
   constructor(
     private teamService: TeamService,
     private loginService: LoginService,
+    private helperService: HelperService,
     private route: ActivatedRoute,
-    router: Router,
-    private snackBar: MatSnackBar
+    router: Router
   ) {
     this.router = router;
   }
@@ -54,10 +54,6 @@ export class TeamComponent implements OnInit {
 
     this.getOwner();
     this.showPlayers(this.myParam);
-  }
-
-  openSnackBar(errMessage: string) {
-    this.snackBar.open(errMessage, '', { duration: 2500 });
   }
 
   fillUpData(team: Team) {
@@ -91,7 +87,7 @@ export class TeamComponent implements OnInit {
       },
       error: (e) => {
         console.log(e);
-        this.openSnackBar(e.error.message);
+        this.helperService.openSnackBarWarn(e.error.message);
       },
     });
     this.userForm.reset();
@@ -120,7 +116,7 @@ export class TeamComponent implements OnInit {
       },
       error: (e) => {
         console.log(e);
-        this.openSnackBar(e.error.message);
+        this.helperService.openSnackBarWarn(e.error.message);
       },
     });
   }
