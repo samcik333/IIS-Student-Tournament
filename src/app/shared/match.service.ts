@@ -27,4 +27,8 @@ export class MatchService {
 	getAll(tournamentId:number):Observable<any>{
 		return this.http.get<any>(baseUrl + "matches/" + tournamentId);
 	}
+
+	update(match: Match) {
+		return this.http.put<any>(`${baseUrl}match/update`, match);
+	}
 }

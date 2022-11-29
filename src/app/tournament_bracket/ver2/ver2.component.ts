@@ -1,9 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import {ActivatedRoute, Params, Route} from "@angular/router";
 import * as e from "express";
 import {firstValueFrom, lastValueFrom} from "rxjs";
 import {myMatch} from "src/app/interface/myMatch";
+import { MatchComponent } from "src/app/match/match.component";
 import {Bracket} from "src/app/model/bracket";
 import {Match} from "src/app/model/match";
 import {Team} from "src/app/model/team";
@@ -51,7 +53,7 @@ export class Ver2Component implements OnInit {
   final: Array<myMatch> = [];
   bronze: Array<myMatch> = [];
 
-  constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService) { 
+  constructor(public fb:FormBuilder, public restTournaments:TournamentService, public route:ActivatedRoute, public restMatch:MatchService, public restUser:UserService, public restTeam:TeamService, public dialog:MatDialog) { 
   }
 
   async ngOnInit(): Promise<void> {
@@ -122,6 +124,7 @@ export class Ver2Component implements OnInit {
           order: order,
           idA: this.IDA,
           idB: this.IDB,
+          id: this.match.id,
           TeamA: this.participantA,
           TeamB: this.participantB,
           ScoreA: scoreA,
@@ -270,4 +273,15 @@ export class Ver2Component implements OnInit {
 		}
 		return a;
 	}
+
+  openPOP(id:number){
+    const loginConfig = new MatDialogConfig();
+		loginConfig.disableClose = false;
+		loginConfig.autoFocus = true;
+		loginConfig.width = "30%";
+    loginConfig.height = "40%";
+    loginConfig.data = id;
+		this.dialog.open(MatchComponent, loginConfig);
+    this.ngOnInit();
+  }
 }

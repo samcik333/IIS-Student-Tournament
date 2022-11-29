@@ -1,0 +1,44 @@
+<div>
+    <mat-toolbar color="primary">
+      <span class="fill-remaining-space"></span>
+      <span>Enter SCORE</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  </div>
+  
+    <mat-grid-list cols="2" rowHeight="200px">
+      <mat-grid-tile>
+        <div class="controles-container">
+            <p>TeamA</p>
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter score</mat-label>
+                  <form [formGroup]="matchFormA"><input matInput placeholder="Score" formControlName="scoreA" required></form>
+                </mat-form-field>
+            </div>
+        </div>
+      </mat-grid-tile>
+        <mat-grid-tile>  
+        <div class="controles-container">    
+            <p>TeamB</p>
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Enter score</mat-label>
+                  <form [formGroup]="matchFormB"><input matInput placeholder="Score" formControlName="scoreB" required></form>
+                </mat-form-field>
+              </div>
+          <div [style.margin-top]="'3em'">
+            <button
+              class="center"
+              mat-raised-button
+              [style.width]="'100px'"
+              (click)="onSubmit()"
+              style="position:absolute; top: 150px"
+            >
+              Save
+            </button>
+          </div>
+        </div></mat-grid-tile>
+    </mat-grid-list>
+  
+  
