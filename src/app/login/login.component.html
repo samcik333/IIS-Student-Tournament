@@ -7,9 +7,6 @@
 </div>
 
 <form [formGroup]="loginGroup">
-  <div *ngIf="invalidCredentials" [style.color]="'red'">
-    <span>Invalid Email or Password</span>
-  </div>
   <mat-grid-list cols="1" rowHeight="200px">
     <mat-grid-tile>
       <div class="controles-container">
@@ -43,7 +40,7 @@
             Enter
           </button>
         </div>
-      </div></mat-grid-tile
-    >
+      </div>
+    </mat-grid-tile>
   </mat-grid-list>
 </form>

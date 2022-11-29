@@ -2,8 +2,11 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {environment} from "src/environments/environment";
 import {Bracket} from "../model/bracket";
+import {Team} from "../model/team";
 import {Tournament} from "../model/tournament";
+import {User} from "../model/user";
 
 const endpoint = `http://localhost:5005/`;
 @Injectable({
@@ -15,6 +18,7 @@ export class TournamentService {
 	getTournaments(): Observable<Tournament[]> {
 		return this.http.get<Tournament[]>(endpoint);
 	}
+
 	getTournamentsByOwner(): Observable<Tournament[]> {
 		return this.http.get<Tournament[]>(endpoint + "user/tournaments", {
 			withCredentials: true,
@@ -40,7 +44,6 @@ export class TournamentService {
 	}
 
 	create(data: any) {
-		console.log(data);
 		return this.http.post(endpoint + "tournaments", data, {
 			withCredentials: true,
 		});
@@ -61,11 +64,38 @@ export class TournamentService {
 	updateSchedule(bracket: any) {
 		return this.http.put<any>(`${endpoint}bracket/update`, bracket);
 	}
-	
+
 	update(data: any, tourId: number) {
 		return this.http.patch(
 			endpoint + `user/tournaments?id=${tourId}`,
 			data
+		);
+	}
+
+	addPlayer(tournamentId: number): Observable<User> {
+		return this.http.post<User>(
+			endpoint + `tournamentAddPlayer/` + tournamentId,
+			"",
+			{withCredentials: true}
+		);
+	}
+
+	addTeam(tournamentId: number, teamId: string): Observable<Team> {
+		return this.http.post<Team>(
+			endpoint + `tournamentAddTeam/` + tournamentId,
+			{teamId}
+		);
+	}
+	deleteTeam(tournamentId: number, teamId: number): Observable<Team> {
+		return this.http.delete<Team>(
+			endpoint + `tournamentDelTeam/` + tournamentId,
+			{body: {teamId}}
+		);
+	}
+	deleteUser(tournamentId: number, userId: number): Observable<User> {
+		return this.http.delete<User>(
+			endpoint + `tournamentDelUser/` + tournamentId,
+			{body: {userId}}
 		);
 	}
 }

@@ -4,6 +4,7 @@ export class Tournament {
 	name!: string;
 	date!: Date;
 	capacity!: number;
+	numberOfPlayers!: number;
 	description!: string;
 	prize!: string;
 	logo!: string;

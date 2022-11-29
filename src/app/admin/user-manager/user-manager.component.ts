@@ -8,6 +8,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { User } from 'src/app/model/user';
+import { LoginService } from 'src/app/shared/login.service';
 import { UserService } from 'src/app/shared/user.service';
 
 @Component({
@@ -19,12 +20,17 @@ export class UserManagerComponent implements OnInit {
   userService: UserService;
   userList: Array<User> = [];
   router: Router;
+  loggedUser!: User;
 
   searchForm: FormGroup = new FormGroup({
     search: new FormControl(''),
   });
 
-  constructor(userService: UserService, router: Router) {
+  constructor(
+    private loginService: LoginService,
+    userService: UserService,
+    router: Router
+  ) {
     this.userService = userService;
     this.router = router;
     this.searchForm
@@ -40,6 +46,8 @@ export class UserManagerComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loggedUser = this.loginService.loadUserFromLocalStorage();
+
     const users$ = this.userService.getUsers();
     this.userList = await lastValueFrom(users$);
   }
