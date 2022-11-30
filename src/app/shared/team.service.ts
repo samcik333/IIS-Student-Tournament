@@ -6,7 +6,7 @@ import {Team} from "../model/team";
 import {User} from "../model/user";
 import {environment} from "src/environments/environment";
 
-const endpoint = `https://sjs-squad.herokuapp.com/`;
+const endpoint = `http://sjs-squad.herokuapp.com/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
