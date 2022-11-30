@@ -7,14 +7,14 @@ import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {AppComponent} from "../app.component";
 import {User} from "../model/user";
 
-const baseUrl = `http://localhost:5005/`;
+const baseUrl = `https://sjs-squad.herokuapp.com/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
-	  'Content-Type': 'application/json',
-	  'Access-Control-Allow-Headers': 'x-access-token'
-	})
-  };
+		"Content-Type": "application/json",
+		"Access-Control-Allow-Headers": "x-access-token",
+	}),
+};
 
 @Injectable({
 	providedIn: "root",
@@ -45,7 +45,7 @@ export class LoginService {
 			.post(baseUrl + "login", data, {
 				observe: "response",
 				withCredentials: true,
-				headers:httpOptions.headers
+				headers: httpOptions.headers,
 			})
 			.pipe(
 				map((data) => {
@@ -58,7 +58,7 @@ export class LoginService {
 			.post(baseUrl + "register", data, {
 				observe: "response",
 				withCredentials: true,
-				headers:httpOptions.headers
+				headers: httpOptions.headers,
 			})
 			.pipe(
 				map((data) => {
@@ -69,7 +69,8 @@ export class LoginService {
 
 	profile(): Observable<User> {
 		return this.http.get<User>(`${baseUrl}` + "user/profile", {
-			withCredentials: true, headers:httpOptions.headers
+			withCredentials: true,
+			headers: httpOptions.headers,
 		});
 	}
 	saveUserToLocalStorage(user: User) {
@@ -79,7 +80,10 @@ export class LoginService {
 	}
 
 	logout() {
-		return this.http.get(baseUrl + "logout", {withCredentials: true, headers:httpOptions.headers});
+		return this.http.get(baseUrl + "logout", {
+			withCredentials: true,
+			headers: httpOptions.headers,
+		});
 	}
 
 	loadUserFromLocalStorage(): User {
