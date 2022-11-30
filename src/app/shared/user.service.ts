@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {User} from "../model/user";
 
-const endpoint = `http://sjs-squad.herokuapp.com/`;
+const endpoint = `https://sjs-squad.herokuapp.com/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
