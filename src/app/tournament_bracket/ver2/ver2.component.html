@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head></head>
-<body>
+<body *ngIf="tournament && tournament.ownerId && userID">
 <!--
 <select name="mods" #version (change)="generateTree(version.value)" class="searchTerm">
   <option [value]="2">2 participants</option>

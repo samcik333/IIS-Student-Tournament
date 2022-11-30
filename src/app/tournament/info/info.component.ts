@@ -16,6 +16,7 @@ export class InfoComponent implements OnInit {
 	myParam!: string;
 	tournament!: Tournament;
 	teamList: Array<Team> = [];
+	userID!:number;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -25,6 +26,7 @@ export class InfoComponent implements OnInit {
 	) {}
 
 	async ngOnInit() {
+		this.userID = parseInt(localStorage.getItem('userID') || "");
 		this.route.params.subscribe(
 			(params: Params) => (this.myParam = params["id"])
 		);
