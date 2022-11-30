@@ -12,7 +12,6 @@ const baseUrl = `https://sjs-squad.herokuapp.com/`;
 const httpOptions = {
 	headers: new HttpHeaders({
 		"Content-Type": "application/json",
-		"Access-Control-Allow-Headers": "x-access-token",
 	}),
 };
 
