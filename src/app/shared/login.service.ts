@@ -1,4 +1,4 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
@@ -7,7 +7,14 @@ import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {AppComponent} from "../app.component";
 import {User} from "../model/user";
 
-const baseUrl = `https://sjs-squad.herokuapp.com/`;
+const baseUrl = `http://localhost:5005/`;
+
+const httpOptions = {
+	headers: new HttpHeaders({
+	  'Content-Type': 'application/json',
+	  'Access-Control-Allow-Headers': 'x-access-token'
+	})
+  };
 
 @Injectable({
 	providedIn: "root",
@@ -38,6 +45,7 @@ export class LoginService {
 			.post(baseUrl + "login", data, {
 				observe: "response",
 				withCredentials: true,
+				headers:httpOptions.headers
 			})
 			.pipe(
 				map((data) => {
@@ -50,6 +58,7 @@ export class LoginService {
 			.post(baseUrl + "register", data, {
 				observe: "response",
 				withCredentials: true,
+				headers:httpOptions.headers
 			})
 			.pipe(
 				map((data) => {
@@ -60,7 +69,7 @@ export class LoginService {
 
 	profile(): Observable<User> {
 		return this.http.get<User>(`${baseUrl}` + "user/profile", {
-			withCredentials: true,
+			withCredentials: true, headers:httpOptions.headers
 		});
 	}
 	saveUserToLocalStorage(user: User) {
@@ -70,7 +79,7 @@ export class LoginService {
 	}
 
 	logout() {
-		return this.http.get(baseUrl + "logout", {withCredentials: true});
+		return this.http.get(baseUrl + "logout", {withCredentials: true, headers:httpOptions.headers});
 	}
 
 	loadUserFromLocalStorage(): User {
