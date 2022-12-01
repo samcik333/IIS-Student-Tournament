@@ -7,7 +7,7 @@ import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {AppComponent} from "../app.component";
 import {User} from "../model/user";
 
-const baseUrl = `//sjs-squad.herokuapp.com/`;
+const baseUrl = `https://sjs-squad.herokuapp.com/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
