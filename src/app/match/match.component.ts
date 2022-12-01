@@ -30,13 +30,15 @@ export class MatchComponent implements OnInit {
   }
 
   async onSubmit(){
-    const $match = this.restMatch.getMatch((this.data).toString());
-    this.match = await lastValueFrom($match);
-    const valueA = this.matchFormA.value;
-    this.match.firstScore = valueA.scoreA;
-    const valueB = this.matchFormB.value;
-    this.match.secondScore = valueB.scoreB;
-    this.restMatch.update(this.match).subscribe();
+    const $match = this.restMatch.getMatch((this.data).toString()).subscribe(res => {
+      if(res){
+        const valueA = this.matchFormA.value;
+        res.firstScore = valueA.scoreA;
+        const valueB = this.matchFormB.value;
+        res.secondScore = valueB.scoreB;
+        this.restMatch.update(res).subscribe();
+      }
+    })
   }
 
 

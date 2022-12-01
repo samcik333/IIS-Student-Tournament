@@ -230,6 +230,7 @@ export class Ver2Component implements OnInit {
         this.bronze[0].TeamB = this.semiMatches[1].TeamA;
       }
     }
+    console.log(this.tournament);
   }
 
   saveMatch(matchA:Match,scoreA:number,matchB:Match,scoreB:number){

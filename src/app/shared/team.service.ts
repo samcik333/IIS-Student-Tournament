@@ -29,7 +29,8 @@ export class TeamService {
 	}
 
 	getOwnedTeams(): Observable<Team[]> {
-		return this.http.get<Team[]>(endpoint + `ownedTeams`, {
+		const id = localStorage.getItem('userID') || "";
+		return this.http.get<Team[]>(endpoint + `ownedTeams/` + id, {
 			withCredentials: true,
 			headers: httpOptions.headers,
 		});
