@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Base_Url: 'https://sjs-squad.herokuapp.com',
+  Base_Url: 'https://sjs-squad.herokuapp.com/',
 };
 
 /*
