@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  Base_Url: 'http://localhost:5005/',
+  Base_Url: 'https://sjs-squad.herokuapp.com/',
 };

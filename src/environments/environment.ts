@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Base_Url: 'http://localhost:5005/',
+  Base_Url: 'https://sjs-squad.herokuapp.com/',
 };
 
 /*
