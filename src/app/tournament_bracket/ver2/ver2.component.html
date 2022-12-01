@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head></head>
-<body *ngIf="tournament && tournament.ownerId && userID">
+<body *ngIf="tournament">
 <!--
 <select name="mods" #version (change)="generateTree(version.value)" class="searchTerm">
   <option [value]="2">2 participants</option>
@@ -11,8 +11,8 @@
 </select>
 -->
 <div *ngIf="tournament">
-  <button [hidden]="tournament.ownerId != userID" [disabled]="eightMatches.length > 0 && tournament.ownerId != userID" (click)="generateSchedule()" class="searchTerm">Generate</button>
-  <button [hidden]="tournament.ownerId != userID" [disabled]="final.length > 0 && tournament.ownerId != userID" (click)="evaluate()" class="searchTerm">Evaluate</button>
+  <button [hidden]="tournament.ownerId != userID" [disabled]="eightMatches.length > 0 || tournament.ownerId != userID || tournament.state == 'waiting'" (click)="generateSchedule()" class="searchTerm">Generate</button>
+  <button [hidden]="tournament.ownerId != userID" [disabled]="final.length > 0 || tournament.ownerId != userID || tournament.state == 'waiting'" (click)="evaluate()" class="searchTerm">Evaluate</button>
   <!--<button (click)="generateSchedule()">Generate TEST</button>-->
 </div>
 
@@ -20,19 +20,19 @@
   <tbody>
   <div *ngIf="v2">
     <tr>
-      <td class="name">{{eightMatches[0]?.TeamA}}</td>
-      <td class="score">{{eightMatches[0]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.ScoreA}}</td>
     </tr>
 
     <tr>
-      <td class="name">{{eightMatches[0]?.TeamB}}</td>
-      <td class="score">{{eightMatches[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.ScoreB}}</td>
     </tr>
   </div>
 
     <tr *ngIf="v4">
       <td class="name" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.TeamA}}</td>
-      <td class="score">{{eightMatches[0]?.ScoreA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -48,8 +48,8 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td class="name">{{eightMatches[0]?.TeamB}}</td>
-      <td class="score">{{eightMatches[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[0].id)">{{eightMatches[0]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -69,8 +69,8 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">{{quarterMatches[0]?.TeamA}}</td>
-      <td class="score">{{quarterMatches[0]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[0].id)">{{quarterMatches[0]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[0].id)">{{quarterMatches[0]?.ScoreA}}</td>
       <td *ngIf="v8" class="border_down"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -86,8 +86,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">{{quarterMatches[0]?.TeamB}}</td>
-      <td class="score">{{quarterMatches[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[0].id)">{{quarterMatches[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[0].id)">{{quarterMatches[0]?.ScoreB}}</td>
       <td *ngIf="v8" class="border_right"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -99,8 +99,8 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td class="name">{{eightMatches[1]?.TeamA}}</td>
-      <td class="score">{{eightMatches[1]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -116,18 +116,18 @@
     </tr>
 
     <tr *ngIf="v4">
-      <td *ngIf="v8 || v16" class="name">{{eightMatches[1]?.TeamB}}</td>
-      <td *ngIf="v8 || v16" class="score">{{eightMatches[1]?.ScoreB}}</td>
+      <td *ngIf="v8 || v16" class="name" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.TeamB}}</td>
+      <td *ngIf="v8 || v16" class="score" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.ScoreB}}</td>
       <td *ngIf="v8 || v16" class="border_top"> </td>
       <td *ngIf="v8 || v16" class="empty_short"> </td>
       <td *ngIf="v8 || v16" class="empty_long"> </td>
       <td *ngIf="v8 || v16" class="empty_short"> </td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">{{eightMatches[1]?.TeamB}}</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">{{eightMatches[1]?.ScoreB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.TeamB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score" (click)="openPOP(eightMatches[1].id)">{{eightMatches[1]?.ScoreB}}</td>
       <td *ngIf="v4 && !v8 && !v16" class="border_top"> </td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"> </td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">{{bronze[0]?.TeamA}}</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">{{bronze[0]?.ScoreA}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamA}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreA}}</td>
       <td *ngIf="v8" class="border_right"> </td>
       <td *ngIf="v8" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -149,12 +149,12 @@
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
       <td *ngIf="v4 && !v8 && !v16" class="empty_short"></td>
-      <td *ngIf="v4 && !v8 && !v16" class="name">{{bronze[0]?.TeamB}}</td>
-      <td *ngIf="v4 && !v8 && !v16" class="score">{{bronze[0]?.ScoreB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamB}}</td>
+      <td *ngIf="v4 && !v8 && !v16" class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreB}}</td>
       <td *ngIf="v8" class="border_right"></td>
       <td *ngIf="v8" class="border_down"></td>
-      <td *ngIf="v8" class="name">{{semiMatches[0]?.TeamA}}</td>
-      <td *ngIf="v8" class="score">{{semiMatches[0]?.ScoreA}}</td>
+      <td *ngIf="v8" class="name" (click)="openPOP(semiMatches[0].id)">{{semiMatches[0]?.TeamA}}</td>
+      <td *ngIf="v8" class="score" (click)="openPOP(semiMatches[0].id)">{{semiMatches[0]?.ScoreA}}</td>
       <td *ngIf="v16" class="border_down"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -170,8 +170,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="empty_short"></td>
-      <td class="name">{{semiMatches[0]?.TeamB}}</td>
-      <td class="score">{{semiMatches[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(semiMatches[0].id)">{{semiMatches[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(semiMatches[0].id)">{{semiMatches[0]?.ScoreB}}</td>
       <td *ngIf="v16" class="border_right"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -179,8 +179,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">{{eightMatches[2]?.TeamA}}</td>
-      <td class="score">{{eightMatches[2]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[2].id)">{{eightMatches[2]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[2].id)">{{eightMatches[2]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -196,16 +196,16 @@
     </tr>
 
     <tr  *ngIf="v8">
-      <td class="name">{{eightMatches[2]?.TeamB}}</td>
-      <td class="score">{{eightMatches[2]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[2].id)">{{eightMatches[2]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[2].id)">{{eightMatches[2]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="!v16" class="name">{{bronze[0]?.TeamA}}</td>
-      <td *ngIf="!v16" class="score">{{bronze[0]?.ScoreA}}</td>
+      <td *ngIf="!v16" class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamA}}</td>
+      <td *ngIf="!v16" class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreA}}</td>
       <td *ngIf="v16" class="empty_long"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="border_right"> </td>
@@ -219,12 +219,12 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">{{quarterMatches[1]?.TeamA}}</td>
-      <td class="score">{{quarterMatches[1]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[1].id)">{{quarterMatches[1]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[1].id)">{{quarterMatches[1]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td *ngIf="!v16" class="name">{{bronze[0]?.TeamB}}</td>
-      <td *ngIf="!v16" class="score">{{bronze[0]?.ScoreB}}</td>
+      <td *ngIf="!v16" class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamB}}</td>
+      <td *ngIf="!v16" class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreB}}</td>
       <td *ngIf="v16" class="empty_long"> </td>
       <td *ngIf="v16" class="empty_short"> </td>
       <td *ngIf="v16" class="border_right"> </td>
@@ -238,8 +238,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">{{quarterMatches[1]?.TeamB}}</td>
-      <td class="score">{{quarterMatches[1]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[1].id)">>{{quarterMatches[1]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[1].id)">{{quarterMatches[1]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td *ngIf="v16" class="empty_long"> </td>
@@ -251,8 +251,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">{{eightMatches[3]?.TeamA}}</td>
-      <td class="score">{{eightMatches[3]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[3].id)">{{eightMatches[3]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[3].id)">{{eightMatches[3]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -268,8 +268,8 @@
     </tr>
 
     <tr *ngIf="v8">
-      <td class="name">{{eightMatches[3]?.TeamB}}</td>
-      <td class="score">{{eightMatches[3]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[3].id)">{{eightMatches[3]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[3].id)">{{eightMatches[3]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -297,8 +297,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">{{final[0]?.TeamA}}</td>
-      <td class="score">{{final[0]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(final[0].id)">{{final[0]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(final[0].id)">{{final[0]?.ScoreA}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -314,13 +314,13 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">{{final[0]?.TeamB}}</td>
-      <td class="score">{{final[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(final[0].id)">{{final[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(final[0].id)">{{final[0]?.ScoreB}}</td>
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[4]?.TeamA}}</td>
-      <td class="score">{{eightMatches[4]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[4].id)">{{eightMatches[4]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[4].id)">{{eightMatches[4]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -336,8 +336,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[4]?.TeamB}}</td>
-      <td class="score">{{eightMatches[4]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[4].id)">{{eightMatches[4]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[4].id)">{{eightMatches[4]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -348,8 +348,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">{{bronze[0]?.TeamA}}</td>
-      <td class="score">{{bronze[0]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreA}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -357,16 +357,16 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">{{quarterMatches[2]?.TeamA}}</td>
-      <td class="score">{{quarterMatches[2]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[2].id)">{{quarterMatches[2]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[2].id)">{{quarterMatches[2]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
-      <td class="name">{{bronze[0]?.TeamB}}</td>
-      <td class="score">{{bronze[0]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(bronze[0].id)">{{bronze[0]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(bronze[0].id)">{{bronze[0]?.ScoreB}}</td>
     </tr>
 
     <tr *ngIf="v16">
@@ -374,8 +374,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">{{quarterMatches[2]?.TeamB}}</td>
-      <td class="score">{{quarterMatches[2]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[2].id)">{{quarterMatches[2]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[2].id)">{{quarterMatches[2]?.ScoreB}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -387,8 +387,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[5]?.TeamA}}</td>
-      <td class="score">{{eightMatches[5]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[5].id)">{{eightMatches[5]?.TeamA}}</td>
+      <td class="score"(click)="openPOP(eightMatches[5].id)">{{eightMatches[5]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -404,8 +404,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[5]?.TeamB}}</td>
-      <td class="score">{{eightMatches[5]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[5].id)">{{eightMatches[5]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[5].id)">{{eightMatches[5]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -429,8 +429,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="empty_short"></td>
-      <td class="name">{{semiMatches[1]?.TeamA}}</td>
-      <td class="score">{{semiMatches[1]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(semiMatches[1].id)">{{semiMatches[1]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(semiMatches[1].id)">{{semiMatches[1]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -446,8 +446,8 @@
       <td class="empty_short"></td>
       <td class="border_right"></td>
       <td class="border_top"></td>
-      <td class="name">{{semiMatches[1]?.TeamB}}</td>
-      <td class="score">{{semiMatches[1]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(semiMatches[1].id)">{{semiMatches[1]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(semiMatches[1].id)">{{semiMatches[1]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -459,8 +459,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[6]?.TeamA}}</td>
-      <td class="score">{{eightMatches[6]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[6].id)">{{eightMatches[6]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[6].id)">{{eightMatches[6]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -476,8 +476,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[6]?.TeamB}}</td>
-      <td class="score">{{eightMatches[6]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[6].id)">{{eightMatches[6]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[6].id)">{{eightMatches[6]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -497,8 +497,8 @@
       <td class="empty_short"> </td>
       <td class="empty_short"> </td>
       <td class="border_left"> </td>
-      <td class="name">{{quarterMatches[3]?.TeamA}}</td>
-      <td class="score">{{quarterMatches[3]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[3].id)">{{quarterMatches[3]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[3].id)">{{quarterMatches[3]?.ScoreA}}</td>
       <td class="border_right"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -514,8 +514,8 @@
       <td class="empty_short"> </td>
       <td class="border_right"> </td>
       <td class="border_top"> </td>
-      <td class="name">{{quarterMatches[3]?.TeamB}}</td>
-      <td class="score">{{quarterMatches[3]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(quarterMatches[3].id)">{{quarterMatches[3]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(quarterMatches[3].id)">{{quarterMatches[3]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>
@@ -527,8 +527,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[7]?.TeamA}}</td>
-      <td class="score">{{eightMatches[7]?.ScoreA}}</td>
+      <td class="name" (click)="openPOP(eightMatches[7].id)">{{eightMatches[7]?.TeamA}}</td>
+      <td class="score" (click)="openPOP(eightMatches[7].id)">{{eightMatches[7]?.ScoreA}}</td>
       <td class="border_down"> </td>
       <td class="border_left"> </td>
       <td class="empty_long"> </td>
@@ -544,8 +544,8 @@
     </tr>
 
     <tr *ngIf="v16">
-      <td class="name">{{eightMatches[7]?.TeamB}}</td>
-      <td class="score">{{eightMatches[7]?.ScoreB}}</td>
+      <td class="name" (click)="openPOP(eightMatches[7].id)">{{eightMatches[7]?.TeamB}}</td>
+      <td class="score" (click)="openPOP(eightMatches[7].id)">{{eightMatches[7]?.ScoreB}}</td>
       <td class="border_top"> </td>
       <td class="empty_short"> </td>
       <td class="empty_long"> </td>

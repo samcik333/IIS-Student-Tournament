@@ -64,14 +64,14 @@
                 {{ team.name }}
               </option>
             </select>
-            <button class="btn" [disabled]="tournament.state != 'open' || tournament.ownerId != userID">
+            <button class="btn" [disabled]="tournament.state != 'open' || !userID">
               <span class="join" (click)="join(tournament.id, version.value)">
                 Join now
               </span>
             </button>
           </span>
           <span *ngIf="tournament.mode == 1">
-            <button class="btn" [disabled]="tournament.state != 'open' || tournament.ownerId != userID">
+            <button class="btn" [disabled]="tournament.state != 'open' || !userID">
               <span class="join" (click)="join(tournament.id, 'user')">
                 Join now
               </span>

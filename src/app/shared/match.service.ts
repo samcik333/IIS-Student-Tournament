@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Match} from "../model/match";
 
-const baseUrl = `https://sjs-squad.herokuapp.com/`;
+const baseUrl = `http://localhost:5005/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({

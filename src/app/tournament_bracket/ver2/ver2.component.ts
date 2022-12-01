@@ -72,15 +72,15 @@ export class Ver2Component implements OnInit {
 
   
   async fillBracket(){
-    const bracket$ = this.restTournaments.getBracket(this.myParam);
-    this.spider = await lastValueFrom(bracket$);
+    await this.restTournaments.getBracket(this.myParam).subscribe( async res => {
+    this.spider = res;
     if(this.spider){
       this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
       this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
       this.createBracketMatches(this.spider.semifinals, this.semiMatches);
       this.createBracketMatches(this.spider.bronze, this.bronze);
       this.createBracketMatches(this.spider.final, this.final);
-    }
+    }});
   }
   
   async updateSchedule(){
@@ -155,13 +155,14 @@ export class Ver2Component implements OnInit {
         secondTeam: this.participants[i+1].id,
         order: order++,
       };
-      console.log(match);
-      const $mat = this.restMatch.create(match);
-      this.match = await lastValueFrom($mat);
-      this.spider.eightfinals.push((this.match.id).toString());
+      const $mat = this.restMatch.create(match).subscribe(res => {
+        this.match = res;
+        this.spider.eightfinals.push((res.id).toString());
+        if(this.tournament.capacity/2 == this.spider.eightfinals.length){
+          this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+        }
+      });
     }
-    this.restTournaments.updateSchedule(this.spider).subscribe();
-    this.ngOnInit();
   }
 
   evaluate(){
