@@ -93,46 +93,37 @@ export class Ver2Component implements OnInit {
     ///Generate BracketMatches
     if(spider_array && spider_array.length > 0){
       spider_array.forEach(async element => {
+        let mat: myMatch = {
+          order: 0,
+          idA: 0,
+          idB: 0,
+          id: 0,
+          TeamA: "",
+          TeamB: "",
+          ScoreA: 0,
+          ScoreB: 0,
+        }
         const mat$ = this.restMatch.getMatch(element);
         if(!mat$){return};
         this.match = await lastValueFrom(mat$);
-        const scoreA = this.match.firstScore;
-        const scoreB = this.match.secondScore;
-        const order = this.match.order;
+        mat.ScoreA = this.match.firstScore;
+        mat.ScoreB = this.match.secondScore;
+        mat.order = this.match.order;
         if(this.tournament.mode == 1){
-          const userA$ = this.restUser.getUserById((this.match.firstTeam).toString());
-          const userB$ = this.restUser.getUserById((this.match.secondTeam).toString());
-          if(!userA$ && !userB$){return};
-          this.UserA = (await lastValueFrom(userA$));
-          this.UserB = (await lastValueFrom(userB$));
-          this.participantA = this.UserA.username;
-          this.participantB = this.UserB.username;
-          this.IDA = this.UserA.id;
-          this.IDB = this.UserB.id;
+          this.restUser.getUserById((this.match.firstTeam).toString()).subscribe( async resA => {
+            this.restUser.getUserById((this.match.secondTeam).toString()).subscribe( async resB => {
+              matches[mat.order-1] = new myMatch(mat.id, mat.order, resA.username, resB.username, mat.ScoreA, mat.ScoreB, resA.id, resB.id); 
+            });
+          });
         }else{
-          const teamA$ = this.restTeam.findTeam((this.match.firstTeam).toString());
-          const teamB$ = this.restTeam.findTeam((this.match.secondTeam).toString());
-          if(!teamA$ && !teamB$){return};
-          this.TeamA = await lastValueFrom(teamA$);
-          this.TeamB = await lastValueFrom(teamB$);
-          this.participantA = this.TeamA.name;
-          this.participantB = this.TeamB.name;
-          this.IDA = this.TeamA.id;
-          this.IDB = this.TeamB.id;
+          this.restTeam.findTeam((this.match.firstTeam).toString()).subscribe( async resA => {
+            this.restTeam.findTeam((this.match.secondTeam).toString()).subscribe( async resB => {
+              matches[mat.order-1] = new myMatch(mat.id, mat.order, resA.name, resB.name, mat.ScoreA, mat.ScoreB, resA.id, resB.id); 
+            });
+          });
         }
-        let a: myMatch = {
-          order: order,
-          idA: this.IDA,
-          idB: this.IDB,
-          id: this.match.id,
-          TeamA: this.participantA,
-          TeamB: this.participantB,
-          ScoreA: scoreA,
-          ScoreB: scoreB
-        }
-        matches.push(a);
-        matches.sort((a,b) => a.order - b.order);
       });
+      matches.sort((a,b) => a.order - b.order);
     }
   }
 
@@ -167,75 +158,131 @@ export class Ver2Component implements OnInit {
 
   evaluate(){
     if(this.quarterMatches){
-      this.quarterMatches =  [new myMatch,new myMatch,new myMatch,new myMatch];
+      this.quarterMatches =  [];
       let counter = 0;
-      let pair = true;
-      for (let i = 0; i < this.eightMatches.length; i++) {
-        if(pair){
+      for (let i = 0; i < this.eightMatches.length; i+=2) {
+        if(this.eightMatches[i].ScoreA != this.eightMatches[i].ScoreB && this.eightMatches[i+1].ScoreA != this.eightMatches[i+1].ScoreB){
+          this.quarterMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
+          this.quarterMatches[counter].id = 0;
           if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
             this.quarterMatches[counter].TeamA = this.eightMatches[i].TeamA;
+            this.quarterMatches[counter].idA = this.eightMatches[i].idA;
           }else if(this.eightMatches[i].ScoreA < this.eightMatches[i].ScoreB){
             this.quarterMatches[counter].TeamA = this.eightMatches[i].TeamB;
+            this.quarterMatches[counter].idA = this.eightMatches[i].idB;
           }
-          pair = false;
-        }else if(!pair){
-          if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
+
+          if(this.eightMatches[i+1].ScoreA > this.eightMatches[i+1].ScoreB){
             this.quarterMatches[counter].TeamB = this.eightMatches[i].TeamA;
-          }else if(this.eightMatches[i].ScoreA < this.eightMatches[i].ScoreB){
+            this.quarterMatches[counter].idB = this.eightMatches[i].idA;
+          }else if(this.eightMatches[i+1].ScoreA < this.eightMatches[i+1].ScoreB){
             this.quarterMatches[counter].TeamB = this.eightMatches[i].TeamB;
+            this.quarterMatches[counter].idB = this.eightMatches[i].idB;
           }
-          pair = true;
-          counter++;
+          this.quarterMatches[counter].ScoreA = 0;
+          this.quarterMatches[counter].ScoreB = 0;
+          let match = {
+            tournamentId: parseInt(this.myParam),
+            firstTeam: this.quarterMatches[counter].idA,
+            secondTeam: this.quarterMatches[counter].idB,
+            order: counter+1,
+            date: new Date(),
+          }
+          this.restMatch.create(match).subscribe(res => {
+            this.quarterMatches[res.order-1].id = res.id;
+            this.spider.quarterfinals.push(res.id.toString());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+          });
         }
-      }
+        counter++;
+      }  
     }
     if(this.semiMatches){
-      this.semiMatches =  [new myMatch,new myMatch];
+      this.semiMatches =  []
       let counter = 0;
-      let pair = true;
-      for (let i = 0; i < this.quarterMatches.length; i++) {
-        if(pair){
+      for (let i = 0; i < this.quarterMatches.length; i+=2) {
+        if(this.quarterMatches[i]?.ScoreA != this.quarterMatches[i]?.ScoreB && this.quarterMatches[i+1]?.ScoreA != this.quarterMatches[i+1]?.ScoreB){
+          this.semiMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
           if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
             this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamA;
           }else if(this.quarterMatches[i].ScoreA < this.quarterMatches[i].ScoreB){
             this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamB;
           }
-          pair = false;
-        }else if(!pair){
-          if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
+          if(this.quarterMatches[i+1].ScoreA > this.quarterMatches[i+1].ScoreB){
             this.semiMatches[counter].TeamB = this.quarterMatches[i].TeamA;
-          }else if(this.quarterMatches[i].ScoreA < this.quarterMatches[i].ScoreB){
+          }else if(this.quarterMatches[i+1].ScoreA < this.quarterMatches[i+1].ScoreB){
             this.semiMatches[counter].TeamB = this.eightMatches[i].TeamB;
           }
-          pair = true;
-          counter++;
+          this.semiMatches[counter].ScoreA = 0;
+          this.semiMatches[counter].ScoreB = 0;
+          let match = {
+            tournamentId: parseInt(this.myParam),
+            firstTeam: this.semiMatches[counter].idA,
+            secondTeam: this.semiMatches[counter].idB,
+            order: counter+1,
+            date: new Date(),
+          }
+          this.restMatch.create(match).subscribe(res => {
+            this.semiMatches[res.order-1].id = res.id;
+            this.spider.semifinals.push(res.id.toString());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+          });
         }
+        counter++;
       }
     }
     if(this.final && this.bronze){
-      this.final =  [new myMatch];
-      this.bronze =  [new myMatch];
-      if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
-        this.final[0].TeamA = this.semiMatches[0].TeamA;
-        this.bronze[0].TeamA = this.semiMatches[0].TeamB;
-      }else if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
-        this.final[0].TeamA = this.semiMatches[0].TeamB;
-        this.bronze[0].TeamA = this.semiMatches[0].TeamA;
+      this.final =  [];
+      this.bronze =  [];
+      this.final[0] = new myMatch(0,0,"","",0,0,0,0);
+      this.bronze[0] = new myMatch(0,0,"","",0,0,0,0);
+      if(this.semiMatches[0]?.ScoreA != this.semiMatches[0]?.ScoreB && this.semiMatches[1]?.ScoreA != this.semiMatches[1]?.ScoreB){ 
+        if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
+          this.final[0].TeamA = this.semiMatches[0].TeamA;
+          this.bronze[0].TeamA = this.semiMatches[0].TeamB;
+        }else if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
+          this.final[0].TeamA = this.semiMatches[0].TeamB;
+          this.bronze[0].TeamA = this.semiMatches[0].TeamA;
+        }
+        if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
+          this.final[0].TeamB = this.semiMatches[1].TeamA;
+          this.bronze[0].TeamB = this.semiMatches[1].TeamB;
+        }else if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
+          this.final[0].TeamB = this.semiMatches[1].TeamB;
+          this.bronze[0].TeamB = this.semiMatches[1].TeamA;
+        }
+          this.final[0].ScoreA = 0;
+          this.final[0].ScoreB = 0;
+          this.bronze[0].ScoreA = 0;
+          this.bronze[0].ScoreB = 0;
+          let matchF = {
+            tournamentId: parseInt(this.myParam),
+            firstTeam: this.final[0].idA,
+            secondTeam: this.final[0].idB,
+            order: 0,
+            date: new Date(),
+          }
+          this.restMatch.create(matchF).subscribe(res => {
+            this.final[res.order].id = res.id;
+            this.spider.final.push(res.id.toString());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+          });
+          let matchB = {
+            tournamentId: parseInt(this.myParam),
+            firstTeam: this.bronze[0].idA,
+            secondTeam: this.bronze[0].idB,
+            order: 0,
+            date: new Date(),
+          }
+          this.restMatch.create(matchB).subscribe(res => {
+            this.final[res.order].id = res.id;
+            this.spider.final.push(res.id.toString());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+          });
       }
-      if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
-        this.final[0].TeamB = this.semiMatches[1].TeamA;
-        this.bronze[0].TeamB = this.semiMatches[1].TeamB;
-      }else if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
-        this.final[0].TeamB = this.semiMatches[1].TeamB;
-        this.bronze[0].TeamB = this.semiMatches[1].TeamA;
-      }
-    }
-    console.log(this.tournament);
   }
+}
 
-  saveMatch(matchA:Match,scoreA:number,matchB:Match,scoreB:number){
-
-  }
 
 	generateTree(data: string) {
 		const value = parseInt(data);
@@ -287,3 +334,5 @@ export class Ver2Component implements OnInit {
     this.ngOnInit();
   }
 }
+
+

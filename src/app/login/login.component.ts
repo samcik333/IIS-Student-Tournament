@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
     authFlow.subscribe({
       next: (user: User) => {
-        console.log(user);
+        //console.log(user);
         this.loginService.saveUserToLocalStorage(user);
         this.helperService.openSnackBarSucc('Loged in successfully');
         this.dialog.closeAll();
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
         if (this.loginGroup.value.username == 'admin') {
           this.adminInfo();
         }
+        location.reload();
       },
 
       error: (e: HttpErrorResponse) => {

@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {User} from "../model/user";
 
-const endpoint = `https://sjs-squad.herokuapp.com/`;
+const endpoint = `http://localhost:5005/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
@@ -55,6 +55,27 @@ export class UserService {
 	deleteUser(username: string): Observable<User> {
 		return this.http.delete<User>(endpoint + `user`, {
 			body: {username},
+			headers: httpOptions.headers,
+		});
+	}
+
+	likeTournament(tournamentID: string, userID:string): Observable<User> {
+		return this.http.post<User>(endpoint + `user/like`, {tournamentID, userID}, {
+			withCredentials: true,
+			headers: httpOptions.headers,
+		});
+	}
+
+	dislikeTournament(tournamentID: string, userID:string): Observable<User> {
+		return this.http.post<User>(endpoint + `user/dislike`, {tournamentID, userID}, {
+			withCredentials: true,
+			headers: httpOptions.headers,
+		});
+	}
+
+	getLiked(id:string): Observable<string[]> {
+		return this.http.get<string[]>(endpoint + `user/getliked/` + id, {
+			withCredentials: true,
 			headers: httpOptions.headers,
 		});
 	}

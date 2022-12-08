@@ -12,4 +12,5 @@ export class User {
   bronze: number = 0;
   numberOfGames: number = 0;
   numberOfWins: number = 0;
+  likedTournaments: number[] = [];
 }
