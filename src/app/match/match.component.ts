@@ -24,7 +24,7 @@ export class MatchComponent implements OnInit {
     scoreB:  new FormControl('')
   });
 
-  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data:number, public restMatch:MatchService) {}
+  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data:number, public restMatch:MatchService) {}
 
   ngOnInit(): void {
   }
@@ -32,11 +32,15 @@ export class MatchComponent implements OnInit {
   async onSubmit(){
     const $match = this.restMatch.getMatch((this.data).toString()).subscribe(res => {
       if(res){
-        const valueA = this.matchFormA.value;
-        res.firstScore = valueA.scoreA;
-        const valueB = this.matchFormB.value;
-        res.secondScore = valueB.scoreB;
-        this.restMatch.update(res).subscribe();
+        if(this.matchFormA.value.scoreA == null || this.matchFormB.value.scoreB == null || this.matchFormA.value.scoreA == "" || this.matchFormB.value.scoreB == ""){
+          alert("Please fill in the score");
+        }else{
+          const valueA = this.matchFormA.value;
+          res.firstScore = valueA.scoreA;
+          const valueB = this.matchFormB.value;
+          res.secondScore = valueB.scoreB;
+          this.restMatch.update(res).subscribe(() => this.dialog.closeAll());
+        }
       }
     })
   }

@@ -72,9 +72,14 @@ export class Ver2Component implements OnInit {
 
   
   async fillBracket(){
-    await this.restTournaments.getBracket(this.myParam).subscribe( async res => {
+    this.restTournaments.getBracket(this.myParam).subscribe( async res => {
     this.spider = res;
     if(this.spider){
+      this.eightMatches = [];
+      this.quarterMatches = [];
+      this.semiMatches = [];
+      this.final = [];
+      this.bronze = [];
       this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
       this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
       this.createBracketMatches(this.spider.semifinals, this.semiMatches);
@@ -109,6 +114,7 @@ export class Ver2Component implements OnInit {
         mat.ScoreA = this.match.firstScore;
         mat.ScoreB = this.match.secondScore;
         mat.order = this.match.order;
+        mat.id = this.match.id;
         if(this.tournament.mode == 1){
           this.restUser.getUserById((this.match.firstTeam).toString()).subscribe( async resA => {
             this.restUser.getUserById((this.match.secondTeam).toString()).subscribe( async resB => {
@@ -137,7 +143,7 @@ export class Ver2Component implements OnInit {
       this.participants = this.participants.result.users;
     }
     this.participants = this.shuffle(this.participants);
-    let order = 0;
+    let order = 1;
     for (let i = 0; i < this.participants.length; i+=2) {
       const match = {
         date: new Date(),
@@ -160,8 +166,8 @@ export class Ver2Component implements OnInit {
     if(this.quarterMatches){
       this.quarterMatches =  [];
       let counter = 0;
-      for (let i = 0; i < this.eightMatches.length; i+=2) {
-        if(this.eightMatches[i].ScoreA != this.eightMatches[i].ScoreB && this.eightMatches[i+1].ScoreA != this.eightMatches[i+1].ScoreB){
+      for (let i = 0; i <= this.eightMatches.length; i+=2) {
+        if(this.eightMatches[i]?.ScoreA != this.eightMatches[i]?.ScoreB && this.eightMatches[i+1]?.ScoreA != this.eightMatches[i+1]?.ScoreB){
           this.quarterMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
           this.quarterMatches[counter].id = 0;
           if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
@@ -188,10 +194,13 @@ export class Ver2Component implements OnInit {
             order: counter+1,
             date: new Date(),
           }
+
           this.restMatch.create(match).subscribe(res => {
-            this.quarterMatches[res.order-1].id = res.id;
+            //this.quarterMatches[counter].id = res.id;
             this.spider.quarterfinals.push(res.id.toString());
-            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => {
+              this.ngOnInit()}
+              );
           });
         }
         counter++;
@@ -200,7 +209,7 @@ export class Ver2Component implements OnInit {
     if(this.semiMatches){
       this.semiMatches =  []
       let counter = 0;
-      for (let i = 0; i < this.quarterMatches.length; i+=2) {
+      for (let i = 0; i <= this.quarterMatches.length; i+=2) {
         if(this.quarterMatches[i]?.ScoreA != this.quarterMatches[i]?.ScoreB && this.quarterMatches[i+1]?.ScoreA != this.quarterMatches[i+1]?.ScoreB){
           this.semiMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
           if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
@@ -223,7 +232,7 @@ export class Ver2Component implements OnInit {
             date: new Date(),
           }
           this.restMatch.create(match).subscribe(res => {
-            this.semiMatches[res.order-1].id = res.id;
+            //this.semiMatches[res.order-1].id = res.id;
             this.spider.semifinals.push(res.id.toString());
             this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
           });
@@ -231,7 +240,7 @@ export class Ver2Component implements OnInit {
         counter++;
       }
     }
-    if(this.final && this.bronze){
+    if(this.final && this.bronze && this.semiMatches[0]?.TeamA && this.semiMatches[1]?.TeamA){
       this.final =  [];
       this.bronze =  [];
       this.final[0] = new myMatch(0,0,"","",0,0,0,0);
@@ -259,11 +268,11 @@ export class Ver2Component implements OnInit {
             tournamentId: parseInt(this.myParam),
             firstTeam: this.final[0].idA,
             secondTeam: this.final[0].idB,
-            order: 0,
+            order: 1,
             date: new Date(),
           }
           this.restMatch.create(matchF).subscribe(res => {
-            this.final[res.order].id = res.id;
+            //this.final[res.order].id = res.id;
             this.spider.final.push(res.id.toString());
             this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
           });
@@ -271,11 +280,11 @@ export class Ver2Component implements OnInit {
             tournamentId: parseInt(this.myParam),
             firstTeam: this.bronze[0].idA,
             secondTeam: this.bronze[0].idB,
-            order: 0,
+            order: 1,
             date: new Date(),
           }
           this.restMatch.create(matchB).subscribe(res => {
-            this.final[res.order].id = res.id;
+            //this.final[res.order].id = res.id;
             this.spider.final.push(res.id.toString());
             this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
           });
@@ -330,8 +339,9 @@ export class Ver2Component implements OnInit {
 		loginConfig.width = "30%";
     loginConfig.height = "40%";
     loginConfig.data = id;
-		this.dialog.open(MatchComponent, loginConfig);
-    this.ngOnInit();
+		const dialog = this.dialog.open(MatchComponent, loginConfig);
+    //dialog.backdropClick().subscribe(() =>  this.ngOnInit());
+    dialog.afterClosed().subscribe(() =>  this.ngOnInit());
   }
 }
 

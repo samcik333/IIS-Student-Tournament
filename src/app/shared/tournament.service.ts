@@ -128,4 +128,11 @@ export class TournamentService {
 			{body: {userId}, headers: httpOptions.headers}
 		);
 	}
+
+	isParticipant(tournamentId: number, partId:number, type:number): Observable<boolean> {
+		return this.http.get<boolean>(
+			endpoint + `isParticipant/` + tournamentId + "/" + partId + "/" + type,
+			httpOptions
+		);
+	}
 }
