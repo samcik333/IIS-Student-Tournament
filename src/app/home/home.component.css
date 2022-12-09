@@ -71,9 +71,27 @@ select {
   color: #006dcc;
 }
 
-.heart {
+.heartB {
   width:8%;
   height: auto;
   object-fit: cover;
   z-index:-5;
 }
+
+.heartR {
+  width:9%;
+  height: auto;
+  object-fit: cover;
+  z-index:-5;
+}
+
+.heartB:active{
+  animation: pop 1s linear 1;
+}
+
+.heartR:active{
+  animation: pop 1s linear 1;
+}
+
+
+

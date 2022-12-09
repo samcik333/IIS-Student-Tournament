@@ -59,15 +59,15 @@ export class UserService {
 		});
 	}
 
-	likeTournament(tournamentID: string, userID:string): Observable<User> {
-		return this.http.post<User>(endpoint + `user/like`, {tournamentID, userID}, {
+	likeTournament(userID:string, tournamentID: string): Observable<User> {
+		return this.http.post<User>(endpoint + `user/like`, {userID, tournamentID}, {
 			withCredentials: true,
 			headers: httpOptions.headers,
 		});
 	}
 
-	dislikeTournament(tournamentID: string, userID:string): Observable<User> {
-		return this.http.post<User>(endpoint + `user/dislike`, {tournamentID, userID}, {
+	dislikeTournament(userID:string, tournamentID: string): Observable<User> {
+		return this.http.post<User>(endpoint + `user/dislike`, {userID, tournamentID}, {
 			withCredentials: true,
 			headers: httpOptions.headers,
 		});

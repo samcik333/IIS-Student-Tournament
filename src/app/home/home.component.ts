@@ -20,9 +20,9 @@ import { UserService } from "../shared/user.service";
 })
 export class HomeComponent implements OnInit {
 	restTournament: TournamentService;
-	public tournamentList: Array<Tournament> = [];
+	tournamentList: { tournaments: Tournament, liked: boolean }[] = [];
 	router: Router;
-	liked: boolean = true;
+	liked: boolean = false;
 	likedTournaments:Array<any> = [];
 
 	searchForm: FormGroup = new FormGroup({
@@ -37,6 +37,27 @@ export class HomeComponent implements OnInit {
 	) {
 		this.restTournament = restTournament;
 		this.router = router;
+	}
+
+	ngOnInit() {
+		if(localStorage.getItem("userID")){
+			this.liked = true;					
+			this.restTournament.getTournaments().subscribe((resA) => {
+				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
+					this.likedTournaments = resB;
+					this.createList(resA);
+				});
+			});
+		}else{
+			this.restTournament.getTournaments().subscribe((res) => {
+				this.createList(res);
+			});
+		}
+		this.search();
+
+	}
+
+	async search() {
 		this.searchForm
 			.get("search")
 			?.valueChanges.pipe(
@@ -45,16 +66,14 @@ export class HomeComponent implements OnInit {
 				switchMap((result) => this.restTournament.findByName(result))
 			)
 			.subscribe((result) => {
-				this.tournamentList = result;
+				if(localStorage.getItem("userID")){
+					this.liked = true;					
+				}
+				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((res) => {
+					this.likedTournaments = res;
+					this.createList(result);
+				});	
 			});
-	}
-
-	async ngOnInit() {
-		const tournaments$ = this.restTournament.getTournaments();
-		this.tournamentList = await lastValueFrom(tournaments$);
-		const liked$ = this.restUser.getLiked(localStorage.getItem("userID") || "");
-		this.likedTournaments = await lastValueFrom(liked$);
-		console.log(this.likedTournaments);
 	}
 
 	async info(id: number) {
@@ -64,27 +83,62 @@ export class HomeComponent implements OnInit {
 	async filtered(state: string) {
 		if(state === "1"){
 			this.restTournament.getTournaments().subscribe((res) => { 
-				this.tournamentList = res; 
+				this.createList(res);
 			});
 		}else if(state === "2"){
 			this.restTournament.getTournaments().subscribe((res) => { 
-				this.tournamentList = res; 
-				const result = this.tournamentList.filter(s => s.state.includes('open'));
-				this.tournamentList = result;
+				this.createList(res);
+				const result = res.filter(s => s.state.includes('open'));
+				this.createList(result);
 			});	
 		}else if(state === "3"){
 			this.restTournament.getTournaments().subscribe((res) => { 
-				this.tournamentList = res; 
-				const result = this.tournamentList.filter(s => s.state.includes('closed'));
-				this.tournamentList = result;
+				this.createList(res);
+				const result = res.filter(s => s.state.includes('closed'));
+				this.createList(result);
 			});	
 		}else if(state === "4"){
 			this.restTournament.getTournaments().subscribe((res) => { 
-				this.tournamentList = res; 
-				const result = this.tournamentList.filter(s => s.state.includes('waiting'));
-				this.tournamentList = result;
+				this.createList(res);
+				const result = res.filter(s => s.state.includes('waiting'));
+				this.createList(result);
 			});	
+		}else if(state === "5"){
+			const result = this.tournamentList.filter(s => s.liked == true);
+			this.tournamentList = result;
 		}
 	}
 
+	async createList(result: Tournament[]) {
+		this.tournamentList = [];
+		result.forEach(element => {
+			if(this.likedTournaments.includes(element.id)){
+				this.tournamentList.push({tournaments: element, liked: true});
+			}else{
+				this.tournamentList.push({tournaments: element, liked: false});
+			}
+		});
+	}
+
+	like(id: number) {
+		this.restUser.likeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
+			this.restTournament.getTournaments().subscribe((resA) => {
+				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
+					this.likedTournaments = resB;
+					this.createList(resA);
+				});
+			});
+		});
+	}
+
+	dislike(id: number) {
+		this.restUser.dislikeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
+			this.restTournament.getTournaments().subscribe((resA) => {
+				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
+					this.likedTournaments = resB;
+					this.createList(resA);
+				});
+			});
+		});
+	}
 }
