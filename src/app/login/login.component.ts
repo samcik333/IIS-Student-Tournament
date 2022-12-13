@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CookieOptions } from 'express';
 import { switchMap } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { HomeComponent } from '../home/home.component';
 import { User } from '../model/user';
 import { HelperService } from '../shared/helper.service';
 import { LoginService } from '../shared/login.service';
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
     public loginService: LoginService,
     private helperService: HelperService,
     private dialog: MatDialog,
-    router: Router
+    router: Router,
   ) {
     this.router = router;
   }
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
 
     authFlow.subscribe({
       next: (user: User) => {
-        console.log(user);
+        //console.log(user);
         this.loginService.saveUserToLocalStorage(user);
         this.helperService.openSnackBarSucc('Loged in successfully');
         this.dialog.closeAll();
@@ -51,6 +52,8 @@ export class LoginComponent implements OnInit {
         if (this.loginGroup.value.username == 'admin') {
           this.adminInfo();
         }
+        location.reload();
+        //this.home.ngOnInit();
       },
 
       error: (e: HttpErrorResponse) => {

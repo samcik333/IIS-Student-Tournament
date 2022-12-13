@@ -8,7 +8,7 @@ import {Team} from "../model/team";
 import {Tournament} from "../model/tournament";
 import {User} from "../model/user";
 
-const endpoint = `https://sjs-squad.herokuapp.com/`;
+const endpoint = `http://localhost:5005/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
@@ -126,6 +126,13 @@ export class TournamentService {
 		return this.http.delete<User>(
 			endpoint + `tournamentDelUser/` + tournamentId,
 			{body: {userId}, headers: httpOptions.headers}
+		);
+	}
+
+	isParticipant(tournamentId: number, partId:number, type:number): Observable<boolean> {
+		return this.http.get<boolean>(
+			endpoint + `isParticipant/` + tournamentId + "/" + partId + "/" + type,
+			httpOptions
 		);
 	}
 }

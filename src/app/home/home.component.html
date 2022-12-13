@@ -8,6 +8,13 @@
       class="searchTerm"
       id=""
     />
+    <select name="mods" #state (change)="filtered(state.value)" class="search">
+      <option [value]="1">All</option>
+      <option [value]="2">Open</option>
+      <option [value]="3">Closed</option>
+      <option [value]="4">Waiting</option>
+      <option [value]="5">Liked</option>
+    </select>
   </form>
 </div>
 
@@ -17,18 +24,20 @@
       *ngFor="let tournament of tournamentList"
       [style.cursor]="'pointer'"
     >
-      <div (click)="info(tournament.id)" [style.margin]="'5px'">
+    <img (click)="like(tournament.tournaments.id)" *ngIf="liked && !tournament.liked" class="heartB" src="https://cdn.icon-icons.com/icons2/2761/PNG/512/love_heart_icon_176421.png">
+    <img (click)="dislike(tournament.tournaments.id)" *ngIf="liked && tournament.liked" class="heartR" src="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/brown_webpict35_1484337169-1.png">
+      <div (click)="info(tournament.tournaments.id)" [style.margin]="'5px'">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>{{ tournament.name }}</mat-card-title>
+            <mat-card-title>{{ tournament.tournaments.name }}</mat-card-title>
             <mat-card-subtitle
               [ngStyle]="{
                 'background-color':
-                  tournament.state === 'open'
+                  tournament.tournaments.state === 'open'
                     ? 'green'
-                    : tournament.state === 'closed'
+                    : tournament.tournaments.state === 'closed'
                     ? 'red'
-                    : tournament.state === 'waiting'
+                    : tournament.tournaments.state === 'waiting'
                     ? 'gray'
                     : ''
               }"
@@ -38,12 +47,12 @@
               [style.text-transfor]="'uppercase'"
               [style.text-align]="'center'"
             >
-              {{ tournament.state }}
+              {{ tournament.tournaments.state }}
             </mat-card-subtitle>
             <img
               style="margin: 5px; border: 2px solid #006dcc; border-radius: 3px"
               mat-card-md-image
-              src="{{ tournament.logo }}"
+              src="{{ tournament.tournaments.logo }}"
             />
           </mat-card-title-group>
         </mat-card-header>
@@ -56,9 +65,9 @@
             [style.color]="'white'"
             [style.font-weight]="'bold'"
           >
-            <p>{{ tournament.date | date: "short" }}</p>
-            <p>Mode: {{ tournament.mode }} vs. {{ tournament.mode }}</p>
-            <p>Capacity: {{ tournament.numberOfPlayers }}/{{ tournament.capacity }}</p>
+            <p>{{ tournament.tournaments.date | date: "short" }}</p>
+            <p>Mode: {{ tournament.tournaments.mode }} vs. {{ tournament.tournaments.mode }}</p>
+            <p>Capacity: {{ tournament.tournaments.numberOfPlayers }}/{{ tournament.tournaments.capacity }}</p>
           </mat-card-content>
         </div>
       </div>

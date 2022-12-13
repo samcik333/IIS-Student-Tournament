@@ -7,6 +7,7 @@ import {
 } from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {CookieOptions} from "express";
+import { HomeComponent } from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {User} from "./model/user";
 import {RegisterComponent} from "./register/register.component";
@@ -57,6 +58,8 @@ export class AppComponent {
 				next: () => {
 					localStorage.clear();
 					this.router.navigate(["/"]);
+					location.reload();
+					//this.home.ngOnInit();	
 				},
 			});
 		}

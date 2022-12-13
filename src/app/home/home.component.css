@@ -16,9 +16,21 @@ mat-card:hover {
 }
 
 .search {
-  width: 25%;
+  width: 35%;
   position: relative;
   display: flex;
+  margin-left: 2%;
+}
+
+select {
+  width: 100%;
+  border: 3px solid #006dcc;
+  border-right: 33px solid #006dcc;
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #006dcc;
 }
 
 .searchTerm {
@@ -58,3 +70,28 @@ mat-card:hover {
   text-align: center;
   color: #006dcc;
 }
+
+.heartB {
+  width:8%;
+  height: auto;
+  object-fit: cover;
+  z-index:-5;
+}
+
+.heartR {
+  width:9%;
+  height: auto;
+  object-fit: cover;
+  z-index:-5;
+}
+
+.heartB:active{
+  animation: pop 1s linear 1;
+}
+
+.heartR:active{
+  animation: pop 1s linear 1;
+}
+
+
+

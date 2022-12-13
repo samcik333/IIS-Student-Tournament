@@ -7,7 +7,7 @@ import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {AppComponent} from "../app.component";
 import {User} from "../model/user";
 
-const baseUrl = `https://sjs-squad.herokuapp.com/`;
+const baseUrl = `http://localhost:5005/`;
 
 const httpOptions = {
 	headers: new HttpHeaders({
@@ -34,6 +34,7 @@ export class LoginService {
 		bronze: 0,
 		numberOfGames: 0,
 		numberOfWins: 0,
+		likedTournaments: [],
 	});
 
 	private componentMethodCallSource = new Subject<any>();
