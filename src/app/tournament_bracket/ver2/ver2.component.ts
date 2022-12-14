@@ -75,11 +75,6 @@ export class Ver2Component implements OnInit {
     this.restTournaments.getBracket(this.myParam).subscribe( async res => {
     this.spider = res;
     if(this.spider){
-      this.eightMatches = [];
-      this.quarterMatches = [];
-      this.semiMatches = [];
-      this.final = [];
-      this.bronze = [];
       this.createBracketMatches(this.spider.eightfinals, this.eightMatches);
       this.createBracketMatches(this.spider.quarterfinals, this.quarterMatches);
       this.createBracketMatches(this.spider.semifinals, this.semiMatches);
@@ -156,7 +151,7 @@ export class Ver2Component implements OnInit {
         this.match = res;
         this.spider.eightfinals.push((res.id).toString());
         if(this.tournament.capacity/2 == this.spider.eightfinals.length){
-          this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+          this.restTournaments.updateSchedule(this.spider).subscribe(() => this.fillBracket());
         }
       });
     }
@@ -202,7 +197,7 @@ export class Ver2Component implements OnInit {
             //this.quarterMatches[counter].id = res.id;
             this.spider.quarterfinals.push(res.id.toString());
             this.restTournaments.updateSchedule(this.spider).subscribe(() => {
-              this.ngOnInit()}
+              this.fillBracket()}
               );
           });
         }
@@ -244,7 +239,7 @@ export class Ver2Component implements OnInit {
           this.restMatch.create(match).subscribe(res => {
             //this.semiMatches[res.order-1].id = res.id;
             this.spider.semifinals.push(res.id.toString());
-            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.fillBracket());
           });
         }
         counter++;
@@ -303,7 +298,7 @@ export class Ver2Component implements OnInit {
               this.restMatch.create(matchB).subscribe(res => {
                 //this.final[res.order].id = res.id;
                 this.spider.bronze.push(res.id.toString());
-                this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+                this.restTournaments.updateSchedule(this.spider).subscribe(() => this.fillBracket());
               });
           });
       }
@@ -341,7 +336,7 @@ export class Ver2Component implements OnInit {
           this.restMatch.create(matchB).subscribe(res => {
             //this.final[res.order].id = res.id;
             this.spider.bronze.push(res.id.toString());
-            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.fillBracket());
           });
       }
   }
