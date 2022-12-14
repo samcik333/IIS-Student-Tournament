@@ -1,8 +1,10 @@
+import {HttpErrorResponse} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {switchMap} from "rxjs";
 import {User} from "../model/user";
+import {HelperService} from "../shared/helper.service";
 import {LoginService} from "../shared/login.service";
 
 @Component({
@@ -14,7 +16,8 @@ export class RegisterComponent implements OnInit {
 	isUserExist = false;
 	constructor(
 		private loginService: LoginService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private helperService: HelperService
 	) {}
 
 	ngOnInit(): void {}
@@ -37,11 +40,42 @@ export class RegisterComponent implements OnInit {
 				this.loginService.saveUserToLocalStorage(user);
 				this.dialog.closeAll();
 			},
-			error: (error) => {
-				this.isUserExist = true;
-				setTimeout(() => {
-					this.isUserExist = false;
-				}, 3000);
+			error: (error: HttpErrorResponse) => {
+				console.log(error.error.message);
+				switch (error.error.message) {
+					case "/name":
+						this.helperService.openSnackBarWarn("Missing Name");
+						break;
+					case "/lastname":
+						this.helperService.openSnackBarWarn("Missing Lastname");
+						break;
+					case "/username":
+						this.helperService.openSnackBarWarn("Missing Username");
+						break;
+					case "/email":
+						this.helperService.openSnackBarWarn(
+							"Email is missing, or invalid"
+						);
+						break;
+					case "/password":
+						this.helperService.openSnackBarWarn(
+							"Password must have 8 or more characters"
+						);
+						break;
+					case "Username already exists":
+						this.helperService.openSnackBarWarn(
+							"User with this username already exists"
+						);
+						break;
+					case "Email already exists":
+						this.helperService.openSnackBarWarn(
+							"User with this email already exists"
+						);
+						break;
+
+					default:
+						break;
+				}
 			},
 		});
 	}
