@@ -22,6 +22,7 @@ import { Ver2Component } from './tournament_bracket/ver2/ver2.component';
 import { UserManagerComponent } from './admin/user-manager/user-manager.component';
 import { TournamentManagerComponent } from './admin/tournament-manager/tournament-manager.component';
 import { MatchComponent } from './match/match.component';
+import { SnakeComponent } from './snake/snake.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MatchComponent } from './match/match.component';
     UserManagerComponent,
     TournamentManagerComponent,
     MatchComponent,
+    SnakeComponent,
   ],
   imports: [
     BrowserModule,
