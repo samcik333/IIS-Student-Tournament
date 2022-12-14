@@ -164,10 +164,13 @@ export class Ver2Component implements OnInit {
 
   evaluate(){
     if(this.quarterMatches){
-      this.quarterMatches =  [];
       let counter = 0;
       for (let i = 0; i <= this.eightMatches.length; i+=2) {
-        if(this.eightMatches[i]?.ScoreA != this.eightMatches[i]?.ScoreB && this.eightMatches[i+1]?.ScoreA != this.eightMatches[i+1]?.ScoreB){
+        if(this.eightMatches[i]?.ScoreA != this.eightMatches[i]?.ScoreB 
+          && this.eightMatches[i+1]?.ScoreA != this.eightMatches[i+1]?.ScoreB
+          && !this.quarterMatches[counter]
+          && this.quarterMatches[counter]?.ScoreA == this.quarterMatches[counter]?.ScoreB
+          ){
           this.quarterMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
           this.quarterMatches[counter].id = 0;
           if(this.eightMatches[i].ScoreA > this.eightMatches[i].ScoreB){
@@ -207,20 +210,27 @@ export class Ver2Component implements OnInit {
       }  
     }
     if(this.semiMatches){
-      this.semiMatches =  []
       let counter = 0;
       for (let i = 0; i <= this.quarterMatches.length; i+=2) {
-        if(this.quarterMatches[i]?.ScoreA != this.quarterMatches[i]?.ScoreB && this.quarterMatches[i+1]?.ScoreA != this.quarterMatches[i+1]?.ScoreB){
+        if(this.quarterMatches[i]?.ScoreA != this.quarterMatches[i]?.ScoreB 
+          && this.quarterMatches[i+1]?.ScoreA != this.quarterMatches[i+1]?.ScoreB
+          && !this.semiMatches[counter]
+          && this.semiMatches[counter]?.ScoreA == this.semiMatches[counter]?.ScoreB
+          ){
           this.semiMatches[counter] = new myMatch(0,0,"","",0,0,0,0);
           if(this.quarterMatches[i].ScoreA > this.quarterMatches[i].ScoreB){
             this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamA;
+            this.semiMatches[counter].idA = this.quarterMatches[i].idA;
           }else if(this.quarterMatches[i].ScoreA < this.quarterMatches[i].ScoreB){
             this.semiMatches[counter].TeamA = this.quarterMatches[i].TeamB;
+            this.semiMatches[counter].idA = this.quarterMatches[i].idB;
           }
           if(this.quarterMatches[i+1].ScoreA > this.quarterMatches[i+1].ScoreB){
             this.semiMatches[counter].TeamB = this.quarterMatches[i].TeamA;
+            this.semiMatches[counter].idB = this.quarterMatches[i].idA;
           }else if(this.quarterMatches[i+1].ScoreA < this.quarterMatches[i+1].ScoreB){
             this.semiMatches[counter].TeamB = this.eightMatches[i].TeamB;
+            this.semiMatches[counter].idB = this.quarterMatches[i].idB;
           }
           this.semiMatches[counter].ScoreA = 0;
           this.semiMatches[counter].ScoreB = 0;
@@ -240,25 +250,34 @@ export class Ver2Component implements OnInit {
         counter++;
       }
     }
-    if(this.final && this.bronze && this.semiMatches[0]?.TeamA && this.semiMatches[1]?.TeamA){
-      this.final =  [];
-      this.bronze =  [];
+    if(this.final && this.bronze && this.semiMatches[0]?.TeamA && this.semiMatches[1]?.TeamA 
+      && this.final[0]?.TeamA == "" && this.bronze[0]?.TeamA == ""
+      && this.final[0]?.ScoreA == 0 && this.bronze[0]?.ScoreA == 0){
       this.final[0] = new myMatch(0,0,"","",0,0,0,0);
       this.bronze[0] = new myMatch(0,0,"","",0,0,0,0);
-      if(this.semiMatches[0]?.ScoreA != this.semiMatches[0]?.ScoreB && this.semiMatches[1]?.ScoreA != this.semiMatches[1]?.ScoreB){ 
+      if(this.semiMatches[0]?.ScoreA != this.semiMatches[0]?.ScoreB 
+        && this.semiMatches[1]?.ScoreA != this.semiMatches[1]?.ScoreB){ 
         if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
           this.final[0].TeamA = this.semiMatches[0].TeamA;
           this.bronze[0].TeamA = this.semiMatches[0].TeamB;
+          this.final[0].idA = this.semiMatches[0].idA;
+          this.bronze[0].idA = this.semiMatches[0].idB;
         }else if(this.semiMatches[0].ScoreA > this.semiMatches[0].ScoreB){
           this.final[0].TeamA = this.semiMatches[0].TeamB;
           this.bronze[0].TeamA = this.semiMatches[0].TeamA;
+          this.final[0].idA = this.semiMatches[0].idB;
+          this.bronze[0].idA = this.semiMatches[0].idA;
         }
         if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
           this.final[0].TeamB = this.semiMatches[1].TeamA;
           this.bronze[0].TeamB = this.semiMatches[1].TeamB;
+          this.final[0].idB = this.semiMatches[1].idA;
+          this.bronze[0].idB = this.semiMatches[1].idB;
         }else if(this.semiMatches[1].ScoreA > this.semiMatches[1].ScoreB){
           this.final[0].TeamB = this.semiMatches[1].TeamB;
           this.bronze[0].TeamB = this.semiMatches[1].TeamA;
+          this.final[0].idB = this.semiMatches[1].idB;
+          this.bronze[0].idB = this.semiMatches[1].idA;
         }
           this.final[0].ScoreA = 0;
           this.final[0].ScoreB = 0;
@@ -271,11 +290,47 @@ export class Ver2Component implements OnInit {
             order: 1,
             date: new Date(),
           }
-          this.restMatch.create(matchF).subscribe(res => {
+          this.restMatch.create(matchF).subscribe(resA => {
             //this.final[res.order].id = res.id;
-            this.spider.final.push(res.id.toString());
-            this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+            this.spider.final.push(resA.id.toString());
+              let matchB = {
+                tournamentId: parseInt(this.myParam),
+                firstTeam: this.bronze[0].idA,
+                secondTeam: this.bronze[0].idB,
+                order: 1,
+                date: new Date(),
+              }
+              this.restMatch.create(matchB).subscribe(res => {
+                //this.final[res.order].id = res.id;
+                this.spider.bronze.push(res.id.toString());
+                this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
+              });
           });
+      }
+  }
+  if(this.v8 == true && this.v16 == false && this.v4 == false && this.v2 == false){
+    if(this.bronze && this.quarterMatches[0]?.TeamA && this.quarterMatches[1]?.TeamA 
+      && this.bronze[0]?.TeamA == "" && this.bronze[0]?.ScoreA == 0){
+      this.bronze[0] = new myMatch(0,0,"","",0,0,0,0);
+      if(this.quarterMatches[0]?.ScoreA != this.quarterMatches[0]?.ScoreB 
+        && this.quarterMatches[1]?.ScoreA != this.quarterMatches[1]?.ScoreB){ 
+        if(this.quarterMatches[0].ScoreA > this.quarterMatches[0].ScoreB){
+          this.bronze[0].TeamA = this.quarterMatches[0].TeamB;
+          this.bronze[0].idA = this.quarterMatches[0].idB;
+        }else if(this.quarterMatches[0].ScoreA > this.quarterMatches[0].ScoreB){
+          this.bronze[0].TeamA = this.quarterMatches[0].TeamA;
+          this.bronze[0].idA = this.quarterMatches[0].idA;
+        }
+        if(this.quarterMatches[1].ScoreA > this.quarterMatches[1].ScoreB){
+          this.bronze[0].TeamB = this.quarterMatches[1].TeamB;
+          this.bronze[0].idB = this.quarterMatches[1].idB;
+        }else if(this.quarterMatches[1].ScoreA > this.quarterMatches[1].ScoreB){
+          this.bronze[0].TeamB = this.quarterMatches[1].TeamA;
+          this.bronze[0].idB = this.quarterMatches[1].idA;
+        }
+          this.bronze[0].ScoreA = 0;
+          this.bronze[0].ScoreB = 0;
+         
           let matchB = {
             tournamentId: parseInt(this.myParam),
             firstTeam: this.bronze[0].idA,
@@ -285,10 +340,11 @@ export class Ver2Component implements OnInit {
           }
           this.restMatch.create(matchB).subscribe(res => {
             //this.final[res.order].id = res.id;
-            this.spider.final.push(res.id.toString());
+            this.spider.bronze.push(res.id.toString());
             this.restTournaments.updateSchedule(this.spider).subscribe(() => this.ngOnInit());
           });
       }
+  }
   }
 }
 
