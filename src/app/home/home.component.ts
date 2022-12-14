@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
   router: Router;
   liked: boolean = false;
   likedTournaments: Array<any> = [];
+  filter:boolean = false;
+  filterType:string = "All";
 
   searchForm: FormGroup = new FormGroup({
     search: new FormControl(''),
@@ -48,8 +50,11 @@ export class HomeComponent implements OnInit {
 			this.restTournament.getTournaments().subscribe((resA) => {
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
 					this.likedTournaments = this.getLikedIDs(resB);
-					console.log(this.likedTournaments)
-					this.createList(resA);
+					if(this.filter){
+						this.filterByType(this.filterType, resA);
+					}else{
+						this.createList(resA);
+					}
 				});
 			});
 		}else{
@@ -75,7 +80,11 @@ export class HomeComponent implements OnInit {
 				}
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((res) => {
 					this.likedTournaments = this.getLikedIDs(res);
-					this.createList(result);
+					if(this.filter){
+						this.filterByType(this.filterType, result);
+					}else{
+						this.createList(result);
+					}
 				});	
 			});
 	}
@@ -86,30 +95,42 @@ export class HomeComponent implements OnInit {
 
   async filtered(state: string) {
     if (state === '1') {
+		this.filter = false;
       this.restTournament.getTournaments().subscribe((res) => {
         this.createList(res);
       });
     } else if (state === '2') {
+		this.filter = true;
+		this.filterType = "open";
       this.restTournament.getTournaments().subscribe((res) => {
         this.createList(res);
         const result = res.filter((s) => s.state.includes('open'));
         this.createList(result);
       });
     } else if (state === '3') {
+		this.filter = true;
+		this.filterType = "closed";
       this.restTournament.getTournaments().subscribe((res) => {
         this.createList(res);
         const result = res.filter((s) => s.state.includes('closed'));
         this.createList(result);
       });
     } else if (state === '4') {
+		this.filter = true;
+		this.filterType = "waiting";
       this.restTournament.getTournaments().subscribe((res) => {
         this.createList(res);
         const result = res.filter((s) => s.state.includes('waiting'));
         this.createList(result);
       });
     } else if (state === '5') {
-      const result = this.tournamentList.filter((s) => s.liked == true);
-      this.tournamentList = result;
+		this.filter = true;
+		this.filterType = "liked";
+		this.restTournament.getTournaments().subscribe((res) => {
+			this.createList(res);
+			const result = this.tournamentList.filter((s) => s.liked == true);
+			this.tournamentList = result;
+		});
     }
   }
 
@@ -126,23 +147,18 @@ export class HomeComponent implements OnInit {
 
 	like(id: number) {
 		this.restUser.likeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
-			this.restTournament.getTournaments().subscribe((resA) => {
-				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
-					this.likedTournaments = this.getLikedIDs(resB);
-					this.createList(resA);
-				});
-			});
+			this.likedTournaments.push(id);
+			this.ngOnInit();
 		});
 	}
 
 	dislike(id: number) {
 		this.restUser.dislikeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
-			this.restTournament.getTournaments().subscribe((resA) => {
-				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
-					this.likedTournaments = this.getLikedIDs(resB);
-					this.createList(resA);
-				});
-			});
+			const index = this.likedTournaments.indexOf(id, 0);
+			if (index > -1) {
+				this.likedTournaments.splice(index, 1);
+			}
+			this.ngOnInit();
 		});
 	}
 
@@ -153,6 +169,7 @@ export class HomeComponent implements OnInit {
 		});
 		return likedIDs;
 	}
+	
 	snake() {
 		const snakeConfig = new MatDialogConfig();
 		snakeConfig.disableClose = false;
@@ -160,5 +177,14 @@ export class HomeComponent implements OnInit {
 		snakeConfig.width = '50%';
 		snakeConfig.height = '90%';
 		this.dialog.open(SnakeComponent, snakeConfig);
-	  }
+	}
+
+	async filterByType(type:string, tournaments:Tournament[]){
+		if(type == "liked"){
+			this.filtered("5");
+			return;
+		}
+		const result = tournaments.filter((s) => s.state.includes(type));
+		this.createList(result);
+	}
 }

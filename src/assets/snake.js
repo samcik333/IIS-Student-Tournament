@@ -2,35 +2,35 @@
 document.addEventListener("keydown", keyPush);
 
 // canvas
-const canvas = document.querySelector("canvas");
-const title = document.querySelector("h1");
-const ctx = canvas.getContext("2d");
+var canvas = document.querySelector("canvas");
+var title = document.querySelector("h1");
+var ctx = canvas.getContext("2d");
 
 // game
-let gameIsRunning = true;
+var gameIsRunning = true;
 
-const fps = 10;
-const tileSize = 50;
-const tileCountX = canvas.width / tileSize;
-const tileCountY = canvas.height / tileSize;
+var fps = 10;
+var tileSize = 50;
+var tileCountX = canvas.width / tileSize;
+var tileCountY = canvas.height / tileSize;
 
-let score = 0;
+var score = 0;
 
 // player
 
-let snakeSpeed = tileSize;
-let snakePosX = 0;
-let snakePosY = canvas.height / 2;
+var snakeSpeed = tileSize;
+var snakePosX = 0;
+var snakePosY = canvas.height / 2;
 
-let velocityX = 1;
-let velocityY = 0;
+var velocityX = 1;
+var velocityY = 0;
 
-let tail = [];
-let snakeLength = 2;
+var tail = [];
+var snakeLength = 2;
 
 // food
-let foodPosX = 0;
-let foodPosY = 0;
+var foodPosX = 0;
+var foodPosY = 0;
 
 // loop
 function gameLoop() {
