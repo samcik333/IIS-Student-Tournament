@@ -53,7 +53,7 @@
 
         <p class="information"></p>
 
-        <div class="control">
+        <div class="control" *ngIf="loggedIn">
           <span *ngIf="tournament.mode != 1" class="select">
             <select
               name="mods"

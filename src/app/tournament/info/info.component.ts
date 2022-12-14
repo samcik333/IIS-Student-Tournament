@@ -19,6 +19,7 @@ export class InfoComponent implements OnInit {
 	userID!:number;
 	isParticipantUser: boolean = false;
 	isParticipantTeam: boolean = false;
+	loggedIn: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -29,6 +30,9 @@ export class InfoComponent implements OnInit {
 
 	async ngOnInit() {
 		this.userID = parseInt(localStorage.getItem('userID') || "");
+		if(!Number.isNaN(this.userID)){
+			this.loggedIn = true;
+		}	
 		this.route.params.subscribe(
 			(params: Params) => (this.myParam = params["id"])
 		);
@@ -36,20 +40,23 @@ export class InfoComponent implements OnInit {
 			.find(this.myParam)
 			.subscribe((response: Tournament) => {
 				this.tournament = response;
-				this.routerTournament.isParticipant(response.id,this.userID,1).subscribe((res: boolean) => {
-					this.isParticipantUser = res;
-					this.teamService.getOwnedTeams().subscribe((res: Team[]) => {
-						res.forEach((team) => {
-							this.routerTournament.isParticipant(response.id,team.id,2).subscribe((res: boolean) => {
-								this.isParticipantTeam = res;
+				if(!Number.isNaN(this.userID)){
+					this.routerTournament.isParticipant(response.id,this.userID,1).subscribe((res: boolean) => {
+						this.isParticipantUser = res;
+						this.teamService.getOwnedTeams().subscribe((res: Team[]) => {
+							res.forEach((team) => {
+								this.routerTournament.isParticipant(response.id,team.id,2).subscribe((res: boolean) => {
+									this.isParticipantTeam = res;
+								});
 							});
 						});
-					});
-				});	
+					});	
+				}
 			});
-
-		const teams$ = this.teamService.getOwnedTeams();
-		this.teamList = await lastValueFrom(teams$);
+			if(!Number.isNaN(this.userID)){
+				const teams$ = this.teamService.getOwnedTeams();
+				this.teamList = await lastValueFrom(teams$);
+			}
 	}
 
 	openSnackBar(errMessage: string) {
