@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import { Tournament } from "../model/tournament";
 import {User} from "../model/user";
 
 const endpoint = `http://localhost:5005/`;
@@ -73,8 +74,8 @@ export class UserService {
 		});
 	}
 
-	getLiked(id:string): Observable<string[]> {
-		return this.http.get<string[]>(endpoint + `user/getliked/` + id, {
+	getLiked(id:string): Observable<Tournament[]> {
+		return this.http.get<Tournament[]>(endpoint + `user/getliked/` + id, {
 			withCredentials: true,
 			headers: httpOptions.headers,
 		});

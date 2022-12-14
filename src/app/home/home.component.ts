@@ -44,7 +44,8 @@ export class HomeComponent implements OnInit {
 			this.liked = true;					
 			this.restTournament.getTournaments().subscribe((resA) => {
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
-					this.likedTournaments = resB;
+					this.likedTournaments = this.getLikedIDs(resB);
+					console.log(this.likedTournaments)
 					this.createList(resA);
 				});
 			});
@@ -70,7 +71,7 @@ export class HomeComponent implements OnInit {
 					this.liked = true;					
 				}
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((res) => {
-					this.likedTournaments = res;
+					this.likedTournaments = this.getLikedIDs(res);
 					this.createList(result);
 				});	
 			});
@@ -124,7 +125,7 @@ export class HomeComponent implements OnInit {
 		this.restUser.likeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
 			this.restTournament.getTournaments().subscribe((resA) => {
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
-					this.likedTournaments = resB;
+					this.likedTournaments = this.getLikedIDs(resB);
 					this.createList(resA);
 				});
 			});
@@ -135,10 +136,18 @@ export class HomeComponent implements OnInit {
 		this.restUser.dislikeTournament(localStorage.getItem("userID") || "", id.toString()).subscribe((res) => {
 			this.restTournament.getTournaments().subscribe((resA) => {
 				this.restUser.getLiked(localStorage.getItem("userID") || "").subscribe((resB) => {
-					this.likedTournaments = resB;
+					this.likedTournaments = this.getLikedIDs(resB);
 					this.createList(resA);
 				});
 			});
 		});
+	}
+
+	getLikedIDs(tournaments:Tournament[]){
+		let likedIDs:number[] = [];
+		tournaments.forEach(tournament => {
+			likedIDs.push(tournament.id);
+		});
+		return likedIDs;
 	}
 }
