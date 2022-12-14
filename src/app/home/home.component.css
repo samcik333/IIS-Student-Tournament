@@ -7,6 +7,13 @@ mat-card:hover {
   background: lightskyblue;
 }
 
+.mat-raised-button {
+  background-color: #22afff;
+  color: white;
+  width: 160px;
+  height: 55px;
+}
+
 .container {
   margin-top: 1cm;
   width: 100%;
@@ -72,26 +79,23 @@ select {
 }
 
 .heartB {
-  width:8%;
+  width: 8%;
   height: auto;
   object-fit: cover;
-  z-index:-5;
+  z-index: -5;
 }
 
 .heartR {
-  width:9%;
+  width: 9%;
   height: auto;
   object-fit: cover;
-  z-index:-5;
+  z-index: -5;
 }
 
-.heartB:active{
+.heartB:active {
   animation: pop 1s linear 1;
 }
 
-.heartR:active{
+.heartR:active {
   animation: pop 1s linear 1;
 }
-
-
-

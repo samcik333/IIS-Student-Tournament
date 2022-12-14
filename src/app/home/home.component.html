@@ -17,6 +17,13 @@
     </select>
   </form>
 </div>
+<button
+  mat-raised-button
+  style="position: absolute; right: 17rem; top: 110px; font-size: 20px"
+  (click)="snake()"
+>
+  Play snake!
+</button>
 
 <ng-container *ngIf="tournamentList && tournamentList.length; else notFound">
   <div class="container">
@@ -24,8 +31,18 @@
       *ngFor="let tournament of tournamentList"
       [style.cursor]="'pointer'"
     >
-    <img (click)="like(tournament.tournaments.id)" *ngIf="liked && !tournament.liked" class="heartB" src="https://cdn.icon-icons.com/icons2/2761/PNG/512/love_heart_icon_176421.png">
-    <img (click)="dislike(tournament.tournaments.id)" *ngIf="liked && tournament.liked" class="heartR" src="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/brown_webpict35_1484337169-1.png">
+      <img
+        (click)="like(tournament.tournaments.id)"
+        *ngIf="liked && !tournament.liked"
+        class="heartB"
+        src="https://cdn.icon-icons.com/icons2/2761/PNG/512/love_heart_icon_176421.png"
+      />
+      <img
+        (click)="dislike(tournament.tournaments.id)"
+        *ngIf="liked && tournament.liked"
+        class="heartR"
+        src="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/brown_webpict35_1484337169-1.png"
+      />
       <div (click)="info(tournament.tournaments.id)" [style.margin]="'5px'">
         <mat-card-header>
           <mat-card-title-group>
@@ -65,9 +82,16 @@
             [style.color]="'white'"
             [style.font-weight]="'bold'"
           >
-            <p>{{ tournament.tournaments.date | date: "short" }}</p>
-            <p>Mode: {{ tournament.tournaments.mode }} vs. {{ tournament.tournaments.mode }}</p>
-            <p>Capacity: {{ tournament.tournaments.numberOfPlayers }}/{{ tournament.tournaments.capacity }}</p>
+            <p>{{ tournament.tournaments.date | date : "short" }}</p>
+            <p>
+              Mode: {{ tournament.tournaments.mode }} vs.
+              {{ tournament.tournaments.mode }}
+            </p>
+            <p>
+              Capacity: {{ tournament.tournaments.numberOfPlayers }}/{{
+                tournament.tournaments.capacity
+              }}
+            </p>
           </mat-card-content>
         </div>
       </div>
